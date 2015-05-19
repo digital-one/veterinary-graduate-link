@@ -1,0 +1,49 @@
+#header{
+	background-color: white;
+	&:before{
+		content:"";
+		@extend %full-width;
+		height:15px;
+		background-color: $vgl-blue;
+		@include abs-pos(0,auto,auto,0);
+	}
+	#home-link{
+		display: block;
+		width: 89px;
+		height:113px;
+		@include bg-image('vgl-logo-mobile');
+		@extend %ir;
+	}
+	#account-links{
+		float: right;
+		background-color: $vgl-blue;
+		display: inline-block;
+		height:30px;
+		line-height: 30px;
+		margin:0;
+		z-index: 999;
+		padding:0 10px;
+		a{
+			&:link,&:visited{
+				color: white;
+			}
+		}
+	}
+}
+
+/* Media Queries */
+
+@media #{$medium-up}{
+	
+	#header{
+		#home-link{
+			width:232px;
+			height:81px;
+			@include bg-image('vgl-logo');
+		}
+	}
+}
+
+@media #{$large-up} { 
+
+}

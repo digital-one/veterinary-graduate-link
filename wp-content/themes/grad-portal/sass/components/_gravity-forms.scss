@@ -1,0 +1,315 @@
+// Fields 
+
+input[type="text"], 
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+select,
+textarea,
+.selectBox-dropdown{
+	-webkit-appearance: none;
+ 	-moz-appearance: none;
+  	border-radius: 0;
+  	background-color: $xlight-grey;
+  	border-style: solid;
+  	border:none;
+  	position: relative;
+  	border-right:4px solid $xlight-grey;
+  	//box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  	//color: rgba(0, 0, 0, 0.75);
+  	display: block;
+  	@include font-size(14px);
+  	height: 38px;
+  	padding: 5px 10px;
+  	width: 100% !important;
+  	box-sizing: border-box;
+	@include transition (background-color .1s linear 0s);
+	font-family:$open_sans;
+	font-weight: 700;
+	@include placeholder {
+    	color: $grey; 
+    	position: relative;
+    	&:after{
+    		.gfield_contains_required &, .required &{
+				content:"*";
+				@include abs-pos(0,0,auto,auto);
+				z-index: 9999;
+				display: block;
+			}
+		}
+  	}
+	&:focus, .gfield_error &{
+		background-color: $orange;
+		outline:none;
+		color: white;
+		border-color: darken($orange,10%);
+		@include placeholder {
+			color: white;
+		}
+	}
+}
+textarea{
+	padding: 10px;
+	height: 150px;
+	resize: none;
+}
+button{
+	background-color: $grey;
+	border:none;
+	color: white;
+	height:30px;
+	line-height:1;
+	text-align:center;
+	@include font-size(12px);
+}
+
+
+// Gravity Forms
+
+.gform_wrapper{
+	padding-top: 30px;
+}
+.gform_body{
+	ul{
+		margin-bottom: 0;
+		li{
+			margin-bottom: 10px;
+			@extend %clearfix;
+		}
+	}
+}
+.gfield_label{
+	@include font-size(14px);
+	display:none;
+	.gfield_required{ 
+
+	}
+	.left_label &{
+		float:left;
+		width:20%;
+		height:30px;
+		line-height: 30px;
+	}
+}
+.ginput_container{
+	display: block;
+	position: relative;
+	.left_label &{
+		float: left;
+		width: 80%;
+	}
+	.gfield_contains_required &{
+		
+	}
+}
+.recaptchatable #recaptcha_response_field{
+	height: 30px;
+	font-size:12px !important;
+	border-color: #ccc !important;
+}
+.recaptchatable #recaptcha_image{
+	overflow: hidden !important;
+}
+.recaptchatable a{
+	font-size:12px !important;
+	color: $dark-grey !important;
+}
+.gform_footer{
+	padding: 10px 0 0;
+	display: block;
+	width: 100%;
+	position: relative;
+	input.gform_button{
+	
+	}
+}
+.gfield_description{
+	display: block;
+	width: 100%;
+	padding-left:20%;
+	text-transform: none;
+}
+.validation_error,.validation_message{
+	@include font-size(14px);
+	color: white;
+	font-weight: 700;
+	background-color: $grey;
+	padding: 8px 8px 10px;
+	display: inline-block;
+	margin-bottom: 10px;
+	width:auto;
+}	
+.validation_message{
+	display: none;
+}
+.validation_error{
+	display: block;
+}
+.gform_ajax_spinner{
+	@include abs-pos(0,0,auto,auto);
+}	
+.gform_confirmation_message{
+
+}
+
+// Selectbox
+
+.selectBox-dropdown{
+	position: relative;
+	cursor: pointer;
+	border: none !important;
+	padding: 0 10px;
+	&:hover, &:active, &:focus{
+		border-style: none;
+		background-color: darken(white,10);
+	}
+	&.selectBox-menuShowing{
+    	background-color: darken(white,10);
+    }
+    &.selectBox-menuShowing-bottom{
+
+    }
+    &.selectBox-menuShowing-top{
+    	
+    }
+	.selectBox-label{
+		height: 38px;
+		line-height: 38px;
+		@include font-size(14px);
+		display: block;
+		color: $grey;
+		width:100% !important;
+	}
+	.selectBox-arrow{
+		height: 38px;
+    	width: 38px;
+    	background-color: darken($xlight-grey,10%);
+    	@include abs-pos(0,0,auto,auto);
+    	display: block;
+    	&:after{
+    		content:"";
+    		width: 16px;
+    		height: 8px;
+    		display: block;
+    		background-image:url('../images/selectbox-arrow.png');
+    		background-position: left top;
+    		background-repeat: no-repeat;
+    		background-size: auto 100%;
+    		@include abs-pos(50%,auto,auto,50%);
+    		margin: -4px 0 0 -8px;
+    		.svg &{
+    			background-image:url('../images/selectbox-arrow.svg');	
+    		}
+    	}	
+	}
+	&.selectBox-active, .gfield_error &{
+    	background-color: $orange;
+    	.selectBox-label{
+    		color: white;
+    	}
+    	.selectBox-arrow{
+    		background-color: darken($orange,10%);
+    		&:after{
+    			background-position: right top;
+    		}
+    	}
+    }
+}
+.selectBox-dropdown-menu {
+    position: absolute;
+    z-index: 99999;
+    max-height: 200px;
+    min-height: 1em;
+    background: white !important;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    @include box-shadow(0 2px 6px rgba(0, 0, 0, .2));
+	&.selectBox-options{
+		li,a{
+			list-style: none;
+    		display: block;
+    		cursor: default;
+    		padding: 0;
+    		margin: 0;
+			text-align:left;
+		}
+		li{
+			&.selectBox-hover a {
+    			background-color: $xlight-grey;
+    			color: $grey;
+    		}
+    		&.selectBox-selected a{
+    			//background-color: $green;
+    		}
+		}
+		a{
+			@include font-size(14px);
+			padding: 4px 10px;
+		}
+		&.selectBox-options-top{
+    		border-bottom:none;
+			margin-top:1px;
+		}
+		&.selectBox-options-bottom{
+
+		}
+		&.selectBox-optgroup {
+    		color: #666;
+    		background: #EEE;
+    		font-weight: bold;
+    		line-height: 1.5;
+    		padding: 0 .3em;
+    		white-space: nowrap;
+		}
+	}
+}
+.selectBox-inline { 
+    min-width: 150px;
+    outline: none;
+    border: solid 1px #BBB;
+    background: #FFF;
+    display: inline-block;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    overflow: auto;
+}
+	
+
+@media #{$medium-up} { 
+	input[type="text"], 
+	input[type="password"],
+	input[type="email"],
+	input[type="tel"],
+	input[type="number"],
+	input[type="search"],
+	select,
+	textarea,
+	.selectBox-dropdown{
+		height:50px;
+		padding:10px;
+	}
+	textarea{
+		height: 150px;
+	}
+	.selectBox-dropdown{
+		padding:0 10px;
+		.selectBox-label{
+			height: 50px;
+			line-height: 50px;
+		}
+		.selectBox-arrow{
+			height: 50px;
+	    	width: 50px;
+	    }
+	}
+}
+@media #{$large-up} { 
+
+	.gform_wrapper{
+		padding-top: 0;
+	}
+
+}

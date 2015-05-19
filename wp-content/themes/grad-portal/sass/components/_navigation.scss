@@ -1,0 +1,152 @@
+#nav{
+	margin:0;
+	width:100%;
+	float:left;
+	padding:20px 36px;
+	display: none;
+	@include inline-menu;
+	background-color:black;
+	border-top:1px solid darken(white,70%);
+	//border-bottom:1px solid darken(white,70%);
+	@include wp-current-page-links{
+		color: $orange;
+		font-weight: 600;
+	}
+	ul{
+		display: block;
+		width:100%;
+		}
+		li{
+			display: block;
+			width:100%;
+			position:relative;
+			padding: 10px 0;
+			a{
+				display: block;
+				width:100%;
+				float: none;
+			}
+			&.menu-item-has-children{
+				a:after{
+					content:" +";
+					@include transition(color .3s ease);
+					color: white;
+				}
+				a:hover:after{
+					color: $orange
+				}
+				&.current-menu-item, &.current-page-parent{
+					a:after{
+						color: $orange;
+					}
+				}
+				.sub-menu li{
+					a:after{
+						content:"";
+					}
+				}
+			}
+			.sub-menu{
+				position: relative;
+				background-color:black;
+				@extend .clearfix;
+				display: block;
+				width:100%;
+				padding: 10px 0 0;
+				z-index: 9999;
+				font-weight: 400 !important;
+				li{
+					width:275px;
+					display: block;
+					float:left;
+					margin:0;
+					padding:0;
+
+				}
+				a{
+					display: block;
+					width:100%;
+					font-weight: 400 !important;
+					@include font-size(14px);
+					text-transform: uppercase;
+					&:link,&:visited{
+					color: darken(white,40%);	
+				}
+				&:hover,&:active{
+					color: white;
+				}
+				}
+			}
+		}
+		a{
+			&:link,&:visited{
+				@include font-size(16px);
+				color: white;
+				text-transform: uppercase;
+			}
+			&:hover,&:active{
+				color: $orange;
+				&:after{
+					color: $orange;
+				}
+			}
+			&.menu-toggle{
+				display: none;
+			}
+		}
+
+}
+
+
+
+
+
+
+
+
+@media #{$xlarge-up} { 
+
+	#nav{
+		background-color:transparent;
+		margin: 45px 36px 0 0;
+		width: auto;
+		float:right;
+		padding:0;
+		display: block;
+		border:none;
+		ul{
+			li{
+				width:auto;
+				margin-left:40px;
+				padding: 0 0 20px;
+				a{
+					float:left;
+				}
+				.sub-menu{
+					width:auto;
+					display: none;
+					padding: 12px 15px;
+					border-top: 5px solid $orange;
+					@include abs-pos(40px,auto,auto,-15px);
+					li{
+						display: block;
+						float:none;
+						width: auto;
+						a{
+							display: block;
+							width: auto;
+							white-space: nowrap;
+							min-width:200px;
+						}
+					}
+				}
+			}
+		}
+		a{
+			&.menu-toggle{
+				display: none;
+			}
+		}
+	}
+
+}
