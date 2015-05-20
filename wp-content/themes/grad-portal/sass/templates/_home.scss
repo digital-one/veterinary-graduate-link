@@ -1,3 +1,32 @@
+#intro{
+	background-color: $vgl-blue;
+	color:white;
+	padding: 40px 0 20px;
+	margin-bottom:20px;
+}
+.icon-box{
+	@extend %full-width;
+	position: relative;
+	margin-bottom:15px;
+	&:before{
+		content:"";
+		padding-top:100%;
+		display: block;
+	}
+}
+.icon{
+	height:66%;
+	width:100%;
+	@include abs-pos(50%,auto,auto,0);
+	margin-top:-33%;
+	text-align:center;
+	img{
+		width:auto;
+		height:100%;
+		margin:0 auto;
+	}
+
+}
 
 /* Media Queries */
 

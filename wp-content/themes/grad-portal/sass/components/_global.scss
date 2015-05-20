@@ -1,83 +1,12 @@
-.section{
-	margin-bottom:50px;
-	@extend %clearfix;
-	&:last-child{
-		margin-bottom: 0;
-	}
+.search{
+	background-color: $search;
 }
-.tint{
-	background-color:$light-grey;
+.blog{
+	background-color: $blog;
 }
-.bullet-list{
-	li{
-		padding-left:15px;
-		margin-bottom: 10px;
-		position: relative;
-		&:before{
-			content:"•";
-			color: $orange;
-			@include abs-pos(0,auto,auto,0);
-		}
-		&:last-child{
-			margin-bottom: 0;
-		}
-	}
+.profile{
+	background-color: $profile;
 }
-.band{
-	background-color: $mid-grey;
-	padding: 25px 50px;
-	margin:0;
-}
-#services-carousel{
-	.item{
-		margin:5px 20px;
-		text-align: center;
-		@include font-size(16px);
-		text-transform: uppercase;
-		a{
-			display: block;
-			width: 100%;
-			height:100%;
-			&:link,&:visited{
-				color: lighten($dark-grey,50%);
-			}
-			&:hover,&:active{
-				color: $dark-grey;
-				figure{
-					@include box-shadow;
-					border:1px solid lighten($dark-grey,50%);
-				}
-			}
-		}
-	}
-	.slick-prev,.slick-next{
-		width: 30px;
-		height: 50px;
-		margin-top:-35px;
-	}
-	.slick-prev{
-		margin-left:-30px;
-	}
-	.slick-next{
-		margin-right:-30px;
-	}
-	figure{
-		width:100%;
-		display: block;
-		position: relative;
-		background-color: $mid-grey;
-		margin-bottom: 10px;
-		border:1px solid lighten($dark-grey,70%);
-		img{
-			@include abs-pos(0,auto,auto,0);
-			width:auto;
-			height:100%;
-			display: block;
-		}
-		&:before{
-			content:"";
-			padding-top:100%;
-			display: block;
-		}
-	}
+.contact{
+	background-color: $secondary;
 }

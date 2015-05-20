@@ -45,14 +45,15 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 		</div>
 		</div>
 		<div class="row">
-			<div class="small-12 medium-6 columns">
+			<div class="small-12 columns">
 			<?php if(is_front_page()): ?>
 		<h1 id="home-link"><?php echo bloginfo('name'); ?></h1>
 	<?php else: ?>
 	<a href="<?php echo home_url() ?>" id="home-link" title="<?php echo bloginfo('name'); ?>"><?php echo bloginfo('name'); ?></a>
 <?php endif ?>
+
+<aside><h2 id="strapline">Bringing Veterinary Graduates and Employers Together</h2></aside>
 </div>
-<aside class="small-12 medium-6 columns"><h2 id="strapline">Bringing Veterinary Graduates and Employers Together</h2></aside>
 </div>
 <div class="row">
 	<div class="small-12 columns">

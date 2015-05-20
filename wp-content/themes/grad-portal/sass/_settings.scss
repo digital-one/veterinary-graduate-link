@@ -3,7 +3,8 @@ $medium-range: (rem-calc(768), rem-calc(1023));
 $large-range: (rem-calc(1024), rem-calc(1200)); 
 $xlarge-range: (rem-calc(1201), rem-calc(1920)); 
 $xxlarge-range: (rem-calc(1921)); /* 1921px */ 
-$column-gutter: rem-calc(20);
+$column-gutter: rem-calc(30);
+$block-grid-default-spacing: rem-calc(20);
 $total-columns: 12;
 $row-width: rem-calc(1260);
 
