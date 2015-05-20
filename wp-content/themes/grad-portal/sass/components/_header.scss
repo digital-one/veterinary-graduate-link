@@ -13,7 +13,7 @@
 		height:113px;
 		@include bg-image('vgl-logo-mobile');
 		@extend %ir;
-		margin:0 0 20px;
+		margin:0 auto 20px;
 	}
 	#account-links{
 		float: right;
@@ -45,6 +45,7 @@
 			height:81px;
 			@include bg-image('vgl-logo');
 			float:left;
+			margin:0 0 20px;
 		}
 		aside{
 			height:101px;

@@ -3456,7 +3456,7 @@ body {
   background-position: left top;
   background-repeat: no-repeat;
   background-size: 100% auto;
-  margin: 0 0 20px;
+  margin: 0 auto 20px;
 }
 /* line 7, ../sass/helpers/mixins/_bg-image.scss */
 .svg #header #home-link {
@@ -3495,12 +3495,13 @@ body {
     background-repeat: no-repeat;
     background-size: 100% auto;
     float: left;
+    margin: 0 0 20px;
   }
   /* line 7, ../sass/helpers/mixins/_bg-image.scss */
   .svg #header #home-link {
     background-image: url("../images/vgl-logo.svg");
   }
-  /* line 49, ../sass/components/_header.scss */
+  /* line 50, ../sass/components/_header.scss */
   #header aside {
     height: 101px;
     width: auto;
@@ -3508,14 +3509,14 @@ body {
     display: inline-block;
     max-width: 420px;
   }
-  /* line 56, ../sass/components/_header.scss */
+  /* line 57, ../sass/components/_header.scss */
   #header aside:before {
     content: "";
     height: 100%;
     vertical-align: middle;
     display: inline-block;
   }
-  /* line 62, ../sass/components/_header.scss */
+  /* line 63, ../sass/components/_header.scss */
   #header aside h2 {
     margin-bottom: 0;
     width: 98%;
