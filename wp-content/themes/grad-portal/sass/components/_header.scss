@@ -1,5 +1,6 @@
 #header{
 	background-color: white;
+	position: relative;
 	&:before{
 		content:"";
 		@extend %full-width;
@@ -13,10 +14,13 @@
 		height:113px;
 		@include bg-image('vgl-logo-mobile');
 		@extend %ir;
-		margin:0 auto 20px;
+		margin:40px auto 20px;
+	}
+	aside{
+		display: none;
 	}
 	#account-links{
-		float: right;
+		float: left;
 		background-color: $vgl-blue;
 		display: inline-block;
 		height:34px;
@@ -25,6 +29,7 @@
 		z-index: 999;
 		padding:0 10px;
 		color: white;
+		margin-left: -0.9375rem;
 		a{
 			font-weight: 700;
 			text-decoration: none;
@@ -47,12 +52,16 @@
 			float:left;
 			margin:0 0 20px;
 		}
+		#account-links{
+			float:right;
+		}
 		aside{
 			height:101px;
 			width: auto;
 			float: right;
 			display: inline-block;
 			max-width: 420px;
+			min-width:340px;
 
 			&:before{
 				content:"";

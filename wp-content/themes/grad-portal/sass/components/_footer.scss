@@ -17,18 +17,14 @@
 	}
 	.top{
 		margin-bottom: 10px;
-		.columns{
-			&:first-child{
-				text-align: left;
-			}
-		}
 	}
 }
 menu.social{
 	@include inline-menu;
 	@extend .clearfix;
-	float:right;
-	margin:0;
+	margin:0 auto;
+	padding:0;
+	display:inline-block;
 	strong,ul{
 		float:left;
 	}
@@ -43,16 +39,42 @@ menu.social{
 	}
 }
 
+@media #{$xsmall-only}{
+
+	#footer{
+		.bottom{
+			span{
+				display: block;
+			}
+		}
+	}
+	
+}
 
 @media #{$medium-only} { 
 
 	#footer{
-		.top{
-			@include font-size(12px);
-		}
+		
 		.bottom{
 			@include font-size(11px);
 		}
+	}
+
+}
+
+@media #{$medium-up} { 
+
+	.top{
+		@include font-size(12px);
+		.columns{
+			&:first-child{
+				text-align: left;
+			}
+		}
+	}
+	menu.social{
+		float:right;
+		margin:0;
 	}
 
 }

@@ -1,8 +1,11 @@
 #intro{
 	background-color: $vgl-blue;
 	color:white;
-	padding: 40px 0 20px;
+	padding: 20px 0;
 	margin-bottom:20px;
+	.columns:last-child{
+		display: none;
+	}
 }
 .icon-box{
 	@extend %full-width;
@@ -30,9 +33,20 @@
 
 /* Media Queries */
 
-@media #{$medium-up} { 
+@media #{$small-up} { 
 
 	
+
+}
+
+@media #{$medium-up} { 
+
+	#intro{
+		padding: 40px 0 20px;
+		.columns:last-child{
+			display: block;
+		}
+	}
 
 }
 

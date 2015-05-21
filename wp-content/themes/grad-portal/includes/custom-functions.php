@@ -59,8 +59,8 @@ function scripts_and_styles() {
 	  wp_register_script(  'gmap', get_stylesheet_directory_uri() . '/js/jquery.gmap.js', array(), null, false  );
 	  wp_enqueue_script( 'gmap' );
 
-	  wp_register_script( 'levi_scripts', get_stylesheet_directory_uri() . '/js/scripts.js', array(), null, false  );
-		wp_enqueue_script( 'levi_scripts' );	
+	 // wp_register_script( 'levi_scripts', get_stylesheet_directory_uri() . '/js/scripts.js', array(), null, false  );
+		//wp_enqueue_script( 'levi_scripts' );	
 		
 		//register styles for our theme
 		//wp_register_style( 'respgrid', get_template_directory_uri() . '/css/foundation-grid.css', array(), 'all' );

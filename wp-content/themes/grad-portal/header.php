@@ -41,6 +41,7 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 	<header id="header">
 		<div class="row">
 			<div class="small-12 columns">
+				<a class="menu-toggle">Menu</a>
 			<menu id="account-links"><a href="">Sign in</a> or <a href="">Register</a></menu>
 		</div>
 		</div>
@@ -52,13 +53,12 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 	<a href="<?php echo home_url() ?>" id="home-link" title="<?php echo bloginfo('name'); ?>"><?php echo bloginfo('name'); ?></a>
 <?php endif ?>
 
-<aside><h2 id="strapline">Bringing Veterinary Graduates and Employers Together</h2></aside>
+<aside><h2 id="strapline">Bringing Veterinary Graduates<br />and Employers Together</h2></aside>
 </div>
 </div>
 <div class="row">
 	<div class="small-12 columns">
 		<!--nav-->
-		<a class="menu-toggle">Menu</a>
 		<nav id="nav">
 <?php wp_nav_menu( array(
 		'theme_location' => 'main-menu',

@@ -6,7 +6,7 @@
 <div class="small-12 medium-4 columns"><menu class="social"><strong>Follow us on: </strong><ul><li><a href="#"><i class="fa fa-linkedin"></i><span>Linkedin</span></a></li><li><a href="#"><i class="fa fa-facebook"><span>Facebook</span></i></a></li><li><a href="#"><i class="fa fa-twitter"><span>Twitter</span></i></a></li><li><a href=""><i class="fa fa-google-plus"><span>Google Plus</span></i></a></li></ul></menu></div>
 </div>
 <div class="row bottom">
-<div class="small-12 columns">&copy; Copyright <?php echo date('Y') ?> Prospect Health Recruitment. All rights reserved.</div>
+<div class="small-12 columns">&copy; Copyright <?php echo date('Y') ?> Prospect Health Recruitment. <span>All rights reserved.</span></div>
 </div>
 </footer>
 <!--/footer-->
