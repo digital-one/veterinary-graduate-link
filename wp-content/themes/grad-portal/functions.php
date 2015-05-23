@@ -2,7 +2,8 @@
 
 // Add custom functions
 require_once( 'includes/custom-functions.php' ); 
-
+get_template_part('includes/users');
+get_template_part('includes/gravity-forms');
 
 // Add theme support post thumbnails
 add_theme_support('post-thumbnails');

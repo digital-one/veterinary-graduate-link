@@ -18,10 +18,15 @@
 <meta name="msapplication-TileColor" content="#d3492f">
 <meta name="msapplication-TileImage" content="<?php echo get_template_directory_uri(); ?>/library/images/win8-tile-icon.png">
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
-<?php //gravity_form_enqueue_scripts(1, true); ?>
+<?php gravity_form_enqueue_scripts(1, true); ?>
+<?php gravity_form_enqueue_scripts(2, true); ?>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
+	<section id="notification">
+		<main>Notification message</main>
+<footer><menu class="confirm"><ul><li><a href="" class="yes">Yes</a></li><li><a href="" class="no">No</a></li></ul></menu></footer>
+	</section>
 	<div id="wrap">
 		<!--cookies-->
 		<?php /*

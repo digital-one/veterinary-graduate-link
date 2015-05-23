@@ -119,7 +119,7 @@ class GFUserSignups {
             return false;
 
         $url = add_query_arg(array('page' => 'gf_activation', 'key' => $key), get_site_url() . '/' );
-
+	    $url = esc_url_raw ( $url );
         // BP replaces URL before passing the message, get the BP activation URL and replace
         if( GFUser::is_bp_active() ) {
             $activate_url = esc_url(bp_get_activation_page() . "?key=$key");
@@ -136,6 +136,7 @@ class GFUserSignups {
             return false;
 
         $url = add_query_arg(array('page' => 'gf_activation', 'key' => $key), get_site_url());
+	    $url = esc_url( $url );
 
         // BP replaces URL before passing the message, get the BP activation URL and replace
         if(GFUser::is_bp_active()) {
@@ -187,19 +188,16 @@ class GFUserSignups {
             return $signup;
 
         $user_id = username_exists( $signup->user_login );
-        /*
         if ($user_id){
         	//username already exists, go ahead and mark signup activated and return error message
         	$signup->set_as_activated();
         	return new WP_Error('user_already_exists', __( 'That username is already activated.' ), $signup);
         }
-        */
-        /*
         if (email_exists($signup->user_email)){
         	//email address already exists, return error message
         	return new WP_Error('email_already_exists', __( 'Sorry, that email address is already used!' ), $signup);
         }
-*/
+
         // unbind site creation from gform_user_registered hook, run it manually below
         if(is_multisite())
             remove_action( 'gform_user_registered' , array( 'GFUser', 'create_new_multisite' ) );
@@ -207,15 +205,14 @@ class GFUserSignups {
 		GFUser::log_debug("Activating signup for username: {$signup->user_login} - entry: {$signup->lead["id"]}" );
         $user_data = GFUser::create_user( $signup->lead, $signup->form, $signup->config, GFUser::decrypt( $signup->meta['password'] ) );
         $user_id = rgar($user_data, 'user_id');
-        /*
+
         if(!$user_id){
             return new WP_Error('create_user', __('Could not create user'), $signup);
 		}
-        */
+
         $signup->set_as_activated();
           
         do_action('gform_activate_user', $user_id, $user_data, $signup->meta);
-        update_user_meta($user_id,'confirmed_email',1); // new
 
         if(is_multisite()) {
             $ms_options = rgars( $signup->config, 'meta/multisite_options');

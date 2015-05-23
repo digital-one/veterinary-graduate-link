@@ -3,7 +3,7 @@
 	height:40px;
 	line-height:32px;
 	padding:0 20px 0 50px;
-	color:white;
+	color:white !important;
 	font-weight:700;
 	text-align:center;
 	background-color:$vgl-blue;
@@ -17,6 +17,9 @@
 	&:before{
 		content:"";
 		display: block;
+		font-family:FontAwesome;
+		@include font-size(20px);
+		line-height:45px;
 		width:50px;
 		height:50px;
 		@include border-radius(50%);
@@ -24,10 +27,10 @@
 		border: 4px solid $light-grey;
 		@include abs-pos(-9px,auto,auto,-14px);
 		@include transition(background-color .3s ease);
-		background-image:url('../images/icon-click.png');
+		/*background-image:url('../images/icon-click.png');
 		.svg &{
 			background-image:url('../images/icon-click.svg');
-		}
+		}*/
 		background-position: center center;
 		background-repeat: no-repeat;
 	}
@@ -35,6 +38,54 @@
 		background-color: $secondary;
 		&:before{
 			background-color: $secondary;
+		}
+	}
+	&.search{
+		&:before{
+			background-image:url('../images/icon-search.png');
+			.svg &{
+				background-image:url('../images/icon-search.svg');
+			}
+		}
+	}
+	&.shortlist{
+		&:before{
+			background-image:url('../images/icon-shortlist.png');
+			.svg &{
+				background-image:url('../images/icon-shortlist.svg');
+			}
+		}
+	}
+	&.profile{
+		&:before{
+			background-image:url('../images/icon-view-profile.png');
+			.svg &{
+				background-image:url('../images/icon-view-profile.svg');
+			}
+		}
+	}
+	&.plus{
+		&:before{
+			background-image:url('../images/icon-plus.png');
+			.svg &{
+				background-image:url('../images/icon-plus.svg');
+			}
+		}
+	}
+	&.minus{
+		&:before{
+			background-image:url('../images/icon-minus.png');
+			.svg &{
+				background-image:url('../images/icon-minus.svg');
+			}
+		}
+	}
+	&.tick{
+		&:before{
+				background-image:url('../images/icon-tick-btn.png');
+			.svg &{
+				background-image:url('../images/icon-tick-btn.svg');
+			}
 		}
 	}
 }

@@ -14,6 +14,12 @@ p{
 }
 a{
 	@include transition(color .3s ease);
+	&:link,&:visited{
+		color: $secondary
+	}
+	&:hover,&:active{
+		color: $vgl-blue;
+	}
 }
 
 

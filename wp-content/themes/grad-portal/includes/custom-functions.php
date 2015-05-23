@@ -1,5 +1,7 @@
 <?php
 
+
+
 function scripts_and_styles() {
    //only effect front-end of your website
 	if (!is_admin() && $_SERVER['SCRIPT_NAME'] != '/wp-login.php') {
@@ -36,6 +38,7 @@ function scripts_and_styles() {
   		wp_enqueue_script( 'easing' );
 
 
+
   		//scroll to
 		wp_register_script( 'scrollto', get_stylesheet_directory_uri() . '/js/jquery.scrollTo.min.js', array(), null, false );
   		wp_enqueue_script( 'scrollto' );
@@ -48,10 +51,13 @@ function scripts_and_styles() {
   		wp_register_script( 'jquery_cookie', get_stylesheet_directory_uri() . '/js/jquery.cookie.js', array(), null, false );
   		wp_enqueue_script( 'jquery_cookie' );
 
+    
 		// register main stylesheet
 		wp_register_style( 'stylesheet', get_stylesheet_directory_uri() . '/css/style.css', array(), '', 'all' );
 		wp_enqueue_style( 'stylesheet' );
 		
+    
+
 		 //google maps api
 	  wp_register_script( 'google_maps_api', "http" . ($_SERVER['SERVER_PORT'] == 443 ? "s" : "") . "://maps.google.com/maps/api/js?sensor=true", false, null );
 	  wp_enqueue_script( 'google_maps_api' );
@@ -59,16 +65,16 @@ function scripts_and_styles() {
 	  wp_register_script(  'gmap', get_stylesheet_directory_uri() . '/js/jquery.gmap.js', array(), null, false  );
 	  wp_enqueue_script( 'gmap' );
 
-	 // wp_register_script( 'levi_scripts', get_stylesheet_directory_uri() . '/js/scripts.js', array(), null, false  );
-		//wp_enqueue_script( 'levi_scripts' );	
+	 wp_register_script( 'scripts', get_stylesheet_directory_uri() . '/js/scripts.js', array(), null, false  );
+		wp_enqueue_script( 'scripts' );	
 		
 		//register styles for our theme
 		//wp_register_style( 'respgrid', get_template_directory_uri() . '/css/foundation-grid.css', array(), 'all' );
 		//wp_enqueue_style( 'respgrid' );
 		
 		//register selectbox
-		wp_register_script( 'selectbox', get_stylesheet_directory_uri() . '/js/jquery.selectBox.js', array(), null, false);
-		wp_enqueue_script( 'selectbox' );	
+		//wp_register_script( 'selectbox', get_stylesheet_directory_uri() . '/js/jquery.selectBox.js', array(), null, false);
+		//wp_enqueue_script( 'selectbox' );	
 
 		
 		//register all scripts

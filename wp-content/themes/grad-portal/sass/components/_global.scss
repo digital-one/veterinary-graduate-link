@@ -10,3 +10,68 @@
 .contact{
 	background-color: $secondary;
 }
+
+#intro{
+	background-color: $vgl-blue;
+	.page-template-template-search-candidates &, .page-template-template-your-shortlist &{
+		background-color: $search;
+	}
+	color:white;
+	padding: 20px 0;
+	.columns:last-child{
+		display: none;
+	}
+	.page-icon{
+		@extend %full-width;
+		img{
+			@include fit-grid(width);
+			max-height: 280px;
+		}
+	}
+}
+#page-header{
+	@extend %full-width;
+	margin-bottom:20px;
+}
+.breadcrumbs, .shortlist-link{
+	float: none;
+	display: block;
+}
+a.more-posts{
+	@include font-size(16px);
+	text-transform:uppercase;
+	font-weight:700;
+	color: $vgl-blue;
+	text-decoration:none;
+}
+.align-left{
+	float:left;
+}
+.align-right{
+	float:right;
+}
+
+/* Media Queries */
+
+@media #{$medium-up} { 
+
+	#intro{
+		padding: 40px 0 20px;
+		.columns{
+			&:last-child{
+				display: block;
+			}
+			&:first-child{
+				div{
+					padding-right:30px;
+				}
+			}
+		}
+	}
+	.breadcrumbs{
+		float:left;
+	}
+	.shortlist-link{
+		float:right; 
+	}
+}

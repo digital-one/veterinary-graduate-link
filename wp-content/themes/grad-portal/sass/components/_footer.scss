@@ -54,7 +54,9 @@ menu.social{
 @media #{$medium-only} { 
 
 	#footer{
-		
+		.top{
+			@include font-size(12px);
+		}
 		.bottom{
 			@include font-size(11px);
 		}
@@ -64,17 +66,18 @@ menu.social{
 
 @media #{$medium-up} { 
 
-	.top{
-		@include font-size(12px);
-		.columns{
-			&:first-child{
-				text-align: left;
+	#footer{
+		.top{
+			.columns{
+				&:first-child{
+					text-align: left;
+				}
 			}
 		}
-	}
-	menu.social{
-		float:right;
-		margin:0;
+		menu.social{
+			float:right;
+			margin:0;
+		}
 	}
 
 }

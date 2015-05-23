@@ -1,12 +1,3 @@
-#intro{
-	background-color: $vgl-blue;
-	color:white;
-	padding: 20px 0;
-	margin-bottom:20px;
-	.columns:last-child{
-		display: none;
-	}
-}
 .icon-box{
 	@extend %full-width;
 	position: relative;
@@ -30,6 +21,22 @@
 	}
 
 }
+@media #{$xsmall-only} { 
+	.page-links-xsmall{
+		@include block-grid(
+			$per-row: 1,
+			$spacing: $block-grid-default-spacing
+		)
+	}
+}
+@media #{$small-only} { 
+	.page-links-small{
+		@include block-grid(
+			$per-row: 2,
+			$spacing: $block-grid-default-spacing
+		)
+	}
+}
 
 /* Media Queries */
 
@@ -41,16 +48,22 @@
 
 @media #{$medium-up} { 
 
-	#intro{
-		padding: 40px 0 20px;
-		.columns:last-child{
-			display: block;
-		}
+	.page-links-medium{
+		@include block-grid(
+			$per-row: 4,
+			$spacing: $block-grid-default-spacing
+		)
 	}
 
 }
 
 @media #{$large-up} { 
 
+	.page-links-medium{
+		@include block-grid(
+			$per-row: 4,
+			$spacing: rem-calc(50)
+		)
+	}
 	
 }

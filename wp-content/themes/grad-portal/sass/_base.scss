@@ -10,6 +10,6 @@ body{
 	font-weight:400;
 	color: $grey;
 	background-color:$vgl-blue;
-
+	@include font-size(14px);
 	// /-webkit-font-smoothing: antialiased;
 }
