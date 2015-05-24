@@ -150,12 +150,12 @@ img {
 }
 
 /* line 172, ../bower_components/foundation/scss/foundation/components/_global.scss */
-.clearfix:before, menu.social:before, #nav:before, #nav ul:before, #page-header:before, .file-select-wrap .file-select:before, .clearfix:after, menu.social:after, #nav:after, #nav ul:after, #page-header:after, .file-select-wrap .file-select:after {
+.clearfix:before, menu.social:before, #nav:before, #nav ul:before, #page-header:before, #notification .form-body:before, .file-select-wrap .file-select:before, .clearfix:after, menu.social:after, #nav:after, #nav ul:after, #page-header:after, #notification .form-body:after, .file-select-wrap .file-select:after {
   content: " ";
   display: table;
 }
 /* line 173, ../bower_components/foundation/scss/foundation/components/_global.scss */
-.clearfix:after, menu.social:after, #nav:after, #nav ul:after, #page-header:after, .file-select-wrap .file-select:after {
+.clearfix:after, menu.social:after, #nav:after, #nav ul:after, #page-header:after, #notification .form-body:after, .file-select-wrap .file-select:after {
   clear: both;
 }
 
@@ -3364,12 +3364,13 @@ button:focus, a:focus {
  *    `:before` to contain the top-margins of child elements.
  */
 /* line 11, ../sass/helpers/classes/_clearfix.scss */
-.clearfix:before, menu.social:before, #nav:before, #nav ul:before, #page-header:before, .file-select-wrap .file-select:before,
+.clearfix:before, menu.social:before, #nav:before, #nav ul:before, #page-header:before, #notification .form-body:before, .file-select-wrap .file-select:before,
 .clearfix:after,
 menu.social:after,
 #nav:after,
 #nav ul:after,
 #page-header:after,
+#notification .form-body:after,
 .file-select-wrap .file-select:after {
   content: " ";
   /* 1 */
@@ -3378,7 +3379,7 @@ menu.social:after,
 }
 
 /* line 16, ../sass/helpers/classes/_clearfix.scss */
-.clearfix:after, menu.social:after, #nav:after, #nav ul:after, #page-header:after, .file-select-wrap .file-select:after {
+.clearfix:after, menu.social:after, #nav:after, #nav ul:after, #page-header:after, #notification .form-body:after, .file-select-wrap .file-select:after {
   clear: both;
 }
 
@@ -3387,7 +3388,7 @@ menu.social:after,
  * Include this rule to trigger hasLayout and contain floats.
  */
 /* line 23, ../sass/helpers/classes/_clearfix.scss */
-.clearfix, menu.social, #nav, #nav ul, #page-header, .file-select-wrap .file-select {
+.clearfix, menu.social, #nav, #nav ul, #page-header, #notification .form-body, .file-select-wrap .file-select {
   *zoom: 1;
 }
 
@@ -3407,7 +3408,7 @@ menu.social:after,
 .box-shadow ($string: 0px 0px 5px 0px rgba(50, 50, 50, 0.75));
 */
 /* line 5, ../sass/helpers/_placeholders.scss */
-#header:before, #nav, #nav ul, #intro .page-icon, #page-header, #notification, .icon-box, #search-results li, #search-results footer {
+#header #header-top, #nav, #nav ul, #intro .page-icon, #page-header, #notification .form-footer, .icon-box, #search-results li, #search-results footer {
   display: block;
   width: 100%;
 }
@@ -3446,19 +3447,63 @@ body {
 #header {
   background-color: white;
   position: relative;
+  padding: 34px 0 0;
+  /*
+  &:before{
+  	content:"";
+  	@extend %full-width;
+  	height:15px;
+  	background-color: $vgl-blue;
+  	@include abs-pos(0,auto,auto,0);
+  }
+  */
 }
-/* line 4, ../sass/components/_header.scss */
-#header:before {
-  content: "";
-  height: 15px;
+/* line 14, ../sass/components/_header.scss */
+#header #header-top {
+  position: fixed;
+  color: white;
   background-color: #2a3644;
-  top: 0;
-  right: auto;
-  bottom: auto;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
   left: 0;
-  position: absolute;
+  top: 0;
+  z-index: 9999;
 }
-/* line 11, ../sass/components/_header.scss */
+/* line 24, ../sass/components/_header.scss */
+#header #header-top .columns {
+  position: relative;
+}
+/* line 27, ../sass/components/_header.scss */
+#header #header-top #account-links {
+  top: auto;
+  right: 0.9375rem;
+  bottom: -30px;
+  left: auto;
+  position: absolute;
+  background-color: #2a3644;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  margin: 0;
+  z-index: 999;
+  padding: 0 10px;
+  color: white;
+  margin-left: -0.9375rem;
+}
+/* line 39, ../sass/components/_header.scss */
+#header #header-top #account-links a {
+  font-weight: 700;
+  text-decoration: none;
+}
+/* line 42, ../sass/components/_header.scss */
+#header #header-top #account-links a:link, #header #header-top #account-links a:visited {
+  color: white;
+}
+/* line 45, ../sass/components/_header.scss */
+#header #header-top #account-links a:hover, #header #header-top #account-links a:active {
+  color: #e6e6e6;
+}
+/* line 51, ../sass/components/_header.scss */
 #header #home-link {
   display: block;
   width: 89px;
@@ -3473,36 +3518,14 @@ body {
 .svg #header #home-link {
   background-image: url("../images/vgl-logo-mobile.svg");
 }
-/* line 19, ../sass/components/_header.scss */
+/* line 59, ../sass/components/_header.scss */
 #header aside {
   display: none;
-}
-/* line 22, ../sass/components/_header.scss */
-#header #account-links {
-  float: left;
-  background-color: #2a3644;
-  display: inline-block;
-  height: 34px;
-  line-height: 34px;
-  margin: 0;
-  z-index: 999;
-  padding: 0 10px;
-  color: white;
-  margin-left: -0.9375rem;
-}
-/* line 33, ../sass/components/_header.scss */
-#header #account-links a {
-  font-weight: 700;
-  text-decoration: none;
-}
-/* line 36, ../sass/components/_header.scss */
-#header #account-links a:link, #header #account-links a:visited {
-  color: white;
 }
 
 /* Media Queries */
 @media only screen and (min-width: 48rem) {
-  /* line 48, ../sass/components/_header.scss */
+  /* line 69, ../sass/components/_header.scss */
   #header #home-link {
     width: 232px;
     height: 81px;
@@ -3517,11 +3540,11 @@ body {
   .svg #header #home-link {
     background-image: url("../images/vgl-logo.svg");
   }
-  /* line 55, ../sass/components/_header.scss */
+  /* line 76, ../sass/components/_header.scss */
   #header #account-links {
     float: right;
   }
-  /* line 58, ../sass/components/_header.scss */
+  /* line 79, ../sass/components/_header.scss */
   #header aside {
     height: 101px;
     width: auto;
@@ -3530,14 +3553,14 @@ body {
     max-width: 420px;
     min-width: 340px;
   }
-  /* line 66, ../sass/components/_header.scss */
+  /* line 87, ../sass/components/_header.scss */
   #header aside:before {
     content: "";
     height: 100%;
     vertical-align: middle;
     display: inline-block;
   }
-  /* line 72, ../sass/components/_header.scss */
+  /* line 93, ../sass/components/_header.scss */
   #header aside h2 {
     margin-bottom: 0;
     width: 98%;
@@ -3798,22 +3821,22 @@ a:hover, a:active {
 }
 /* line 1, ../sass/components/_global.scss */
 .search {
-  background-color: #f17a72;
+  background-color: #f17a72 !important;
 }
 
 /* line 4, ../sass/components/_global.scss */
 .blog {
-  background-color: #78bcaf;
+  background-color: #78bcaf !important;
 }
 
 /* line 7, ../sass/components/_global.scss */
 .profile {
-  background-color: #e05e66;
+  background-color: #e05e66 !important;
 }
 
 /* line 10, ../sass/components/_global.scss */
 .contact {
-  background-color: #306480;
+  background-color: #306480 !important;
 }
 
 /* line 14, ../sass/components/_global.scss */
@@ -3895,31 +3918,31 @@ a.more-posts {
 }
 /* line 1, ../sass/components/_notification.scss */
 #notification {
-  position: fixed;
-  text-align: center;
-  background-color: #2a3644;
-  color: white;
-  padding: 20px;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  display: none;
-}
-/* line 12, ../sass/components/_notification.scss */
-#notification main {
   margin: 20px 0;
   text-transform: uppercase;
   font-weight: 700;
+  color: white;
+  text-align: center;
+  color: white;
+  display: none;
 }
-/* line 17, ../sass/components/_notification.scss */
-#notification menu.confirm {
+/* line 9, ../sass/components/_notification.scss */
+#notification a.close {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: auto;
+  position: absolute;
+}
+/* line 12, ../sass/components/_notification.scss */
+#notification .form-body {
   width: 100%;
   position: relative;
   overflow: hidden;
-  display: none;
+  margin-bottom: 25px;
 }
 /* line 5, ../sass/helpers/mixins/_centered-menu.scss */
-#notification menu.confirm ul {
+#notification .form-body ul {
   clear: left;
   float: left;
   position: relative;
@@ -3927,16 +3950,28 @@ a.more-posts {
   text-align: center;
 }
 /* line 11, ../sass/helpers/mixins/_centered-menu.scss */
-#notification menu.confirm ul li {
+#notification .form-body ul li {
   display: inline-block;
   position: relative;
   right: 50%;
 }
+/* line 16, ../sass/components/_notification.scss */
+#notification .form-body li {
+  margin: 0 10px;
+}
 /* line 20, ../sass/components/_notification.scss */
+#notification .form-footer {
+  display: block;
+}
+/* line 23, ../sass/components/_notification.scss */
+#notification .form-footer a, #notification .form-footer button {
+  margin: 0 15px;
+}
+/* line 28, ../sass/components/_notification.scss */
 #notification menu.confirm li {
   margin: 0 10px;
 }
-/* line 23, ../sass/components/_notification.scss */
+/* line 31, ../sass/components/_notification.scss */
 #notification menu.confirm a {
   width: 50px;
   height: 50px;
@@ -3954,11 +3989,11 @@ a.more-posts {
   color: white;
   text-transform: uppercase;
 }
-/* line 34, ../sass/components/_notification.scss */
+/* line 42, ../sass/components/_notification.scss */
 #notification menu.confirm a:link, #notification menu.confirm a:visited {
   border: 4px solid white;
 }
-/* line 37, ../sass/components/_notification.scss */
+/* line 45, ../sass/components/_notification.scss */
 #notification menu.confirm a:hover, #notification menu.confirm a:active {
   background-color: white;
   color: #2a3644;
@@ -4074,10 +4109,26 @@ a.more-posts {
 .svg .icon-button.tick:before {
   background-image: url("../images/icon-tick-btn.svg");
 }
+/* line 92, ../sass/components/_buttons.scss */
+.icon-button.cancel:before {
+  background-image: url("../images/icon-cancel.png");
+}
+/* line 94, ../sass/components/_buttons.scss */
+.svg .icon-button.cancel:before {
+  background-image: url("../images/icon-cancel.svg");
+}
+/* line 100, ../sass/components/_buttons.scss */
+.icon-button.login:before {
+  background-image: url("../images/icon-key.png");
+}
+/* line 102, ../sass/components/_buttons.scss */
+.svg .icon-button.login:before {
+  background-image: url("../images/icon-key.svg");
+}
 
 /* Media Queries */
 @media only screen and (min-width: 48rem) and (max-width: 63.9375rem) {
-  /* line 97, ../sass/components/_buttons.scss */
+  /* line 113, ../sass/components/_buttons.scss */
   .icon-button {
     font-size: 12px;
     font-size: 0.75rem;

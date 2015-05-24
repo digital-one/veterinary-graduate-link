@@ -10,6 +10,28 @@
 </div>
 </footer>
 <!--/footer-->
+<!-- role confirmation -->
+<div id="role-selection">
+	<form method="post" action="">
+		<div class="form-body">
+		<p>Are you an:</p>
+		<ul>
+			<li><input type="radio" name="role" value="1" /> <label for ="role-employer">Employer</label></li>
+			<li><input type="radio" name="role" value="1" /> <label for ="role-employer">Job Seeker</label></li>
+		</ul>
+		</div>
+		<footer class="form-footer"><a class="icon-button cancel">Cancel</a><button type="submit" class="icon-button tick">Confirm</button></footer>
+	</form>
+</div>
+<!-- notification -->
+<div class="notification">
+	<p>Notification message</p>
+<footer><menu class="confirm"><ul><li><a href="" class="yes">Yes</a></li><li><a href="" class="no">No</a></li></ul></menu></footer>
+	</div>
+<!-- /notification -->
+<!-- account forms -->
+<?php get_template_part('partials/content','account-forms' );  ?>
+<!-- /account forms -->
 <?php /*
 <!-- callback form -->
 <div class="popup">

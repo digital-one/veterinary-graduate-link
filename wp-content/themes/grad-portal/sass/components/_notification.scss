@@ -1,22 +1,30 @@
 #notification{
-	position: fixed;
-	@extend %full-width;
-	text-align:center;
-	background-color: $vgl-blue;
+	margin: 20px 0;
+	text-transform: uppercase;
+	font-weight: 700;
 	color: white;
-	padding: 20px;
-	top:0;
-	left:0;
-	z-index:9999;
+	text-align: center;
+	color: white;
 	display: none;
-	main{
-		margin: 20px 0;
-		text-transform: uppercase;
-		font-weight: 700;
+	a.close{
+		@include abs-pos(0,0,auto,auto);
+	}
+	.form-body{
+		@include centered-menu;
+		@extend .clearfix;
+		margin-bottom:25px;
+		li{
+			margin:0 10px;
+		}
+	}
+	.form-footer{
+		display: block;
+		@extend %full-width;
+		a,button{
+			margin: 0 15px;
+		}
 	}
 	menu.confirm{
-		@include centered-menu;
-		display: none;
 		li{
 			margin:0 10px;
 		}

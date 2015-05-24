@@ -1,3 +1,7 @@
+<?php 
+global $current_user;
+$user = new gradportaluser($current_user);
+?>
 <!doctype html>
 <!--[if lt IE 7]><html <?php language_attributes(); ?> class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 <!--[if (IE 7)&!(IEMobile)]><html <?php language_attributes(); ?> class="no-js lt-ie9 lt-ie8"><![endif]-->
@@ -23,10 +27,7 @@
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-	<section id="notification">
-		<main>Notification message</main>
-<footer><menu class="confirm"><ul><li><a href="" class="yes">Yes</a></li><li><a href="" class="no">No</a></li></ul></menu></footer>
-	</section>
+
 	<div id="wrap">
 		<!--cookies-->
 		<?php /*
@@ -44,10 +45,30 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 		<!--/cookies-->
 	<!-- header -->
 	<header id="header">
+		<!-- header top -->
+		<div id="header-top">
+			<div class="row">
+				<div class="small-12 columns">
+				<div id="notification"></div>
+<menu id="account-links">
+
+<?php if(!$user->is_logged_in()): ?>
+	<a rel="login-form" class="notification-btn">Sign in</a> or <a rel="role-selection" class="notification-btn">Register</a>
+<?php else: ?>
+	<?php 
+$redirect = '&amp;redirect_to='.urlencode(wp_make_link_relative(get_option('siteurl')));
+$logout_uri = wp_nonce_url( site_url("wp-login.php?action=logout$redirect", 'login'), 'log-out' );
+?>
+	<a href="<?php echo $logout_uri ?>">Log Out</a> or <a href="<?php echo $user->get_profile_url() ?>">Account</a>
+<?php endif ?>
+			</menu>
+		</div></div></div>
+			<!-- /header top -->
+
 		<div class="row">
 			<div class="small-12 columns">
 				<a class="menu-toggle">Menu</a>
-			<menu id="account-links"><a href="">Sign in</a> or <a href="">Register</a></menu>
+		
 		</div>
 		</div>
 		<div class="row">

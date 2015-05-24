@@ -3,7 +3,7 @@
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 <!--intro-->
-<section id="intro" class="search">
+<section id="intro" class="profile">
 <div class="row">
 <div class="small-12 medium-8 columns">
 	<div>
@@ -13,7 +13,7 @@
 <p>Ysonet legere accommodare te mel. </p>
 </div>
 </div>
-<div class="small-12 medium-4 columns"><div class="page-icon"><img src="<?php echo get_template_directory_uri(); ?>/images/your-shortlist-page-icon.svg" onerror="this.onerror=null; this.src='<?php echo get_template_directory_uri(); ?>/images/your-shortlist-page-icon.png'" /></div></div>
+<div class="small-12 medium-4 columns"><div class="page-icon"><img src="<?php echo get_template_directory_uri(); ?>/images/icon-profile.svg" onerror="this.onerror=null; this.src='<?php echo get_template_directory_uri(); ?>/images/icon-profile.png'" /></div></div>
 </div>
 </section>
 
@@ -22,9 +22,7 @@
 	<div class="row">
 		<div class="small-12 columns">
 	<!--breadcrumbs-->
-
-	
-	<div id="page-header">
+<div id="page-header">
 	<div class="breadcrumbs">
 <?php if(function_exists('bcn_display')):
         bcn_display();
@@ -33,7 +31,6 @@
 </div>
 <div class="shortlist-link"><i class="fa fa-user"></i> 0 Candidates in <a href="">your shortlist</a></div>
 </div>
-
 <!--/breadcrumbs-->
 <?php
 //(id, display title, display desc, display inactive, field values, ajax, tab index)

@@ -1,12 +1,52 @@
 #header{
 	background-color: white;
 	position: relative;
+	padding: 34px 0 0;
+	/*
 	&:before{
 		content:"";
 		@extend %full-width;
 		height:15px;
 		background-color: $vgl-blue;
 		@include abs-pos(0,auto,auto,0);
+	}
+	*/
+	#header-top{
+		position:fixed;
+		color: white;
+		@extend %full-width;
+		background-color: $vgl-blue;
+		padding-bottom:15px;
+		margin-bottom:15px;
+		left:0;
+		top:0;
+		z-index: 9999;
+		.columns{
+			position: relative;
+		}
+		#account-links{
+			//float:right;
+			@include abs-pos(auto,0.9375rem,-30px,auto);
+			background-color: $vgl-blue;
+			display: inline-block;
+			height:30px;
+			line-height: 30px;
+			margin:0;
+			z-index: 999;
+			padding:0 10px;
+			color: white;
+			margin-left: -0.9375rem;
+			a{
+				font-weight: 700;
+				text-decoration: none;
+				&:link,&:visited{
+					color: white;
+				}
+				&:hover,&:active{
+					color: darken(white,10%);
+				}
+			}
+		}
 	}
 	#home-link{
 		display: block;
@@ -18,25 +58,6 @@
 	}
 	aside{
 		display: none;
-	}
-	#account-links{
-		float: left;
-		background-color: $vgl-blue;
-		display: inline-block;
-		height:34px;
-		line-height: 34px;
-		margin:0;
-		z-index: 999;
-		padding:0 10px;
-		color: white;
-		margin-left: -0.9375rem;
-		a{
-			font-weight: 700;
-			text-decoration: none;
-			&:link,&:visited{
-				color: white;
-			}
-		}
 	}
 }
 

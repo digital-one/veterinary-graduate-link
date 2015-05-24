@@ -88,6 +88,22 @@
 			}
 		}
 	}
+	&.cancel{
+		&:before{
+				background-image:url('../images/icon-cancel.png');
+			.svg &{
+				background-image:url('../images/icon-cancel.svg');
+			}
+		}
+	}
+	&.login{
+		&:before{
+				background-image:url('../images/icon-key.png');
+			.svg &{
+				background-image:url('../images/icon-key.svg');
+			}
+		}
+	}
 }
 
 /* Media Queries */

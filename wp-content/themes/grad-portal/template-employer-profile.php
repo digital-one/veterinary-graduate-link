@@ -1,4 +1,4 @@
-<?php /* Template Name: Employer Register */ ?>
+<?php /* Template Name: Employer Profile */ ?>
 <?php get_header() ?>
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -7,7 +7,7 @@
 <div class="row">
 <div class="small-12 medium-8 columns">
 	<div>
-<h1>Register</h1>
+<h1>Your Profile</h1>
 <p>Lorem ipsum dolor sit amet, eu enim nostrum scribentur ius, ei vix suas oporteat. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel.</p>
 <p>Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel.</p><p>Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. </p>
 <p>Ysonet legere accommodare te mel. </p>
@@ -33,7 +33,7 @@
 <!--/breadcrumbs-->
 <?php
 //(id, display title, display desc, display inactive, field values, ajax, tab index)
-gravity_form(2, false, false, false, '', true, 1);
+gravity_form(6, false, false, false, '', true, 1);
 ?>
 </div>
 </div>

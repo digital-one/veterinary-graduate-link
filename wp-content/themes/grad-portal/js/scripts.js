@@ -42,18 +42,30 @@ if ($.cookie('accept_cookies')) { // if cookie exists do nothing
    
 }
 
-// notification message
+$('body').on('click','.cancel',function(e){
+    e.preventDefault();
+    hide_notification();
+})
 
+$('.notification-btn').on('click',function(e){
+    e.preventDefault();
+    var _html = $('#'+$(this).attr('rel')).clone();
+    show_notification(_html,true);
+})
+// notification message
+hide_notification = function(){
+   $('#notification').slideUp(100); 
+}
 show_notification = function(_message,_confirm,_callback){
     _confirm = typeof _confirm !== 'undefined' ? _confirm : 0;
     _callback = typeof _callback !== 'undefined' ? _callback : 0;
-    $('#notification main').html(_message);
+    $('#notification').html(_message);
     if(_confirm){
-        $('#notification .confirm').show();
+       // $('#notification .confirm').show();
     } else {
-        $('#notification .confirm').hide();
+      //  $('#notification .confirm').hide();
         setTimeout(function(){
-           $('#notification').fadeOut(100); 
+          hide_notification();
         },4000)
 
     }
