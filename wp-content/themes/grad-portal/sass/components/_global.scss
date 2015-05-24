@@ -32,6 +32,7 @@
 #page-header{
 	@extend %full-width;
 	margin-bottom:20px;
+	@extend .clearfix;
 }
 .breadcrumbs, .shortlist-link{
 	float: none;

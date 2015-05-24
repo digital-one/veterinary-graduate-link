@@ -22,17 +22,18 @@
 	<div class="row">
 		<div class="small-12 columns">
 	<!--breadcrumbs-->
-	<div id="page-header" class="row">
-<div class="small-12 columns">
+
+	
+	<div id="page-header">
 	<div class="breadcrumbs">
 <?php if(function_exists('bcn_display')):
         bcn_display();
     endif;
     ?>
 </div>
-<div class="shortlist-link"><i class="fa fa-user"></i> 0 Candidates in <a href="">your shortlist</a></span></div>
+<div class="shortlist-link"><i class="fa fa-user"></i> 0 Candidates in <a href="">your shortlist</a></div>
 </div>
-</div>
+
 <!--/breadcrumbs-->
 <?php
 //(id, display title, display desc, display inactive, field values, ajax, tab index)

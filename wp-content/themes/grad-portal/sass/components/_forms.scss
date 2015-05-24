@@ -166,6 +166,7 @@ button{
 	margin-top: 4px;
 	color: $vgl-blue;
 }
+/*
 .validation_error,.validation_message{
 	@include font-size(14px);
 	color: white;
@@ -176,8 +177,12 @@ button{
 	margin-bottom: 10px;
 	width:auto;
 }	
+*/
 .validation_message{
 	display: block;
+	color: red;
+	@include font-size(12px);
+	font-weight:700;
 }
 .validation_error{
 	display: none;

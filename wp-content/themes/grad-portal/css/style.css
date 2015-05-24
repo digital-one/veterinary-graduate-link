@@ -150,12 +150,12 @@ img {
 }
 
 /* line 172, ../bower_components/foundation/scss/foundation/components/_global.scss */
-.clearfix:before, menu.social:before, #nav:before, #nav ul:before, .file-select-wrap .file-select:before, .clearfix:after, menu.social:after, #nav:after, #nav ul:after, .file-select-wrap .file-select:after {
+.clearfix:before, menu.social:before, #nav:before, #nav ul:before, #page-header:before, .file-select-wrap .file-select:before, .clearfix:after, menu.social:after, #nav:after, #nav ul:after, #page-header:after, .file-select-wrap .file-select:after {
   content: " ";
   display: table;
 }
 /* line 173, ../bower_components/foundation/scss/foundation/components/_global.scss */
-.clearfix:after, menu.social:after, #nav:after, #nav ul:after, .file-select-wrap .file-select:after {
+.clearfix:after, menu.social:after, #nav:after, #nav ul:after, #page-header:after, .file-select-wrap .file-select:after {
   clear: both;
 }
 
@@ -3364,11 +3364,12 @@ button:focus, a:focus {
  *    `:before` to contain the top-margins of child elements.
  */
 /* line 11, ../sass/helpers/classes/_clearfix.scss */
-.clearfix:before, menu.social:before, #nav:before, #nav ul:before, .file-select-wrap .file-select:before,
+.clearfix:before, menu.social:before, #nav:before, #nav ul:before, #page-header:before, .file-select-wrap .file-select:before,
 .clearfix:after,
 menu.social:after,
 #nav:after,
 #nav ul:after,
+#page-header:after,
 .file-select-wrap .file-select:after {
   content: " ";
   /* 1 */
@@ -3377,7 +3378,7 @@ menu.social:after,
 }
 
 /* line 16, ../sass/helpers/classes/_clearfix.scss */
-.clearfix:after, menu.social:after, #nav:after, #nav ul:after, .file-select-wrap .file-select:after {
+.clearfix:after, menu.social:after, #nav:after, #nav ul:after, #page-header:after, .file-select-wrap .file-select:after {
   clear: both;
 }
 
@@ -3386,7 +3387,7 @@ menu.social:after,
  * Include this rule to trigger hasLayout and contain floats.
  */
 /* line 23, ../sass/helpers/classes/_clearfix.scss */
-.clearfix, menu.social, #nav, #nav ul, .file-select-wrap .file-select {
+.clearfix, menu.social, #nav, #nav ul, #page-header, .file-select-wrap .file-select {
   *zoom: 1;
 }
 
@@ -3841,13 +3842,13 @@ a:hover, a:active {
   margin-bottom: 20px;
 }
 
-/* line 36, ../sass/components/_global.scss */
+/* line 37, ../sass/components/_global.scss */
 .breadcrumbs, .shortlist-link {
   float: none;
   display: block;
 }
 
-/* line 40, ../sass/components/_global.scss */
+/* line 41, ../sass/components/_global.scss */
 a.more-posts {
   font-size: 16px;
   font-size: 1rem;
@@ -3857,37 +3858,37 @@ a.more-posts {
   text-decoration: none;
 }
 
-/* line 47, ../sass/components/_global.scss */
+/* line 48, ../sass/components/_global.scss */
 .align-left {
   float: left;
 }
 
-/* line 50, ../sass/components/_global.scss */
+/* line 51, ../sass/components/_global.scss */
 .align-right {
   float: right;
 }
 
 /* Media Queries */
 @media only screen and (min-width: 48rem) {
-  /* line 58, ../sass/components/_global.scss */
+  /* line 59, ../sass/components/_global.scss */
   #intro {
     padding: 40px 0 20px;
   }
-  /* line 61, ../sass/components/_global.scss */
+  /* line 62, ../sass/components/_global.scss */
   #intro .columns:last-child {
     display: block;
   }
-  /* line 65, ../sass/components/_global.scss */
+  /* line 66, ../sass/components/_global.scss */
   #intro .columns:first-child div {
     padding-right: 30px;
   }
 
-  /* line 71, ../sass/components/_global.scss */
+  /* line 72, ../sass/components/_global.scss */
   .breadcrumbs {
     float: left;
   }
 
-  /* line 74, ../sass/components/_global.scss */
+  /* line 75, ../sass/components/_global.scss */
   .shortlist-link {
     float: right;
   }
@@ -4509,30 +4510,33 @@ button {
   color: #2a3644;
 }
 
-/* line 169, ../sass/components/_forms.scss */
-.validation_error, .validation_message {
-  font-size: 14px;
-  font-size: 0.875rem;
-  color: white;
-  font-weight: 700;
-  background-color: #474747;
-  padding: 8px 8px 10px;
-  display: inline-block;
-  margin-bottom: 10px;
-  width: auto;
-}
-
-/* line 179, ../sass/components/_forms.scss */
+/*
+.validation_error,.validation_message{
+	@include font-size(14px);
+	color: white;
+	font-weight: 700;
+	background-color: $grey;
+	padding: 8px 8px 10px;
+	display: inline-block;
+	margin-bottom: 10px;
+	width:auto;
+}	
+*/
+/* line 181, ../sass/components/_forms.scss */
 .validation_message {
   display: block;
+  color: red;
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
-/* line 182, ../sass/components/_forms.scss */
+/* line 187, ../sass/components/_forms.scss */
 .validation_error {
   display: none;
 }
 
-/* line 185, ../sass/components/_forms.scss */
+/* line 190, ../sass/components/_forms.scss */
 .gform_ajax_spinner {
   top: 0;
   right: auto;
@@ -4544,7 +4548,7 @@ button {
 }
 
 /* ========================= Select2 =========================  */
-/* line 198, ../sass/components/_forms.scss */
+/* line 203, ../sass/components/_forms.scss */
 .select2-container .select2-selection--single {
   background-color: #efefef;
   height: 40px;
@@ -4555,47 +4559,47 @@ button {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-/* line 204, ../sass/components/_forms.scss */
+/* line 209, ../sass/components/_forms.scss */
 .select2-container .select2-search--inline .select2-search__field {
   margin: 0;
   padding: 0 10px;
   height: 38px;
 }
 
-/* line 212, ../sass/components/_forms.scss */
+/* line 217, ../sass/components/_forms.scss */
 .select2-container--default .select2-selection--single {
   border-color: #2a3644;
 }
-/* line 214, ../sass/components/_forms.scss */
+/* line 219, ../sass/components/_forms.scss */
 .select2-container--default .select2-selection--single .select2-selection__rendered {
   height: 40px;
   line-height: 37px;
   color: #2a3644;
   font-weight: 700;
 }
-/* line 220, ../sass/components/_forms.scss */
+/* line 225, ../sass/components/_forms.scss */
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
   color: #2a3644;
   font-weight: 700;
 }
-/* line 224, ../sass/components/_forms.scss */
+/* line 229, ../sass/components/_forms.scss */
 .select2-container--default .select2-selection--single .select2-selection__arrow {
   height: 40px;
   width: 30px;
 }
-/* line 227, ../sass/components/_forms.scss */
+/* line 232, ../sass/components/_forms.scss */
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
   border-color: #2a3644 transparent transparent transparent;
 }
-/* line 234, ../sass/components/_forms.scss */
+/* line 239, ../sass/components/_forms.scss */
 .select2-container--default.select2-container--open .select2-selection--single {
   background-color: #e2e2e2;
 }
-/* line 237, ../sass/components/_forms.scss */
+/* line 242, ../sass/components/_forms.scss */
 .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
   border-color: transparent transparent #2a3644 transparent;
 }
-/* line 243, ../sass/components/_forms.scss */
+/* line 248, ../sass/components/_forms.scss */
 .select2-container--default .select2-selection--multiple {
   background-color: #efefef;
   border: 1px solid #2a3644;
@@ -4607,32 +4611,32 @@ button {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-/* line 248, ../sass/components/_forms.scss */
+/* line 253, ../sass/components/_forms.scss */
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
   display: block;
   padding: 0;
 }
 
-/* line 256, ../sass/components/_forms.scss */
+/* line 261, ../sass/components/_forms.scss */
 .select2-container--default.select2-container--open.select2-container--below .select2-selection--single, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown {
   position: relative;
   cursor: pointer;
   padding: 0;
 }
-/* line 265, ../sass/components/_forms.scss */
+/* line 270, ../sass/components/_forms.scss */
 .select2-container--default.select2-container--open.select2-container--below .select2-selection--single:hover, .select2-container--default.select2-container--open.select2-container--below .select2-selection--single:active, .select2-container--default.select2-container--open.select2-container--below .select2-selection--single:focus, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown:hover, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown:active, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown:focus {
   background-color: #e2e2e2;
 }
-/* line 268, ../sass/components/_forms.scss */
+/* line 273, ../sass/components/_forms.scss */
 .select2-container--default.select2-container--open.select2-container--below .select2-selection--single.selectBox-menuShowing, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown.selectBox-menuShowing {
   background-color: #e2e2e2;
 }
-/* line 277, ../sass/components/_forms.scss */
+/* line 282, ../sass/components/_forms.scss */
 .select2-container--default.select2-container--open.select2-container--below .select2-selection--single .selectBox-label, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown .selectBox-label {
   height: 40px;
@@ -4644,7 +4648,7 @@ button {
   color: #474747;
   width: 100% !important;
 }
-/* line 286, ../sass/components/_forms.scss */
+/* line 291, ../sass/components/_forms.scss */
 .select2-container--default.select2-container--open.select2-container--below .select2-selection--single .selectBox-arrow, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown .selectBox-arrow {
   height: 40px;
@@ -4656,7 +4660,7 @@ button {
   position: absolute;
   display: block;
 }
-/* line 291, ../sass/components/_forms.scss */
+/* line 296, ../sass/components/_forms.scss */
 .select2-container--default.select2-container--open.select2-container--below .select2-selection--single .selectBox-arrow:after, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown .selectBox-arrow:after {
   content: "";
@@ -4674,19 +4678,19 @@ button {
   position: absolute;
   margin: -4px 0 0 -8px;
 }
-/* line 302, ../sass/components/_forms.scss */
+/* line 307, ../sass/components/_forms.scss */
 .svg .select2-container--default.select2-container--open.select2-container--below .select2-selection--single .selectBox-arrow:after, .svg .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown .selectBox-arrow:after {
   background-image: url("../images/selectbox-arrow.svg");
 }
-/* line 307, ../sass/components/_forms.scss */
+/* line 312, ../sass/components/_forms.scss */
 .select2-container--default.select2-container--open.select2-container--below .select2-selection--single.selectBox-active, .gfield_error .select2-container--default.select2-container--open.select2-container--below .select2-selection--single, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown.selectBox-active, .gfield_error .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple
 .selectBox-dropdown {
   background-color: #e2e2e2;
 }
 
-/* line 314, ../sass/components/_forms.scss */
+/* line 319, ../sass/components/_forms.scss */
 .selectBox-dropdown-menu {
   position: absolute;
   z-index: 99999;
@@ -4699,7 +4703,7 @@ button {
   -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
-/* line 324, ../sass/components/_forms.scss */
+/* line 329, ../sass/components/_forms.scss */
 .selectBox-dropdown-menu.selectBox-options li, .selectBox-dropdown-menu.selectBox-options a {
   list-style: none;
   display: block;
@@ -4708,23 +4712,23 @@ button {
   margin: 0;
   text-align: left;
 }
-/* line 333, ../sass/components/_forms.scss */
+/* line 338, ../sass/components/_forms.scss */
 .selectBox-dropdown-menu.selectBox-options li.selectBox-hover a {
   background-color: #efefef;
   color: #474747;
 }
-/* line 341, ../sass/components/_forms.scss */
+/* line 346, ../sass/components/_forms.scss */
 .selectBox-dropdown-menu.selectBox-options a {
   font-size: 14px;
   font-size: 0.875rem;
   padding: 4px 10px;
 }
-/* line 345, ../sass/components/_forms.scss */
+/* line 350, ../sass/components/_forms.scss */
 .selectBox-dropdown-menu.selectBox-options.selectBox-options-top {
   border-bottom: none;
   margin-top: 1px;
 }
-/* line 352, ../sass/components/_forms.scss */
+/* line 357, ../sass/components/_forms.scss */
 .selectBox-dropdown-menu.selectBox-options.selectBox-optgroup {
   color: #666;
   background: #EEE;
@@ -4734,7 +4738,7 @@ button {
   white-space: nowrap;
 }
 
-/* line 362, ../sass/components/_forms.scss */
+/* line 367, ../sass/components/_forms.scss */
 .selectBox-inline {
   min-width: 150px;
   outline: none;
@@ -4748,7 +4752,7 @@ button {
 }
 
 /* ========================= File Field Replacement =========================  */
-/* line 376, ../sass/components/_forms.scss */
+/* line 381, ../sass/components/_forms.scss */
 .file-select-wrap {
   display: block;
   width: 100%;
@@ -4756,7 +4760,7 @@ button {
   overflow: hidden;
   position: relative;
 }
-/* line 382, ../sass/components/_forms.scss */
+/* line 387, ../sass/components/_forms.scss */
 .file-select-wrap input[type="file"] {
   width: 5000px;
   height: 100%;
@@ -4773,7 +4777,7 @@ button {
   left: -500px;
   position: absolute;
 }
-/* line 391, ../sass/components/_forms.scss */
+/* line 396, ../sass/components/_forms.scss */
 .file-select-wrap .file-select {
   position: relative;
   width: 100%;
@@ -4784,7 +4788,7 @@ button {
   z-index: 1;
   cursor: pointer;
 }
-/* line 401, ../sass/components/_forms.scss */
+/* line 406, ../sass/components/_forms.scss */
 .file-select-wrap .file-select .value {
   display: block;
   height: 40px;
@@ -4795,7 +4799,7 @@ button {
   color: #2a3644;
   font-weight: 700;
 }
-/* line 411, ../sass/components/_forms.scss */
+/* line 416, ../sass/components/_forms.scss */
 .file-select-wrap .file-select .button {
   float: right;
   width: 20%;
@@ -4809,7 +4813,7 @@ button {
 }
 
 /* ========================= Checkbox Replacement =========================  */
-/* line 429, ../sass/components/_forms.scss */
+/* line 434, ../sass/components/_forms.scss */
 .replace-checkbox .checkbox {
   width: 40px;
   height: 40px;
@@ -4821,7 +4825,7 @@ button {
   margin-right: 5px;
   float: left;
 }
-/* line 440, ../sass/components/_forms.scss */
+/* line 445, ../sass/components/_forms.scss */
 .replace-checkbox .checkbox.checked:before {
   font-family: FontAwesome;
   content: "\f00c";
@@ -4832,24 +4836,24 @@ button {
   font-size: 1.25rem;
   color: #2a3644;
 }
-/* line 451, ../sass/components/_forms.scss */
+/* line 456, ../sass/components/_forms.scss */
 .replace-checkbox label {
   height: 40px;
   line-height: 40px;
   cursor: pointer;
 }
-/* line 456, ../sass/components/_forms.scss */
+/* line 461, ../sass/components/_forms.scss */
 .replace-checkbox input[type="checkbox"] {
   display: none;
 }
 
 /* ========================= Media Queries =========================  */
 @media only screen and (min-width: 30rem) {
-  /* line 467, ../sass/components/_forms.scss */
+  /* line 472, ../sass/components/_forms.scss */
   .gform_footer input, .gform_footer button {
     float: right;
   }
-  /* line 470, ../sass/components/_forms.scss */
+  /* line 475, ../sass/components/_forms.scss */
   .gform_footer a {
     float: left;
     margin: 0;
