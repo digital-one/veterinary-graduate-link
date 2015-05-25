@@ -7,7 +7,6 @@ get_template_part('includes/gravity-forms');
 
 
 //Classes
-get_template_part('classes/class.loginclass');
 get_template_part('classes/class.gradportaluser');
 
 // Add theme support post thumbnails

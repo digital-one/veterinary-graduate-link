@@ -30,7 +30,10 @@
 	</div>
 <!-- /notification -->
 <!-- account forms -->
-<?php get_template_part('partials/content','account-forms' );  ?>
+<?php echo do_shortcode('[login-form]'); ?>
+<?php echo do_shortcode('[reset-password-form]'); ?>
+<?php echo do_shortcode('[update-password-form]'); ?>
+<?php //get_template_part('partials/content','account-forms' );  ?>
 <!-- /account forms -->
 <?php /*
 <!-- callback form -->

@@ -53,7 +53,7 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 <menu id="account-links">
 
 <?php if(!$user->is_logged_in()): ?>
-	<a rel="login-form" class="notification-btn">Sign in</a> or <a rel="role-selection" class="notification-btn">Register</a>
+	<a href="/?login" rel="login-form" class="notification-btn">Sign in</a> or <a rel="role-selection" class="notification-btn">Register</a>
 <?php else: ?>
 	<?php 
 $redirect = '&amp;redirect_to='.urlencode(wp_make_link_relative(get_option('siteurl')));
