@@ -1,6 +1,7 @@
 <?php 
 global $current_user;
-$user = new gradportaluser($current_user);
+global $vgl_user;
+$vgl_user = new gradportaluser($current_user);
 global $login;
 $login = new login_forms();
 $login->init_form();
@@ -56,12 +57,12 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 
 <!-- role confirmation -->
 <div id="role-selection" class="notification">
-	<form method="post" action="">
+	<form method="post" action="<?php echo get_template_directory_uri(); ?>/register_redirect.php">
 		<div class="form-body">
 		<p>Are you an:</p>
 		<ul>
-			<li><input type="radio" name="role" value="1" /> <label for ="role-employer">Employer</label></li>
-			<li><input type="radio" name="role" value="1" /> <label for ="role-employer">Job Seeker</label></li>
+			<li><input type="radio" name="role" id="role-employer" value="employer" /> <label for ="role-employer">Employer</label></li>
+			<li><input type="radio" name="role" id="role-candidate" value="candidate" /> <label for ="role-candidate">Job Seeker</label></li>
 		</ul>
 		</div>
 		<footer class="form-footer"><a class="icon-button cancel">Cancel</a><button type="submit" class="icon-button tick">Confirm</button></footer>
@@ -83,14 +84,14 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 </div>
 <menu id="account-links">
 
-<?php if(!$user->is_logged_in()): ?>
+<?php if(!$vgl_user->is_logged_in()): ?>
 	<a href="/?login" rel="login-form" class="notification-btn">Sign in</a> or <a rel="role-selection" class="notification-btn">Register</a>
 <?php else: ?>
 	<?php 
 $redirect = '&amp;redirect_to='.urlencode(wp_make_link_relative(get_option('siteurl')));
 $logout_uri = wp_nonce_url( site_url("wp-login.php?action=logout$redirect", 'login'), 'log-out' );
 ?>
-	<a href="<?php echo $logout_uri ?>">Log Out</a> or <a href="<?php echo $user->get_profile_url() ?>">Account</a>
+	<a href="<?php echo $logout_uri ?>">Log Out</a> or <a href="<?php echo $vgl_user->get_profile_url() ?>">Account</a>
 <?php endif ?>
 			</menu>
 		</div></div></div>

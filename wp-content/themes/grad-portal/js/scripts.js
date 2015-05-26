@@ -41,6 +41,18 @@ if ($.cookie('accept_cookies')) { // if cookie exists do nothing
     setTimeout(function() { $('#cookie-alert').slideDown(100); }, 1000);
    
 }
+//stop role selection form submitting without selecting option
+$('body').on('submit','#role-selection form',function(){
+    if ($('input[name=role]:checked').length > 0) {
+        return true;
+    }
+    return false;
+  
+  /*  if($('input[name=role]').val()==''){
+        return false;
+    }
+    return true;*/
+})
 
 $('body').on('click','.cancel',function(e){
     e.preventDefault();
@@ -75,7 +87,7 @@ hide_notification = function(){
 show_notification = function(_message,_confirm,_callback){
     _confirm = typeof _confirm !== 'undefined' ? _confirm : 0;
     _callback = typeof _callback !== 'undefined' ? _callback : 0;
-    $('#notification').html(_message);
+    $('#notification').html(_message).addClass('active');
     if(_confirm){
        // $('#notification .confirm').show();
     } else {
@@ -92,7 +104,10 @@ show_notification = function(_message,_confirm,_callback){
 $(document).bind('gform_post_render', function(){
     if($('.validation_error').length){
         var _message = $('.validation_error').text();
-        show_notification(_message);
+        if(_message!=''){
+            show_notification(_message); 
+        }
+       // show_notification(_message);
     }
 });
 

@@ -3918,7 +3918,6 @@ a.more-posts {
 }
 /* line 1, ../sass/components/_notification.scss */
 #notification-panel {
-  text-transform: uppercase;
   font-weight: 700;
   color: white;
   text-align: center;
@@ -4148,10 +4147,18 @@ a.more-posts {
 .svg .icon-button.login:before {
   background-image: url("../images/icon-key.svg");
 }
+/* line 108, ../sass/components/_buttons.scss */
+.icon-button.click:before {
+  background-image: url("../images/icon-click.png");
+}
+/* line 110, ../sass/components/_buttons.scss */
+.svg .icon-button.click:before {
+  background-image: url("../images/icon-click.svg");
+}
 
 /* Media Queries */
 @media only screen and (min-width: 48rem) and (max-width: 63.9375rem) {
-  /* line 113, ../sass/components/_buttons.scss */
+  /* line 121, ../sass/components/_buttons.scss */
   .icon-button {
     font-size: 12px;
     font-size: 0.75rem;
@@ -4891,6 +4898,12 @@ button {
 }
 
 /* ========================= Checkbox Replacement =========================  */
+/* line 436, ../sass/components/_forms.scss */
+.replace-checkbox {
+  /*input[type="checkbox"]{
+  	display: none;
+  }*/
+}
 /* line 437, ../sass/components/_forms.scss */
 .replace-checkbox .checkbox {
   width: 40px;
@@ -4919,10 +4932,6 @@ button {
   height: 40px;
   line-height: 40px;
   cursor: pointer;
-}
-/* line 464, ../sass/components/_forms.scss */
-.replace-checkbox input[type="checkbox"] {
-  display: none;
 }
 
 /* ========================= Media Queries =========================  */

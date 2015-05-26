@@ -9,19 +9,21 @@ init_form_field_replace = function(){
             _box = $("<div>", {class: "checkbox"}),
             _label = $('label',_parent_li);
             _this = $(this);
-
         _parent_li.addClass('replace-checkbox');
-        $(this).before(_box).hide();
-        if(_this.is(':checked')){
+        //_this.before(_box).hide();
+          _this.before(_box);
+        if($(_this).is(':checked')){
             _box.addClass('checked');
         }
         $(_box).add(_label).on('click',function(){
             if(_box.hasClass('checked')){
                 _box.removeClass('checked');
-                _this.attr('checked', false)
+                $(this).next().prop('checked', false);
+              //  $(this).next().attr('checked', false)
             } else {
                 _box.addClass('checked');
-                _this.attr('checked', true)
+               // $(this).next().attr('checked', true)
+                $(this).next().prop('checked', true);
             }
          
         })

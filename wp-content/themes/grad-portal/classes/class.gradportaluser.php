@@ -8,6 +8,7 @@ class gradportaluser {
 
 		function __construct($user){
 			$this->set_user($user);
+			$this->_user_meta = get_user_meta($this->get_id());
 		}
 
 		protected function set_user($user) {
@@ -54,6 +55,21 @@ class gradportaluser {
 		public function is_logged_in() {
 			return $this->get_user()->ID > 0;
 		}
+		public function get_id() {
+			return $this->ID;
+		}
+		public function get_firstname() {
+			return $this->_user_meta["first_name"][0];
+		}
+
+		public function get_surname() {
+			return $this->_user_meta["last_name"][0];		
+		}
+
+		public function get_email() {
+			return $this->user_email;
+		}
+
 		public function get_profile_url(){
 			if($this->is_candidate()):
 				return get_permalink(27);

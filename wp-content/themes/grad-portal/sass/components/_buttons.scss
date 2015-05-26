@@ -104,6 +104,14 @@
 			}
 		}
 	}
+	&.click{
+		&:before{
+				background-image:url('../images/icon-click.png');
+			.svg &{
+				background-image:url('../images/icon-click.svg');
+			}
+		}
+	}
 }
 
 /* Media Queries */

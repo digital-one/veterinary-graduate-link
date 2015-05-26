@@ -1,7 +1,8 @@
 <?php
 
 add_filter( 'gform_field_input', 'password_input', 10, 5 );
-add_filter( 'gform_field_choices', 'checkbox_choices', 10, 2 );
+//add_filter( 'gform_field_choices', 'checkbox_choices', 10, 2 );
+add_filter( 'gform_field_input', 'rw_change_checkbox_structure', 10, 5 );
 add_filter( 'gform_submit_button', 'form_submit_button', 10, 2 );
 //add_filter("gform_validation_message", "change_message", 10, 2);
 add_filter( 'gform_ajax_spinner_url', 'custom_gform_spinner' );
@@ -73,6 +74,69 @@ function check_password_length_and_characters( $validation_result ){
 }
 
 
+function rw_change_checkbox_structure($input, $field, $value, $lead_id, $form_id){
+    $input_type = RGFormsModel::get_input_type($field);
+    if($input_type != "checkbox" || IS_ADMIN && RG_CURRENT_VIEW == "entry")
+        return $input;
+
+    $choices = "";
+
+    if(is_array($field["choices"])){
+        $choice_number = 1;
+        $count = 1;
+        $total = count($field['choices']);
+        $logic_event = !empty($field["conditionalLogicFields"]) ? "onclick='gf_apply_rules(" . $form_id . "," . GFCommon::json_encode($field["conditionalLogicFields"]) . ");'" : "";
+        $disabled_text = (IS_ADMIN && RG_CURRENT_VIEW != "entry") ? "disabled='disabled'" : "";
+
+        foreach($field["choices"] as $choice){
+            if($choice_number % 10 == 0) //hack to skip numbers ending in 0. so that 5.1 doesn't conflict with 5.10
+                $choice_number++;
+
+            $input_id = $field["id"] . '.' . $choice_number;
+            $id = $field["id"] . '_' . $choice_number++;
+
+            if(empty($_POST) && rgar($choice,"isSelected")){
+                $checked = "checked='checked'";
+            }
+            else if(is_array($value) && RGFormsModel::choice_value_match($field, $choice, rgget($input_id, $value))){
+                $checked = "checked='checked'";
+            }
+            else if(!is_array($value) && RGFormsModel::choice_value_match($field, $choice, $value)){
+                $checked = "checked='checked'";
+            }
+            else{
+                $checked = "";
+            }
+
+            $tabindex = GFCommon::get_tabindex();
+            $end = $count==$total ? ' end' : '';
+            $choice_value = $choice["value"];
+            if(rgget("enablePrice", $field))
+                $choice_value .= "|" . GFCommon::to_number(rgar($choice,"price"));
+
+            $label = sprintf("<label for='choice_%s'>%s</label>", $id, $choice["text"]);
+
+            $choices .= sprintf("<li class='small-6 medium-4 large-2 columns %s gchoice_$id'><input name='input_%s' type='checkbox' $logic_event value='%s' %s id='choice_%s' $tabindex %s />%s</li>", $end, $input_id, esc_attr($choice_value), $checked, $id, $disabled_text, $label);
+
+            if(IS_ADMIN && RG_CURRENT_VIEW != "entry" && $count >=5)
+                break;
+
+            $count++;
+        }
+
+        $total = sizeof($field["choices"]);
+        if($count < $total)
+            $choices .= "<div class='gchoice_total'>" . sprintf(__("%d of %d items shown. Edit field to view all", "gravityforms"), $count, $total) . "</div>";
+    }
+
+    $field_id = "input_{$form_id}_{$field["id"]}";
+
+    return sprintf("<div class='ginput_container'><ul class='gfield_checkbox row' id='%s'>%s</ul row></div>", $field_id, $choices);
+}
+
+
+
+
 function checkbox_choices( $choices, $field ) {
 
  	if(is_array($field["choices"])):
@@ -86,6 +150,18 @@ function checkbox_choices( $choices, $field ) {
             $id = $field["id"] . '_' . $choice_id++;
             $field_value = !empty($choice["value"]) || rgar($field, "enableChoiceValue") ? $choice["value"] : $choice["text"];
             $checked = rgar($choice,"isSelected") ? "checked='checked'" : "";
+             if(empty($_POST) && rgar($choice,"isSelected")){
+                $checked = "checked='checked'";
+            }
+            else if(is_array($value) && RGFormsModel::choice_value_match($field, $choice, rgget($input_id, $value))){
+                $checked = "checked='checked'";
+            }
+            else if(!is_array($value) && RGFormsModel::choice_value_match($field, $choice, $value)){
+                $checked = "checked='checked'";
+            }
+            else{
+                $checked = "";
+            }
             $tabindex = GFCommon::get_tabindex();
             $end = $count==$total ? ' end' : '';
 
