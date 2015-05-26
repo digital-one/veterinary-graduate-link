@@ -186,6 +186,9 @@ button{
 }
 .validation_error{
 	display: none;
+	#notification-panel &{
+		display: block; 
+	}
 }
 .gform_ajax_spinner{
 	@include abs-pos(0,auto,auto,0);

@@ -9,12 +9,13 @@
  * License: Private. Only Digital One customers are allowed to use this plugin
  */
 
-require_once plugin_dir_path( __FILE__ ) . 'classes/class.login-forms-admin.php';
+require_once plugin_dir_path( __FILE__ ) . 'classes/class.login-forms.php';
 
-function run_login_forms_admin() {
+function run_login_forms() {
 
-  $admin = new login_forms_admin();
+  $admin = new login_forms();
+  $admin->setup_admin();
 
 }
 
-run_login_forms_admin();
+run_login_forms();

@@ -1,11 +1,44 @@
-#notification{
-	margin: 20px 0;
+#notification-panel{
+	//margin: 20px 0 0;
 	text-transform: uppercase;
 	font-weight: 700;
 	color: white;
 	text-align: center;
 	color: white;
-	display: none;
+	//display: none;
+	a{
+		&:link,&:visited{
+			color: white;
+		}
+		&:hover,&:active{
+			color: darken(white,20%);
+		}
+	}
+	.notification{
+		display: none;
+		padding: 20px 0 10px;
+	}
+	&.reset_success{
+		.notification{
+			&#login-form{
+				display: block;
+			}
+		}
+	}
+	&.reset_pwd_confirm{
+		.notification{
+			&#update-password-form{
+				display: block;
+			}
+		}
+	}
+	&.invalid_key{
+		.notification{
+			&#reset-password-form{
+				display: block;
+			}
+		}
+	}
 	a.close{
 		@include abs-pos(0,0,auto,auto);
 	}

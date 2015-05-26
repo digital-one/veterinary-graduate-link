@@ -49,12 +49,28 @@ $('body').on('click','.cancel',function(e){
 
 $('.notification-btn').on('click',function(e){
     e.preventDefault();
-    var _html = $('#'+$(this).attr('rel')).clone();
-    show_notification(_html,true);
+    _elms  =$('#notification, #role-selection, #login-form, #reset-password-request-form, #reset-password-form');
+    _elms.hide();
+    var _target = $('#'+$(this).attr('rel'));
+    if($('#notification-panel .active').length){
+        reset_notification();
+        _elms.removeClass('active');
+        _target.show().addClass('active');
+} else {
+    reset_notification();
+    _elms.removeClass('active');
+     _target.slideDown(100).addClass('active');
+}
 })
 // notification message
+reset_notification = function(){
+    $('#notification-panel .notification').each(function(){
+        $('input[type=text]',$(this)).val('');
+        $('.validation_error',$(this)).text('');
+    })
+}
 hide_notification = function(){
-   $('#notification').slideUp(100); 
+    $('#notification-panel .active').slideUp(100).removeClass('active');
 }
 show_notification = function(_message,_confirm,_callback){
     _confirm = typeof _confirm !== 'undefined' ? _confirm : 0;

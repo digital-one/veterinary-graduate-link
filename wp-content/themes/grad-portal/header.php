@@ -1,6 +1,9 @@
 <?php 
 global $current_user;
 $user = new gradportaluser($current_user);
+global $login;
+$login = new login_forms();
+$login->init_form();
 ?>
 <!doctype html>
 <!--[if lt IE 7]><html <?php language_attributes(); ?> class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
@@ -49,7 +52,35 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 		<div id="header-top">
 			<div class="row">
 				<div class="small-12 columns">
-				<div id="notification"></div>
+				<div id="notification-panel" class="<?php echo $login->_action ?>">
+
+<!-- role confirmation -->
+<div id="role-selection" class="notification">
+	<form method="post" action="">
+		<div class="form-body">
+		<p>Are you an:</p>
+		<ul>
+			<li><input type="radio" name="role" value="1" /> <label for ="role-employer">Employer</label></li>
+			<li><input type="radio" name="role" value="1" /> <label for ="role-employer">Job Seeker</label></li>
+		</ul>
+		</div>
+		<footer class="form-footer"><a class="icon-button cancel">Cancel</a><button type="submit" class="icon-button tick">Confirm</button></footer>
+	</form>
+</div>
+<!-- /role confirmation -->
+<!-- notification -->
+<div id="notification" class="notification">
+	<p>Notification message</p>
+<footer><menu class="confirm"><ul><li><a href="" class="yes">Yes</a></li><li><a href="" class="no">No</a></li></ul></menu></footer>
+	</div>
+<!-- /notification -->
+<!-- account forms -->
+<?php echo do_shortcode('[login-form]'); ?>
+<?php echo do_shortcode('[reset-password-form]'); ?>
+<?php echo do_shortcode('[update-password-form]'); ?>
+<?php //get_template_part('partials/content','account-forms' );  ?>
+<!-- /account forms -->
+</div>
 <menu id="account-links">
 
 <?php if(!$user->is_logged_in()): ?>
