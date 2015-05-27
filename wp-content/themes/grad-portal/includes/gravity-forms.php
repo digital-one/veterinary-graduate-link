@@ -1,13 +1,15 @@
 <?php
 
-add_filter( 'gform_field_input', 'password_input', 10, 5 );
+add_filter( 'gform_field_input', 'change_password_structure', 10, 5 );
 //add_filter( 'gform_field_choices', 'checkbox_choices', 10, 2 );
-add_filter( 'gform_field_input', 'rw_change_checkbox_structure', 10, 5 );
+add_filter( 'gform_field_input', 'change_checkbox_structure', 10, 5 );
 add_filter( 'gform_submit_button', 'form_submit_button', 10, 2 );
 //add_filter("gform_validation_message", "change_message", 10, 2);
 add_filter( 'gform_ajax_spinner_url', 'custom_gform_spinner' );
-add_filter( 'gform_validation_2', 'check_password_match' );
-//add_filter( 'gform_validation_2', 'check_password_length_and_characters' );
+add_filter( 'gform_validation_1', 'check_password_match_can' );
+add_filter( 'gform_validation_1', 'check_password_length_and_characters_can' );
+add_filter( 'gform_validation_2', 'check_password_match_emp' );
+add_filter( 'gform_validation_2', 'check_password_length_and_characters_emp' );
 
 function form_submit_button( $button, $form ) {
     return "<button class='icon-button tick' id='gform_submit_button_{$form['id']}'><span>".$form['button']['text']."</span></button>";
@@ -17,7 +19,36 @@ function custom_gform_spinner(){
 }
 
 
-function check_password_match( $validation_result ){
+function check_password_match_can( $validation_result ){
+ 
+  // this is making sure the passwords match
+  if( $_POST['input_22'] != $_POST['input_24'] ) {
+ 
+    // marking the whole form as not valid
+    $validation_result['is_valid'] = false;
+ 
+    // looping through our fields and marking the failed ones
+    foreach( $validation_result['form']['fields'] as &$field ){
+ 
+      // if 17 or 16 mark as not valid
+      if( $field['id'] == '22' || $field['id'] == '24' ){
+ 
+          $field['failed_validation'] = true;
+          $field['validation_message'] = 'The passwords don\'t match';
+ 
+      }
+ 
+    }
+ 
+  }
+ 
+    return $validation_result;
+ 
+}
+
+
+
+function check_password_match_emp( $validation_result ){
  
   // this is making sure the passwords match
   if( $_POST['input_25'] != $_POST['input_26'] ) {
@@ -44,12 +75,12 @@ function check_password_match( $validation_result ){
  
 }
 
-function check_password_length_and_characters( $validation_result ){
+function check_password_length_and_characters_can( $validation_result ){
  
   // checking now to make sure the passwords match the requirements
   // for length and that we only have upper and lower case letters
   // and numbers
-  if( !preg_match( "/^[a-zA-Z0-9]{4,16}$/", $_POST['input_7'] ) ){
+  if( !preg_match( "/^[a-zA-Z0-9]{4,16}$/", $_POST['input_22'] ) ){
  
     // marking the whole thing as not valid
     $validation_result['is_valid'] = false;
@@ -58,23 +89,44 @@ function check_password_length_and_characters( $validation_result ){
       foreach( $validation_result['form']['fields'] as &$field ){
  
       // if 17 or 16 mark as not valid
-      if( $field['id'] == '7' || $field['id'] == '8' ){
+      if( $field['id'] == '22' || $field['id'] == '24' ){
  
           $field['failed_validation'] = true;
           $field['validation_message'] = 'Your password needs to be between 4 and 16 characters and can only contain upper and lower case letters and numbers.';
  
       }
- 
-    }
- 
+	 }
   }
+ 	return $validation_result;
+}
+
+function check_password_length_and_characters_emp( $validation_result ){
  
-  return $validation_result;
+  // checking now to make sure the passwords match the requirements
+  // for length and that we only have upper and lower case letters
+  // and numbers
+  if( !preg_match( "/^[a-zA-Z0-9]{4,16}$/", $_POST['input_25'] ) ){
  
+    // marking the whole thing as not valid
+    $validation_result['is_valid'] = false;
+ 
+      // looping through our fields and marking the failed ones
+      foreach( $validation_result['form']['fields'] as &$field ){
+ 
+      // if 17 or 16 mark as not valid
+      if( $field['id'] == '25' || $field['id'] == '26' ){
+ 
+          $field['failed_validation'] = true;
+          $field['validation_message'] = 'Your password needs to be between 4 and 16 characters and can only contain upper and lower case letters and numbers.';
+ 
+      }
+	 }
+  }
+ 	return $validation_result;
 }
 
 
-function rw_change_checkbox_structure($input, $field, $value, $lead_id, $form_id){
+function change_checkbox_structure($input, $field, $value, $lead_id, $form_id){
     $input_type = RGFormsModel::get_input_type($field);
     if($input_type != "checkbox" || IS_ADMIN && RG_CURRENT_VIEW == "entry")
         return $input;
@@ -136,49 +188,13 @@ function rw_change_checkbox_structure($input, $field, $value, $lead_id, $form_id
 
 
 
-
-function checkbox_choices( $choices, $field ) {
-
- 	if(is_array($field["choices"])):
-        $choice_id = 0;
-        $count = 1;
-         $choices = "";
-         $total = count($field['choices']);
-        $logic_event = !empty($field["conditionalLogicFields"]) ? "onclick='gf_apply_rules(" . $field["formId"] . "," . GFCommon::json_encode($field["conditionalLogicFields"]) . ");'" : "";
-
-        foreach($field["choices"] as $choice):
-            $id = $field["id"] . '_' . $choice_id++;
-            $field_value = !empty($choice["value"]) || rgar($field, "enableChoiceValue") ? $choice["value"] : $choice["text"];
-            $checked = rgar($choice,"isSelected") ? "checked='checked'" : "";
-             if(empty($_POST) && rgar($choice,"isSelected")){
-                $checked = "checked='checked'";
-            }
-            else if(is_array($value) && RGFormsModel::choice_value_match($field, $choice, rgget($input_id, $value))){
-                $checked = "checked='checked'";
-            }
-            else if(!is_array($value) && RGFormsModel::choice_value_match($field, $choice, $value)){
-                $checked = "checked='checked'";
-            }
-            else{
-                $checked = "";
-            }
-            $tabindex = GFCommon::get_tabindex();
-            $end = $count==$total ? ' end' : '';
-
-            $input = sprintf("<input name='input_%d' type='checkbox' value='%s' %s id='choice_%s' $tabindex $logic_event />", $field["id"], esc_attr($field_value), $checked, $id);
-            $choices .= sprintf("<li class='small-6 medium-4 large-2 columns %s gchoice_$id'> %s<label for='choice_%s'>%s</label></li>", $end, $input, $id, $choice["text"]);
-
-            $count++;
-        endforeach;
-	endif;
-	return $choices;
-}
-
-
-
-function password_input( $input, $field, $value, $lead_id, $form_id ) {
+function change_password_structure( $input, $field, $value, $lead_id, $form_id ) {
 //print_r($field);
- if ( $field->id == 10 ) {
+	$input_type = RGFormsModel::get_input_type($field);
+    if($input_type != "password" || IS_ADMIN && RG_CURRENT_VIEW == "entry")
+        return $input;
+
+// if ( $field->id == 10 ) {
 
 if ( is_array( $value ) ) {
 			$value = array_values( $value );
@@ -261,7 +277,8 @@ if ( is_array( $value ) ) {
 				</div>{$strength}";
 		}
 		return $input;
-	}
+	//}
+	/*
 	if ( $field->id == 17 or $field->id == 18 or $field->id == 19 or $field->id == 23 ) {
 		$is_entry_detail = $field->is_entry_detail();
 		$is_form_editor  = $field->is_form_editor();
@@ -272,4 +289,5 @@ if ( is_array( $value ) ) {
 //small-12 medium-6 large-4 columns
 		return sprintf( "<div class='ginput_container'><ul class='row gfield_checkbox' id='%s'>%s</ul></div>", $field_id, $field->get_checkbox_choices( $value, $disabled_text, $form_id ) );
 	}
+	*/
 	}

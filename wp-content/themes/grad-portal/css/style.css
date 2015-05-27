@@ -4898,12 +4898,6 @@ button {
 }
 
 /* ========================= Checkbox Replacement =========================  */
-/* line 436, ../sass/components/_forms.scss */
-.replace-checkbox {
-  /*input[type="checkbox"]{
-  	display: none;
-  }*/
-}
 /* line 437, ../sass/components/_forms.scss */
 .replace-checkbox .checkbox {
   width: 40px;
@@ -4932,6 +4926,10 @@ button {
   height: 40px;
   line-height: 40px;
   cursor: pointer;
+}
+/* line 464, ../sass/components/_forms.scss */
+.replace-checkbox input[type="checkbox"] {
+  display: none;
 }
 
 /* ========================= Media Queries =========================  */

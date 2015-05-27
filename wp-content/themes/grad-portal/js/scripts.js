@@ -19,6 +19,17 @@ var isTouchDevice = {
     }
 };
 
+function get_url_parameter(sParam){
+
+var sPageURL = window.location.search.substring(1);
+var sURLVariables = sPageURL.split('&');
+for (var i = 0; i < sURLVariables.length; i++){
+ var sParameterName = sURLVariables[i].split('=');
+if (sParameterName[0] == sParam){
+    return sParameterName[1];
+    }
+    }
+}
 
 
 $(function(){
@@ -101,7 +112,20 @@ show_notification = function(_message,_confirm,_callback){
 }
 //gravity form validation hook
 
+gform.addFilter("gform_pre_form_editor_save", "save_form");
+function save_form(){
+    console.log('save form');
+}
+
 $(document).bind('gform_post_render', function(){
+   if(get_url_parameter('updated')){
+    _message = 'Your profile has been updated.';
+        show_notification(_message);
+   }
+   if(get_url_parameter('saved')){
+    _message = 'Thank you for registering. We have sent you an email to confirm your account.');
+        show_notification(_message);
+   }
     if($('.validation_error').length){
         var _message = $('.validation_error').text();
         if(_message!=''){
