@@ -25,22 +25,22 @@ global $login;
     <?php
     $email = isset($_POST['user_email']) ? $_POST['user_email'] : '';
 ?>
-    <li class="no-label"><label class='gfield_label' for="user_email">Registered Email Address<span class='gfield_required'>*</span></label>
+    <li class="no-label gfield"><label class='gfield_label' for="user_email">Registered Email Address<span class='gfield_required'>*</span></label>
 <div class='ginput_container'><input name='user_email' id='user_email' type='text' value='<?php echo $login->_user_email ?>' class='medium' placeholder="Email Address"    /></div>
 </li>
-  <li class="no-label"><label class='gfield_label' for="user_email">Password<span class='gfield_required'>*</span></label>
+  <li class="no-label gfield"><label class='gfield_label' for="user_email">Password<span class='gfield_required'>*</span></label>
 <div class='ginput_container'><input name='user_pass' id='user_pass' type='password' value='' class='medium' placeholder="Password"  /></div>
 </li>
 
-	 <li>
-	 	<input type="checkbox" name="user_remember" id="user_remember" value="1" /><label for="user_remember">Remember Me</label></li>
+	 <li class="remember">
+	 	<div class="checkbox-wrap"><input type="checkbox" name="user_remember" id="user_remember" value="1" /><label for="user_remember">Remember Me</label></div></li>
 </ul>
 
  </div>
  <div class='gform_footer top_label'>
- <a class="notification-btn" rel="reset-password-form">Forgotten Password?</a>
- <a class="icon-button cancel">Cancel</a>  <button type="submit" class="icon-button login" <?php if($login->_use_ajax):?>onclick="ajax_login(this.form);return false;"<?php endif ?>>Log in</button>
 
+<div class="buttons"> <a class="icon-button cancel">Cancel</a>  <button type="submit" class="icon-button login" <?php if($login->_use_ajax):?>onclick="ajax_login(this.form);return false;"<?php endif ?>>Log in</button></div>
+ <a class="notification-btn" rel="reset-password-form">Forgotten Password?</a>
 </div>
  <input name="action" type="hidden" value="login" />
 </form>

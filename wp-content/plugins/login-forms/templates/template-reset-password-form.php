@@ -19,14 +19,15 @@
 
   <div class='gform_body'>
   <ul>
-	<li class="no-label"><label class='gfield_label' for="user_email">Email Address<span class='gfield_required'>*</span></label>
+	<li class="no-label gfield"><label class='gfield_label' for="user_email">Email Address<span class='gfield_required'>*</span></label>
 <div class='ginput_container'><input name='user_email' id='user_email' type='text' placeholder="Email Address" value="<?php echo $login->_user_email ?>" class='medium'    /></div>
 </li>
 </ul>
 </div>
  <div class='gform_footer top_label'>
- 	<a class="notification-btn" rel="login-form">Login</a>
-<a class="icon-button cancel">Cancel</a>  <button type="submit" class="icon-button tick"<?php if($login->_use_ajax):?>onclick="ajax_login(this.form);return false;"<?php endif ?>>Submit</button>
+
+<div class="buttons"><a class="icon-button cancel">Cancel</a>  <button type="submit" class="icon-button tick"<?php if($login->_use_ajax):?>onclick="ajax_login(this.form);return false;"<?php endif ?>>Submit</button></div>
+  <a class="notification-btn" rel="login-form">Login</a>
  <input name="action" type="hidden" value="reset_pwd" />
  <input name="reset_pwd_nonce" type="hidden" value="<?php echo wp_create_nonce( 'reset_pwd_nonce' ); ?>" />
 </div>

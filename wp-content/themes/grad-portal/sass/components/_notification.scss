@@ -1,11 +1,14 @@
 #notification-panel{
 	//margin: 20px 0 0;
-	//text-transform: uppercase;
+	text-transform: uppercase;
 	font-weight: 700;
 	color: white;
 	text-align: center;
 	color: white;
 	//display: none;
+	li{
+		text-align: left;
+	}
 	a{
 		&:link,&:visited{
 			color: white;
@@ -50,6 +53,34 @@
 			margin:0 10px;
 		}
 	}
+	li.remember{
+		text-align: center;
+		margin-bottom: 20px;
+		div.checkbox-wrap{
+			margin:0 auto;
+			display: inline-block;
+		}
+	}
+	.gform_footer{
+		//margin-bottom: 10px;
+		.buttons{
+			display: inline-block;
+			margin: 0 auto 10px;
+			@extend .clearfix;
+			.icon-button{
+				margin:0 20px 20px 20px;
+				//float: left;
+			}
+		}
+		.notification-btn{
+			height:40px;
+			line-height: 40px;
+			float:left;
+			width:100%;
+			display: block;
+		}
+	}
+	
 	.form-footer{
 		display: block;
 		@extend %full-width;
@@ -82,4 +113,21 @@
 			}
 		}
 	}
+}
+
+
+
+@media #{$small-up}{
+
+	#notification-panel{
+		.gform_footer{
+			.buttons{
+				.icon-button{
+					margin:0 20px;
+					//float: left;
+				}
+			}
+		}
+	}
+
 }

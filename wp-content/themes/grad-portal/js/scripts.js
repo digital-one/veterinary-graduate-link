@@ -65,7 +65,30 @@ $('body').on('submit','#role-selection form',function(){
     return true;*/
 })
 
+$('.menu-toggle').on('click',function(e){
+    e.preventDefault();
+    _nav = $('#nav')
+    if(_nav.hasClass('active')){
+        _nav.removeClass('active').fadeOut(300);
+        $(this).removeClass('active');
+        $('#account-links').show();
+    } else {
+        _nav.addClass('active').fadeIn(300);
+        $('#account-links').hide();
+          $(this).addClass('active');
+    }
+
+})
+
+if($('.g-recaptcha').length){
+var _target_li = $('.g-recaptcha').parents('li').eq(0);
+console.log(_target_li);
+_target_li.addClass('small-12 columns');
+}
+
+
 $('body').on('click','.cancel',function(e){
+    console.log('click');
     e.preventDefault();
     hide_notification();
 })
@@ -83,6 +106,8 @@ $('.notification-btn').on('click',function(e){
     reset_notification();
     _elms.removeClass('active');
      _target.slideDown(100).addClass('active');
+     $('#account-links').hide();
+     $('.menu-toggle').hide();
 }
 })
 // notification message
@@ -94,11 +119,15 @@ reset_notification = function(){
 }
 hide_notification = function(){
     $('#notification-panel .active').slideUp(100).removeClass('active');
+    $('#account-links').show();
+    $('.menu-toggle').show();
 }
 show_notification = function(_message,_confirm,_callback){
     _confirm = typeof _confirm !== 'undefined' ? _confirm : 0;
     _callback = typeof _callback !== 'undefined' ? _callback : 0;
     $('#notification').html(_message).addClass('active');
+    $('#account-links').hide();
+    $('.menu-toggle').hide();
     if(_confirm){
        // $('#notification .confirm').show();
     } else {
@@ -114,7 +143,6 @@ show_notification = function(_message,_confirm,_callback){
 
 gform.addFilter("gform_pre_form_editor_save", "save_form");
 function save_form(){
-    console.log('save form');
 }
 
 $(document).bind('gform_post_render', function(){
@@ -123,7 +151,7 @@ $(document).bind('gform_post_render', function(){
         show_notification(_message);
    }
    if(get_url_parameter('saved')){
-    _message = 'Thank you for registering. We have sent you an email to confirm your account.');
+    _message = 'Thank you for registering. We have sent you an email to confirm your account.';
         show_notification(_message);
    }
     if($('.validation_error').length){
@@ -135,9 +163,7 @@ $(document).bind('gform_post_render', function(){
     }
 });
 
-if($('#search-form').length){
-    init_form_field_replace();
-}
+
 
 $(window).on( 'DOMMouseScroll mousewheel', function ( event ) {
   if( event.originalEvent.detail > 0 || event.originalEvent.wheelDelta < 0 ) { 

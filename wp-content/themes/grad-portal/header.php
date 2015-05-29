@@ -52,9 +52,10 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 		<!-- header top -->
 		<div id="header-top">
 			<div class="row">
-				<div class="small-12 columns">
+				<div class="small-12  columns">
 				<div id="notification-panel" class="<?php echo $login->_action ?>">
-
+					<div class="row">
+						<div class="small-12 medium-8 medium-centered columns">
 <!-- role confirmation -->
 <div id="role-selection" class="notification">
 	<form method="post" action="<?php echo get_template_directory_uri(); ?>/register_redirect.php">
@@ -82,6 +83,8 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 <?php //get_template_part('partials/content','account-forms' );  ?>
 <!-- /account forms -->
 </div>
+</div>
+</div>
 <menu id="account-links">
 
 <?php if(!$vgl_user->is_logged_in()): ?>
@@ -106,9 +109,9 @@ $logout_uri = wp_nonce_url( site_url("wp-login.php?action=logout$redirect", 'log
 		<div class="row">
 			<div class="small-12 columns">
 			<?php if(is_front_page()): ?>
-		<h1 id="home-link"><?php echo bloginfo('name'); ?></h1>
+		<h1 class="home-link"><?php echo bloginfo('name'); ?></h1>
 	<?php else: ?>
-	<a href="<?php echo home_url() ?>" id="home-link" title="<?php echo bloginfo('name'); ?>"><?php echo bloginfo('name'); ?></a>
+	<a href="<?php echo home_url() ?>" class="home-link" title="<?php echo bloginfo('name'); ?>"><?php echo bloginfo('name'); ?></a>
 <?php endif ?>
 
 <aside><h2 id="strapline">Bringing Veterinary Graduates<br />and Employers Together</h2></aside>
@@ -118,11 +121,13 @@ $logout_uri = wp_nonce_url( site_url("wp-login.php?action=logout$redirect", 'log
 	<div class="small-12 columns">
 		<!--nav-->
 		<nav id="nav">
+				<a href="<?php echo home_url() ?>" class="home-link" title="<?php echo bloginfo('name'); ?>"><?php echo bloginfo('name'); ?></a>
 <?php wp_nav_menu( array(
 		'theme_location' => 'main-menu',
 		'menu_id'=> 'main-menu',
 		'container' => '',
-		'container_class' => ''
+		'container_class' => '',
+		'walker' => new navWalker()
 		));
 		 ?>
 		</nav>

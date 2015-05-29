@@ -3,9 +3,9 @@
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 <!--intro-->
-<section id="intro" class="profile">
+<section id="intro" class="profile-color">
 <div class="row">
-<div class="small-12 medium-8 columns">
+<div class="xsmall-12 small-9 small-centered medium-uncentered medium-8 columns">
 	<div>
 <h1>Your Profile</h1>
 <p>Lorem ipsum dolor sit amet, eu enim nostrum scribentur ius, ei vix suas oporteat. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel.</p>
@@ -19,7 +19,7 @@
 <!--main-->
 <main id="main" role="main">
 	<div class="row">
-		<div class="small-12 columns">
+		<div class="xsmall-12 small-9 small-centered medium-uncentered medium-12 columns">
 		<!--breadcrumbs-->
 <div id="page-header">
 	<div class="breadcrumbs">
@@ -28,7 +28,6 @@
     endif;
     ?>
 </div>
-<div class="shortlist-link"><i class="fa fa-user"></i> 0 Candidates in <a href="">your shortlist</a></div>
 </div>
 <!--/breadcrumbs-->
 <?php

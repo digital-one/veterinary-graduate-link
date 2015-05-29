@@ -25,6 +25,7 @@ textarea,
   	padding: 5px 10px;
   	line-height: 1;
   	width: 100% !important;
+  	color: $grey;
   	box-sizing: border-box;
 	@include transition (background-color .1s linear 0s);
 	font-family:$helvetica;
@@ -72,15 +73,15 @@ button{
 .gform_wrapper{
 }
 .gform_body{
-	@extend %clearfix;
 	ul{
 		margin-bottom: 0;
 		li.gfield{
-			margin-bottom: 20px;
+			margin-bottom: 10px;
 			@extend %clearfix;
 			div.half{
-				width:48%;
-				float: left;
+				width:100%;
+				float: none;
+				margin-bottom: 10px;
 				&:last-child{
 					float: right;
 				}
@@ -112,6 +113,9 @@ button{
 	label{
 		color: $vgl-blue;
 		font-weight: 700;
+	}
+	li{
+		margin-bottom: 10px;
 	}
 }
 .ginput_complex{
@@ -147,9 +151,10 @@ button{
 	display: block;
 	width: 100%;
 	position: relative;
+	@extend .clearfix;
 	button{
 		//margin-right: 20px;
-		margin-bottom: 20px;
+		//margin-bottom: 20px;
 	}
 }
 .gsection{
@@ -186,6 +191,7 @@ button{
 }
 .validation_error{
 	display: none;
+	margin-bottom:10px;
 	#notification-panel &{
 		display: block; 
 	}
@@ -203,6 +209,7 @@ button{
 
 
 .select2-container{
+	width:100% !important;
 	.select2-selection--single{
 		background-color: $light-grey;
 		height:40px;
@@ -442,7 +449,7 @@ button{
 		display: block;
 		background-color: $light-grey;
 		border:1px solid $vgl-blue;
-		margin-right:5px;
+		margin-right:10px;
 		float: left;
 		&.checked{
 			&:before{
@@ -465,12 +472,64 @@ button{
 		display: none;
 	}
 }
+.replace-radio{
+	.radio{
+		width: 30px;
+		height: 30px;
+		text-align:center;
+		cursor:pointer;
+		display: block;
+		background-color: $light-grey;
+		border:1px solid $vgl-blue;
+		margin-right:10px;
+		@include border-radius(50%);
+		float: left;
+		margin: 5px 10px 5px 0;
+		&.checked{
+			&:before{
+				font-family: FontAwesome;
+				content:"\f111";
+				width:30px;
+				height:30px;
+				line-height: 28px;
+				@include font-size(12px);
+				color: $vgl-blue;
+			}
+		}
+	}
+	label{
+		height:40px;
+		line-height: 40px;
+		display: inline-block;
+		cursor: pointer;
+		font-weight: 700;
+	}
+	input[type="radio"]{
+		display: none;
+	}
+}
 
 
 /* ========================= Media Queries =========================  */
 
 @media #{$small-up} { 
 	
+	.gform_body{
+		ul{
+			margin-bottom: 0;
+			li.gfield{
+				margin-bottom: 20px;
+				div.half{
+					width:48%;
+					float: left;
+					&:last-child{
+						float: right;
+					}
+
+				}
+			}
+		}
+	}
 	.gform_footer{
 		input,button{
 			float: right;
@@ -481,8 +540,12 @@ button{
 		}
 	}
 }
-@media #{$large-up} { 
+@media #{$medium-up} { 
 
-	
+	.gfield_checkbox{
+		li{
+			margin-bottom: 0;
+		}
+	}
 
 }

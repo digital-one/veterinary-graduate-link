@@ -3,7 +3,7 @@
 <div class="row top">
 <div class="small-12 medium-4 columns"><strong>Call us on:</strong> <a href="tel:01423813450">01423 813 450</a></div>
 <div class="small-12 medium-4 columns"><strong>Email us on:</strong> <a href="mailto:vets@prospect-health.com">vets@prospect-health.com</a></div>
-<div class="small-12 medium-4 columns"><menu class="social"><strong>Follow us on: </strong><ul><li><a href="#"><i class="fa fa-linkedin"></i><span>Linkedin</span></a></li><li><a href="#"><i class="fa fa-facebook"><span>Facebook</span></i></a></li><li><a href="#"><i class="fa fa-twitter"><span>Twitter</span></i></a></li><li><a href=""><i class="fa fa-google-plus"><span>Google Plus</span></i></a></li></ul></menu></div>
+<div class="small-12 medium-4 columns"><menu class="social"><strong>Follow us on: </strong><ul><li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a></li><li><a href="#" class="facebook"><i class="fa fa-facebook"><span>Facebook</span></i></a></li><li><a href="#" class="twitter"><i class="fa fa-twitter"><span>Twitter</span></i></a></li><li><a href="" class="google-plus"><i class="fa fa-google-plus"><span>Google Plus</span></i></a></li></ul></menu></div>
 </div>
 <div class="row bottom">
 <div class="small-12 columns">&copy; Copyright <?php echo date('Y') ?> Prospect Health Recruitment. <span>All rights reserved.</span></div>

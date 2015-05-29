@@ -3,6 +3,7 @@
 add_filter( 'gform_field_input', 'change_password_structure', 10, 5 );
 //add_filter( 'gform_field_choices', 'checkbox_choices', 10, 2 );
 add_filter( 'gform_field_input', 'change_checkbox_structure', 10, 5 );
+add_filter( 'gform_field_input', 'change_radio_structure', 10, 5 );
 add_filter( 'gform_submit_button', 'form_submit_button', 10, 2 );
 //add_filter("gform_validation_message", "change_message", 10, 2);
 add_filter( 'gform_ajax_spinner_url', 'custom_gform_spinner' );
@@ -10,6 +11,32 @@ add_filter( 'gform_validation_1', 'check_password_match_can' );
 add_filter( 'gform_validation_1', 'check_password_length_and_characters_can' );
 add_filter( 'gform_validation_2', 'check_password_match_emp' );
 add_filter( 'gform_validation_2', 'check_password_length_and_characters_emp' );
+
+add_filter( 'gform_pre_render_7', 'change_field_html' );
+
+function change_field_html($form){
+
+        foreach ( $form['fields'] as &$field ):
+         // print_r($field);
+          $html='';
+          if($field['type']=='gf_no_captcha_recaptcha'):
+            $field_id = $field['id'];
+            
+         // echo $field_id;
+             $field->content = 'new content';
+            endif;
+          endforeach;
+         
+          return $form;
+}
+
+function subsection_field($content, $field, $value, $lead_id, $form_id){
+  if($field['type']=='gf_no_captcha_recaptcha'):
+   $content="<li>dddd</li>";
+   endif;
+ return $content;
+
+}
 
 function form_submit_button( $button, $form ) {
     return "<button class='icon-button tick' id='gform_submit_button_{$form['id']}'><span>".$form['button']['text']."</span></button>";
@@ -125,6 +152,78 @@ function check_password_length_and_characters_emp( $validation_result ){
  	return $validation_result;
 }
 
+function change_radio_structure($input, $field, $value, $lead_id, $form_id){
+    $input_type = RGFormsModel::get_input_type($field);
+    if($input_type != "radio" || IS_ADMIN && RG_CURRENT_VIEW == "entry")
+        return $input;
+
+    $choices = "";
+
+    if(is_array($field["choices"])){
+        $choice_id = 0;
+        $count = 1;
+        $total = count($field['choices']);
+        // add "other" choice to choices if enabled
+        if(rgar($field, 'enableOtherChoice')) {
+            $other_default_value = GFCommon::get_other_choice_value();
+            $field["choices"][] = array('text' => $other_default_value, 'value' => 'gf_other_choice', 'isSelected' => false, 'isOtherChoice' => true);
+        }
+
+        $logic_event = !empty($field["conditionalLogicFields"]) ? "onclick='gf_apply_rules(" . $form_id . "," . GFCommon::json_encode($field["conditionalLogicFields"]) . ");'" : "";
+        $disabled_text = IS_ADMIN ? "disabled='disabled'" : "";
+
+        foreach($field["choices"] as $choice){
+            $id = $field["id"] . '_' . $choice_id++;
+            $field_value = !empty($choice["value"]) || rgar($field, "enableChoiceValue") ? $choice["value"] : $choice["text"];
+            $checked = rgar($choice,"isSelected") ? "checked='checked'" : "";
+            $tabindex = GFCommon::get_tabindex();
+            $end = $count==$total ? ' end' : '';
+            $label = sprintf("<label for='choice_%s'>%s</label>", $id, $choice["text"]);
+            $input_focus = '';
+
+            // handle "other" choice
+            if(rgar($choice, 'isOtherChoice')) {
+
+                $onfocus = !IS_ADMIN ? 'jQuery(this).prev("input").attr("checked", true); if(jQuery(this).val() == "' . $other_default_value . '") { jQuery(this).val(""); }' : '';
+                $onblur = !IS_ADMIN ? 'if(jQuery(this).val().replace(" ", "") == "") { jQuery(this).val("' . $other_default_value . '"); }' : '';
+
+                $input_focus = !IS_ADMIN ? "onfocus=\"jQuery(this).next('input').focus();\"" : "";
+                $value_exists = RGFormsModel::choices_value_match($field, $field["choices"], $value);
+
+                if($value == 'gf_other_choice' && rgpost("input_{$field["id"]}_other")){
+                    $other_value = rgpost("input_{$field["id"]}_other");
+                } else if(!$value_exists && !empty($value)){
+                    $other_value = $value;
+                    $value = 'gf_other_choice';
+                    $checked = "checked='checked'";
+                } else {
+                    $other_value = $other_default_value;
+                }
+                $label = "<input name='input_{$field["id"]}_other' type='text' value='" . esc_attr($other_value) . "' onfocus='$onfocus' onblur='$onblur' $tabindex $disabled_text />";
+            }
+
+        /*    $choices .= sprintf("<input name='input_%d' type='radio' value='%s' %s id='choice_%s' $tabindex %s $logic_event %s />%s", $field["id"], esc_attr($field_value), $checked, $id, $disabled_text, $input_focus, $label); */
+              $choices .= sprintf("<div class='small-6 columns %s gchoice_$id'><input name='input_%d' type='radio' value='%s' %s id='choice_%s' $tabindex %s $logic_event %s />%s</div>", $end,  $field["id"], esc_attr($field_value), $checked, $id, $disabled_text, $input_focus, $label);
+            if(IS_ADMIN && $count >=5)
+                break;
+
+            $count++;
+        }
+
+        $total = sizeof($field["choices"]);
+        if($count < $total)
+            $choices .= "<div class='gchoice_total'>" . sprintf(__("%d of %d items shown. Edit field to view all", "gravityforms"), $count, $total) . "</div>";
+    }
+    
+    $field_id = "input_{$form_id}_{$field["id"]}";
+
+    return sprintf("<div class='ginput_container'><div class='gfield_radio row' id='%s'>%s</div></div>", $field_id, $choices);    
+
+}
+
+
+
+
 
 function change_checkbox_structure($input, $field, $value, $lead_id, $form_id){
     $input_type = RGFormsModel::get_input_type($field);
@@ -168,7 +267,7 @@ function change_checkbox_structure($input, $field, $value, $lead_id, $form_id){
 
             $label = sprintf("<label for='choice_%s'>%s</label>", $id, $choice["text"]);
 
-            $choices .= sprintf("<li class='small-6 medium-4 large-2 columns %s gchoice_$id'><input name='input_%s' type='checkbox' $logic_event value='%s' %s id='choice_%s' $tabindex %s />%s</li>", $end, $input_id, esc_attr($choice_value), $checked, $id, $disabled_text, $label);
+            $choices .= sprintf("<li class='small-6 medium-3 large-2 columns %s gchoice_$id'><input name='input_%s' type='checkbox' $logic_event value='%s' %s id='choice_%s' $tabindex %s />%s</li>", $end, $input_id, esc_attr($choice_value), $checked, $id, $disabled_text, $label);
 
             if(IS_ADMIN && RG_CURRENT_VIEW != "entry" && $count >=5)
                 break;

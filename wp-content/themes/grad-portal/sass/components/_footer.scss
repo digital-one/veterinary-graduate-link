@@ -18,26 +18,12 @@
 	.top{
 		margin-bottom: 10px;
 	}
-}
-menu.social{
-	@include inline-menu;
-	@extend .clearfix;
-	margin:0 auto;
-	padding:0;
-	display:inline-block;
-	strong,ul{
-		float:left;
-	}
-	strong{
-		padding-right:10px;
-	}
-	li{
-		padding-left:5px;
-	}
-	span{
-		display:none;
+	menu.social{
+		display: inline-block;
+		margin:10px auto 0;
 	}
 }
+
 
 @media #{$xsmall-only}{
 
@@ -59,6 +45,9 @@ menu.social{
 		}
 		.bottom{
 			@include font-size(11px);
+		}
+		menu.social{
+			margin:0;
 		}
 	}
 

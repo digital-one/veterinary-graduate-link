@@ -13,7 +13,7 @@ p{
 	}
 }
 a{
-	@include transition(color .3s ease);
+	@include transition(color .3s ease, background-color .3s ease);
 	&:link,&:visited{
 		color: $secondary
 	}
@@ -31,7 +31,7 @@ a{
 		@include font-size(18px);
 	}
 	p{
-		@include font-size(12px);
+		//@include font-size(12px);
 	}
 
 }

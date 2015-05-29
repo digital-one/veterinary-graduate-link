@@ -26,7 +26,7 @@
 		}
 		#account-links{
 			//float:right;
-			@include abs-pos(auto,0.9375rem,-30px,auto);
+			@include abs-pos(auto,auto,-30px,0.9375rem);
 			background-color: $vgl-blue;
 			display: inline-block;
 			height:30px;
@@ -48,11 +48,12 @@
 			}
 		}
 	}
-	#home-link{
+	.home-link{
 		display: block;
 		width: 89px;
 		height:113px;
 		@include bg-image('vgl-logo-mobile');
+		background-size: auto 100%;
 		@extend %ir;
 		margin:40px auto 20px;
 	}
@@ -66,15 +67,17 @@
 @media #{$medium-up}{
 	
 	#header{
-		#home-link{
+		.home-link{
 			width:232px;
 			height:81px;
 			@include bg-image('vgl-logo');
 			float:left;
 			margin:0 0 20px;
 		}
-		#account-links{
-			float:right;
+		#header-top{
+			#account-links{
+				@include abs-pos(auto,0.9375rem,-30px,auto);
+			}
 		}
 		aside{
 			height:101px;
@@ -96,6 +99,7 @@
 				text-align: right;
 				vertical-align: middle;
 				display: inline-block;
+				color: $vgl-blue;
 				//white-space: nowrap;
 			}
 		}

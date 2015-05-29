@@ -112,6 +112,22 @@
 			}
 		}
 	}
+	&.read{
+		&:before{
+				background-image:url('../images/icon-read-more.png');
+			.svg &{
+				background-image:url('../images/icon-read-more.svg');
+			}
+		}
+	}
+	&.download{
+		&:before{
+				background-image:url('../images/icon-download.png');
+			.svg &{
+				background-image:url('../images/icon-download.svg');
+			}
+		}
+	}
 }
 
 /* Media Queries */
