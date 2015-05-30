@@ -5,14 +5,79 @@ add_filter( 'gform_field_input', 'change_password_structure', 10, 5 );
 add_filter( 'gform_field_input', 'change_checkbox_structure', 10, 5 );
 add_filter( 'gform_field_input', 'change_radio_structure', 10, 5 );
 add_filter( 'gform_submit_button', 'form_submit_button', 10, 2 );
-//add_filter("gform_validation_message", "change_message", 10, 2);
 add_filter( 'gform_ajax_spinner_url', 'custom_gform_spinner' );
-add_filter( 'gform_validation_1', 'check_password_match_can' );
-add_filter( 'gform_validation_1', 'check_password_length_and_characters_can' );
-add_filter( 'gform_validation_2', 'check_password_match_emp' );
-add_filter( 'gform_validation_2', 'check_password_length_and_characters_emp' );
+
 
 add_filter( 'gform_pre_render_7', 'change_field_html' );
+add_action("gform_user_registration_validation", "validate_password", 10, 3); //custom validation of the password
+add_filter("gform_user_registration_validation_message", "update_validation_msgs", 10, 2); //change the default username validation msg as were using email address
+
+
+/**
+* Gravity Forms Custom Activation Template
+* http://gravitywiz.com/customizing-gravity-forms-user-registration-activation-page
+*/
+add_action('wp', 'custom_maybe_activate_user', 9);
+function custom_maybe_activate_user() {
+$template_path = STYLESHEETPATH . '/gfur-activate-template/activate.php';
+$is_activate_page = isset( $_GET['page'] ) && $_GET['page'] == 'gf_activation';
+if( ! file_exists( $template_path ) || ! $is_activate_page )
+return;
+require_once( $template_path );
+exit();
+} 
+
+
+
+function update_validation_msgs($message, $form){
+    if($message == 'The username can not be empty')
+        $message = 'Please enter your email address';
+    
+    return $message;
+}
+
+
+function validate_password($form, $config, $pagenum){
+
+   $error=false;
+   
+ //   endif;
+ foreach( $form['fields'] as &$field ):
+     $password = rgpost( 'input_' . $field->id );
+    $confirm  = rgpost( 'input_' . $field->id . '_2' );
+    $input_type = RGFormsModel::get_input_type($field);
+  $is_required = $field['isRequired'];
+    if($input_type == "password"): 
+//if( $field['id'] == $password_field_id):
+  if(empty($password) and $is_required):
+     $field['failed_validation'] = true;
+     $field['validation_message'] = 'Please enter a password';
+     $error=true;
+    endif;
+    if(!$error):
+
+if($password != $confirm and $password!=""):
+    $field['failed_validation'] = true;
+     $field['validation_message'] = 'Passwords dont match';
+     $error=true;
+  endif;
+  endif;
+  if(!$error):
+$pattern = get_option('reset_pwd_valid_pattern');
+     $pattern = !empty($pattern) ? $pattern : '/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/'; //at least 8 chars long containing an uppercase letter and number;
+if( !preg_match( $pattern, $password ) and $password!=""):
+  $field['failed_validation'] = true;
+       $msg = get_option('reset_pwd_format_error_msg');
+        $msg = !empty($msg) ? $msg : "Password must be at least 8 chars long containing at least one uppercase letter and number";
+  $field['validation_message'] = $msg;
+endif;
+endif;
+endif;
+endforeach;
+return $form;
+}
+
+
 
 function change_field_html($form){
 
@@ -107,7 +172,10 @@ function check_password_length_and_characters_can( $validation_result ){
   // checking now to make sure the passwords match the requirements
   // for length and that we only have upper and lower case letters
   // and numbers
-  if( !preg_match( "/^[a-zA-Z0-9]{4,16}$/", $_POST['input_22'] ) ){
+  $pattern = get_option('reset_pwd_valid_pattern');
+     $pattern = !empty($pattern) ? $pattern : '/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/'; //at least 8 chars long containing an uppercase letter and number;
+
+  if( !preg_match( $pattern, $_POST['input_22'] ) ){
  
     // marking the whole thing as not valid
     $validation_result['is_valid'] = false;
@@ -119,7 +187,10 @@ function check_password_length_and_characters_can( $validation_result ){
       if( $field['id'] == '22' || $field['id'] == '24' ){
  
           $field['failed_validation'] = true;
-          $field['validation_message'] = 'Your password needs to be between 4 and 16 characters and can only contain upper and lower case letters and numbers.';
+           $msg = get_option('reset_pwd_format_error_msg');
+        $msg = !empty($msg) ? $msg : "Password must be at least 8 chars long containing at least one uppercase letter and number";
+
+          $field['validation_message'] = $msg;
  
       }
 	 }
@@ -132,7 +203,10 @@ function check_password_length_and_characters_emp( $validation_result ){
   // checking now to make sure the passwords match the requirements
   // for length and that we only have upper and lower case letters
   // and numbers
-  if( !preg_match( "/^[a-zA-Z0-9]{4,16}$/", $_POST['input_25'] ) ){
+   $pattern = get_option('reset_pwd_valid_pattern');
+     $pattern = !empty($pattern) ? $pattern : '/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/'; //at least 8 chars long containing an uppercase letter and number;
+
+  if( !preg_match( $pattern, $_POST['input_25'] ) ){
  
     // marking the whole thing as not valid
     $validation_result['is_valid'] = false;
@@ -144,7 +218,10 @@ function check_password_length_and_characters_emp( $validation_result ){
       if( $field['id'] == '25' || $field['id'] == '26' ){
  
           $field['failed_validation'] = true;
-          $field['validation_message'] = 'Your password needs to be between 4 and 16 characters and can only contain upper and lower case letters and numbers.';
+            $msg = get_option('reset_pwd_format_error_msg');
+        $msg = !empty($msg) ? $msg : "Password must be at least 8 chars long containing at least one uppercase letter and number";
+
+          $field['validation_message'] = $msg;
  
       }
 	 }
@@ -286,107 +363,91 @@ function change_checkbox_structure($input, $field, $value, $lead_id, $form_id){
 }
 
 
-
-function change_password_structure( $input, $field, $value, $lead_id, $form_id ) {
-//print_r($field);
-	$input_type = RGFormsModel::get_input_type($field);
+function change_password_structure($input,$field,$value,$lead_id,$form_id){
+  // if ( $field->id == 10 ) {
+    $input_type = RGFormsModel::get_input_type($field);
     if($input_type != "password" || IS_ADMIN && RG_CURRENT_VIEW == "entry")
         return $input;
 
-// if ( $field->id == 10 ) {
+  if ( is_array( $value ) ) {
+      $value = array_values( $value );
+    }
+$form = RGFormsModel::get_form_meta($form_id, true);
+   // $form_id         = $form['id'];
+    $is_entry_detail = $field->is_entry_detail();
+    $is_form_editor  = $field->is_form_editor();
+    $is_admin = $is_entry_detail || $is_form_editor;
 
-if ( is_array( $value ) ) {
-			$value = array_values( $value );
-		}
+    $id       = (int) $field->id;
+    
+    $field_id = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
 
-		//$form_id         = $form['id'];
-		$is_entry_detail = $field->is_entry_detail();
-		$is_form_editor  = $field->is_form_editor();
-		$is_admin = $is_entry_detail || $is_form_editor;
+    $class_suffix = $is_entry_detail ? '_admin' : '';
 
-		$id  = $form_id;
-		$form = RGFormsModel::get_form_meta($form_id, true);
-		$field_id = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
+    $form_sub_label_placement  = rgar( $form, 'subLabelPlacement' );
+    $field_sub_label_placement = $field->subLabelPlacement;
+    $is_sub_label_above        = $field_sub_label_placement == 'above' || ( empty( $field_sub_label_placement ) && $form_sub_label_placement == 'above' );
+    $sub_label_class_attribute = $field_sub_label_placement == 'hidden_label' ? "class='hidden_sub_label'" : '';
 
-		$class_suffix = $is_entry_detail ? '_admin' : '';
+    $disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
 
-		$form_sub_label_placement  = rgar( $form, 'subLabelPlacement' );
-		$field_sub_label_placement = $field->subLabelPlacement;
-		$is_sub_label_above        = $field_sub_label_placement == 'above' || ( empty( $field_sub_label_placement ) && $form_sub_label_placement == 'above' );
-		$sub_label_class_attribute = $field_sub_label_placement == 'hidden_label' ? "class='hidden_sub_label'" : '';
+    $first_tabindex = $field->get_tabindex();
+    $last_tabindex  = $field->get_tabindex();
 
-		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
+    $strength_style           = ! $field->passwordStrengthEnabled ? "style='display:none;'" : '';
+    $strength_indicator_label = __( 'Strength indicator', 'gravityforms' );
+    $strength                 = $field->passwordStrengthEnabled || $is_admin ? "<div id='{$field_id}_strength_indicator' class='gfield_password_strength' {$strength_style}>
+                                      {$strength_indicator_label}
+                                    </div>
+                                    <input type='hidden' class='gform_hidden' id='{$field_id}_strength' name='input_{$id}_strength' />" : '';
 
-		$first_tabindex = $field->get_tabindex();
-		$last_tabindex  = $field->get_tabindex();
+    $action   = ! $is_admin ? "gformShowPasswordStrength(\"$field_id\");" : '';
+    $onchange = $field->passwordStrengthEnabled ? "onchange='{$action}'" : '';
+    $onkeyup  = $field->passwordStrengthEnabled ? "onkeyup='{$action}'" : '';
 
-		$strength_style           = ! $field->passwordStrengthEnabled ? "style='display:none;'" : '';
-		$strength_indicator_label = __( 'Strength indicator', 'gravityforms' );
-		$strength                 = $field->passwordStrengthEnabled || $is_admin ? "<div id='{$field_id}_strength_indicator' class='gfield_password_strength' {$strength_style}>
-																			{$strength_indicator_label}
-																		</div>
-																		<input type='hidden' class='gform_hidden' id='{$field_id}_strength' name='input_{$id}_strength' />" : '';
+    $confirmation_value = rgpost( 'input_' . $id . '_2' );
 
-		$action   = ! $is_admin ? "gformShowPasswordStrength(\"$field_id\");" : '';
-		$onchange = $field->passwordStrengthEnabled ? "onchange='{$action}'" : '';
-		$onkeyup  = $field->passwordStrengthEnabled ? "onkeyup='{$action}'" : '';
+    $password_value     = is_array( $value ) ? $value[0] : $value;
+    $password_value     = esc_attr( $password_value );
+    $confirmation_value = esc_attr( $confirmation_value );
 
-		$confirmation_value = rgpost( 'input_' . $id . '_2' );
+    $enter_password_field_input   = GFFormsModel::get_input( $field, $field->id . '' );
+    $confirm_password_field_input = GFFormsModel::get_input( $field, $field->id . '.2' );
 
-		$password_value     = is_array( $value ) ? $value[0] : $value;
-		$password_value     = esc_attr( $password_value );
-		$confirmation_value = esc_attr( $confirmation_value );
+    $enter_password_label   = rgar( $enter_password_field_input, 'customLabel' ) != '' ? $enter_password_field_input['customLabel'] : __( 'Enter Password', 'gravityforms' );
+    $enter_password_label   = apply_filters( "gform_password_{$form_id}", apply_filters( 'gform_password', $enter_password_label, $form_id ), $form_id );
 
-		$enter_password_field_input   = GFFormsModel::get_input( $field, $field->id . '' );
-		$confirm_password_field_input = GFFormsModel::get_input( $field, $field->id . '.2' );
-
-		$enter_password_label   = rgar( $enter_password_field_input, 'customLabel' ) != '' ? $enter_password_field_input['customLabel'] : __( 'Enter Password', 'gravityforms' );
-		$enter_password_label   = apply_filters( "gform_password_{$form_id}", apply_filters( 'gform_password', $enter_password_label, $form_id ), $form_id );
-
-		$confirm_password_label   = rgar( $confirm_password_field_input, 'customLabel' ) != '' ? $confirm_password_field_input['customLabel'] : __( 'Confirm Password', 'gravityforms' );
-		$confirm_password_label = apply_filters( "gform_password_confirm_{$form_id}", apply_filters( 'gform_password_confirm', $confirm_password_label, $form_id ), $form_id );
+    $confirm_password_label   = rgar( $confirm_password_field_input, 'customLabel' ) != '' ? $confirm_password_field_input['customLabel'] : __( 'Confirm Password', 'gravityforms' );
+    $confirm_password_label = apply_filters( "gform_password_confirm_{$form_id}", apply_filters( 'gform_password_confirm', $confirm_password_label, $form_id ), $form_id );
 
 
-		$enter_password_placeholder_attribute   = GFCommon::get_input_placeholder_attribute( $enter_password_field_input );
-		$confirm_password_placeholder_attribute = GFCommon::get_input_placeholder_attribute( $confirm_password_field_input );
+    $enter_password_placeholder_attribute   = GFCommon::get_input_placeholder_attribute( $enter_password_field_input );
+    $confirm_password_placeholder_attribute = GFCommon::get_input_placeholder_attribute( $confirm_password_field_input );
 
-		if ( $is_sub_label_above ) {
-			$input =  "<div class='row ginput_complex$class_suffix ginput_container' id='{$field_id}_container'>
-					<span id='{$field_id}_1_container' class='ginput_left small-12 medium-6 large-4 columns'>
-						<label for='{$field_id}' {$sub_label_class_attribute}>{$enter_password_label}</label>
-						<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$disabled_text}/>
-					</span>
-					<span id='{$field_id}_2_container' class='ginput_right small-12 medium-6 large-4 columns'>
-						<label for='{$field_id}_2' {$sub_label_class_attribute}>{$confirm_password_label}</label>
-						<input type='password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$disabled_text}/>
-					</span>
-					<div class='gf_clear gf_clear_complex'></div>
-				</div>{$strength}";
-		} else {
-			$input =  "<div class='row ginput_complex$class_suffix ginput_container' id='{$field_id}_container'>
-					<span id='{$field_id}_1_container' class='ginput_left small-12 medium-6 large-4 columns'>
-						<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$disabled_text}/>
-						<label for='{$field_id}' {$sub_label_class_attribute}>{$enter_password_label}</label>
-					</span>
-					<span id='{$field_id}_2_container' class='ginput_right small-12 medium-6 large-4 columns'>
-						<input type='password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$disabled_text}/>
-						<label for='{$field_id}_2' {$sub_label_class_attribute}>{$confirm_password_label}</label>
-					</span>
-					<div class='gf_clear gf_clear_complex'></div>
-				</div>{$strength}";
-		}
-		return $input;
-	//}
-	/*
-	if ( $field->id == 17 or $field->id == 18 or $field->id == 19 or $field->id == 23 ) {
-		$is_entry_detail = $field->is_entry_detail();
-		$is_form_editor  = $field->is_form_editor();
+    if ( $is_sub_label_above ) {
+      return "<div class='row ginput_complex$class_suffix ginput_container' id='{$field_id}_container'>
+          <span id='{$field_id}_1_container' class='ginput_left small-12 medium-6 large-4 columns'>
+            <label for='{$field_id}' {$sub_label_class_attribute}>{$enter_password_label}</label>
+            <input type='password' placeholder='Password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$disabled_text}/>
+          </span>
+          <span id='{$field_id}_2_container' class='ginput_right small-12 medium-6 large-4 columns'>
+            <label for='{$field_id}_2' {$sub_label_class_attribute}>{$confirm_password_label}</label>
+            <input type='password' placeholder='Confirm Password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$disabled_text}/>
+          </span>
+          <div class='gf_clear gf_clear_complex'></div>
+        </div>{$strength}";
+    } else {
+      return "<div class='row ginput_complex$class_suffix ginput_container' id='{$field_id}_container'>
+          <span id='{$field_id}_1_container' class='ginput_left small-12 medium-6 large-4 columns'>
+            <input type='password' placeholder='Password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$disabled_text}/>
+            <label for='{$field_id}' {$sub_label_class_attribute}>{$enter_password_label}</label>
+          </span>
+          <span id='{$field_id}_2_container' class='ginput_right small-12 medium-6 large-4 columns'>
+            <input type='password' placeholder='Confirm Password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$disabled_text}/>
+            <label for='{$field_id}_2' {$sub_label_class_attribute}>{$confirm_password_label}</label>
+          </span>
+          <div class='gf_clear gf_clear_complex'></div>
+        </div>{$strength}";
+    }
+}
 
-		$id            = $field->id;
-		$field_id      = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
-		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
-//small-12 medium-6 large-4 columns
-		return sprintf( "<div class='ginput_container'><ul class='row gfield_checkbox' id='%s'>%s</ul></div>", $field_id, $field->get_checkbox_choices( $value, $disabled_text, $form_id ) );
-	}
-	*/
-	}

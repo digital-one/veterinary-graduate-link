@@ -58,7 +58,7 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 						<div class="small-12 medium-8 medium-centered columns">
 <!-- role confirmation -->
 <div id="role-selection" class="notification">
-	<form method="post" action="<?php echo get_template_directory_uri(); ?>/register_redirect.php">
+	<form id="role-selection-form" method="post" action="<?php echo get_template_directory_uri(); ?>/register_redirect.php">
 		<div class="form-body">
 		<p>Are you an:</p>
 		<ul>

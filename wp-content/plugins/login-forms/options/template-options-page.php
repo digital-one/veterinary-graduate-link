@@ -157,7 +157,7 @@ if($pages = get_posts($args)):
 <table class="form-table">
 <tbody>
 <tr>
-<th scope="row"><label for="reset_pwd_expired_key_error_msg">Validation Pattern</label></th>
+<th scope="row"><label for="reset_pwd_valid_pattern">Validation Pattern</label></th>
 <td><input name="reset_pwd_valid_pattern" type="text" id="reset_pwd_valid_pattern" placeholder="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/" value="<?php echo get_option('reset_pwd_valid_pattern') ?>" class="regular-text ltr">
 </td>
 </tr>
@@ -166,11 +166,6 @@ if($pages = get_posts($args)):
 <h3>Update Password Messages</h3>
 <table class="form-table">
 <tbody>
-<tr>
-<th scope="row"><label for="update_pwd_expired_key_error_msg">Expired Key</label></th>
-<td><input name="update_pwd_expired_key_error_msg" type="text" id="update_pwd_expired_key_error_msg" placeholder="Key expired or invalid. Please request password reset again." value="<?php echo get_option('update_pwd_expired_key_error_msg') ?>" class="regular-text ltr">
-</td>
-</tr>
 <tr>
 <th scope="row"><label for="update_pwd_empty_pwd_error_msg">Empty Password</label></th>
 <td><input name="update_pwd_empty_pwd_error_msg" type="text" id="update_pwd_empty_pwd_error_msg" placeholder="Please enter a password" value="<?php echo get_option('update_pwd_empty_pwd_error_msg') ?>" class="regular-text ltr">

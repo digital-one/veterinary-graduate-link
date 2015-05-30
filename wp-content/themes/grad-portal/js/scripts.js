@@ -59,7 +59,7 @@ $('body').on('submit','#role-selection form',function(){
     }
     return false;
   
-  /*  if($('input[name=role]').val()==''){
+  /*  if($('input[name=role]'). val()==''){
         return false;
     }
     return true;*/
@@ -79,16 +79,23 @@ $('.menu-toggle').on('click',function(e){
     }
 
 })
+//hide the mobile menu on scroll
+
+$(window).on('scroll resize',function(){
+    if($('#nav.active').length){
+        $('.menu-toggle').removeClass('active');
+        $('#account-links').show();
+        $('#nav').removeClass('active').fadeOut(300);
+    }
+})
 
 if($('.g-recaptcha').length){
 var _target_li = $('.g-recaptcha').parents('li').eq(0);
-console.log(_target_li);
 _target_li.addClass('small-12 columns');
 }
 
 
 $('body').on('click','.cancel',function(e){
-    console.log('click');
     e.preventDefault();
     hide_notification();
 })
@@ -139,31 +146,72 @@ show_notification = function(_message,_confirm,_callback){
     }
         $('#notification').slideDown(100);
 }
-//gravity form validation hook
 
-gform.addFilter("gform_pre_form_editor_save", "save_form");
-function save_form(){
+//customisation to show candidate alert fields on checkbox select
+
+function show_ca_fields(){
+
+_checkbox = $('#choice_23_1');
+_fields = $('.ca-field');
+
+if($(_checkbox).is(':checked')){
+    _fields.show();
+    }
+
+$('#choice_23_1').on('click',function(){
+    _this = $(this);
+    if($(_this).is(':checked')){
+        _fields.show();
+    } else {
+        _fields.hide();
+    }
+})
+$('body').on('click','#choice_23_1_replace',function(e){
+        _this = $(this);
+      if(_this.hasClass('checked')){
+          _fields.show();
+      } else {
+          _fields.hide();
+      }
+});
 }
-
-$(document).bind('gform_post_render', function(){
-   if(get_url_parameter('updated')){
-    _message = 'Your profile has been updated.';
-        show_notification(_message);
+//show_ca_fields();
+//check if form saved/updated parameter is in url. If so, display relevant confirmation message.
+function saved_form_confirmation(){
+    _message='';
+    if(get_url_parameter('updated')){
+    _message = 'Your profile has been successfully updated.';
+      //  show_notification(_message);
    }
    if(get_url_parameter('saved')){
     _message = 'Thank you for registering. We have sent you an email to confirm your account.';
-        show_notification(_message);
+      //  show_notification(_message);
    }
+   if(_message){
+     setTimeout(function(){
+          show_notification(_message);
+        },1000)
+    }
+}
+saved_form_confirmation(); 
+
+$(document).bind('gform_post_render', function(){
+  
     if($('.validation_error').length){
         var _message = $('.validation_error').text();
         if(_message!=''){
             show_notification(_message); 
+            $('.validation_error').text('');
         }
        // show_notification(_message);
     }
 });
 
 
+init_form_field_replace('login');
+init_form_field_replace('reset-password-form');
+init_form_field_replace('update-password-form');
+init_form_field_replace('role-selection-form');
 
 $(window).on( 'DOMMouseScroll mousewheel', function ( event ) {
   if( event.originalEvent.detail > 0 || event.originalEvent.wheelDelta < 0 ) { 

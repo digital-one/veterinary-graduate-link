@@ -81,7 +81,7 @@ if(!empty($_POST)):
   $redirect = !empty(get_option('login_redirect_page_id')) ? get_permalink(get_option('login_redirect_page_id')) : '';
     $use_remember_me = get_option('login_remember_me') ? 1 : 0;
     //  $status['show_form_id'] = 'login';
-    $this->_user_email = $_POST['user_email'];
+    $this->_user_email = urldecode($_POST['user_email']);
     $this->_user_pass = $_POST['user_pass'];
   $this->_remember = isset($_POST['user_remember']) ? 1 : 0;
   if(empty($this->_user_email) and empty($this->_user_pass)):
@@ -353,7 +353,8 @@ endif;
 	
 */
 	function register_plugin_settings() { 
-	 register_setting( 'login-form-settings-group', 'login_page_id' );
+
+register_setting( 'login-form-settings-group', 'login_page_id' );
 	 register_setting( 'login-form-settings-group', 'reset_pwd_page_id' );
 	 register_setting( 'login-form-settings-group', 'update_pwd_page_id' );
 	 register_setting( 'login-form-settings-group', 'login_remember_me' );
@@ -364,6 +365,14 @@ register_setting( 'login-form-settings-group', 'update_pwd_redirect_page_id');
 	 register_setting( 'login-form-settings-group', 'login_empty_email_error_msg' );
 	 register_setting( 'login-form-settings-group', 'login_empty_pwd_error_msg' );
 	 register_setting( 'login-form-settings-group', 'login_failed_error_msg' );
+   register_setting( 'login-form-settings-group', 'reset_pwd_expired_key_error_msg' );
+   register_setting( 'login-form-settings-group', 'reset_pwd_link_sent_msg' );
+   register_setting( 'login-form-settings-group', 'reset_pwd_link_sent_error_msg' );
+      register_setting( 'login-form-settings-group', 'reset_pwd_valid_pattern' );
+      register_setting( 'login-form-settings-group', 'update_pwd_empty_pwd_error_msg' );
+      register_setting( 'login-form-settings-group', 'update_pwd_no_match_error_msg' );
+      register_setting( 'login-form-settings-group', 'update_pwd_format_error_msg' );
+      register_setting( 'login-form-settings-group', 'update_pwd_success_msg' );
 	}
 
 	function register_form_shortcodes(){

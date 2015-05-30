@@ -1,9 +1,15 @@
 $(function(){
 
-init_form_field_replace = function(){
+init_form_field_replace = function(_form_id){
     //checkbox replacements
+   
+   var _checkboxes = $('input[type=checkbox]');
 
-    var _checkboxes = $('input[type=checkbox]');
+    if(_form_id){
+       _form = $('#'+_form_id);
+       console.log(_form);
+      _checkboxes = $('input[type=checkbox]',_form);
+    }
     _checkboxes.each(function(){
         var _parent_li = $(this).parents('li').eq(0),
             _box = $("<div>", {class: "checkbox"}),
@@ -12,6 +18,7 @@ init_form_field_replace = function(){
         _parent_li.addClass('replace-checkbox');
         //_this.before(_box).hide();
           _this.before(_box);
+          _box.attr('id',_this.attr('id')+'_replace');
         if($(_this).is(':checked')){
             _box.addClass('checked');
         }
@@ -31,8 +38,12 @@ init_form_field_replace = function(){
 
 
     //radio replacements
+var _radios = $('input[type=radio]');
 
-    var _radios = $('input[type=radio]');
+    if(_form_id){
+     _radios = $('input[type=radio]',_form);
+    }
+
     _radios.each(function(){
         var _parent_li = $(this).parents('li').eq(0),
             _box = $("<div>", {class: "radio"}),
@@ -97,10 +108,7 @@ init_form_field_replace = function(){
     })
 
   }
-
-if($('.gfield_html').length<1){
-       init_form_field_replace();
-}
+  
 //init_form_field_replace();
 
 

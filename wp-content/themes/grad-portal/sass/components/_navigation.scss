@@ -91,7 +91,7 @@
 @media #{$medium-up} { 
 
 	#nav{
-		display: block;
+		display: block !important;
 		position: relative;
 		top:auto;
 		left:auto;
@@ -119,6 +119,7 @@
 		a{
 			@include font-size(14px);
 			background-color: white;
+			color: $vgl-blue;
 			&:link,&:visited{
 				text-decoration:none;
 				color: $vgl-blue;
