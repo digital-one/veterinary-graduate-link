@@ -1,4 +1,8 @@
 <?php
+wp_redirect(home_url().'/?activate-success=1');
+exit();
+
+/*
 global $gw_activate_template;
 extract( $gw_activate_template->result );
 $url = is_multisite() ? get_blogaddress_by_id( (int) $blog_id ) : home_url('', 'http');
@@ -31,3 +35,5 @@ echo do_shortcode($banner->post_content);
 </aside>
 </div>
 </div>
+*/
+?>

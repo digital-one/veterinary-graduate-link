@@ -65,6 +65,25 @@ $('body').on('submit','#role-selection form',function(){
     return true;*/
 })
 
+//add option groups to location dropdown field in forms
+
+
+     //Use the class you used for the drop down here, I used ‘custom-opt’
+     $('.locations select option').each(function() {
+        //look for 'start', start a new optgroup with the label 
+        if($(this).val()=='start') {
+            var label = $(this).text();
+            $(this).replaceWith("<optgroup label='"+label+"'>");
+        }
+ 
+        //look for 'end' end the optgroup here
+        if($(this).val()=='end') {
+            $(this).replaceWith('</optgroup>');
+        }
+    });
+
+
+
 $('.menu-toggle').on('click',function(e){
     e.preventDefault();
     _nav = $('#nav')
@@ -181,16 +200,23 @@ function saved_form_confirmation(){
     _message='';
     if(get_url_parameter('updated')){
     _message = 'Your profile has been successfully updated.';
-      //  show_notification(_message);
    }
    if(get_url_parameter('saved')){
     _message = 'Thank you for registering. We have sent you an email to confirm your account.';
-      //  show_notification(_message);
+   }
+   if(get_url_parameter('activate-success')){
+    _message = 'Your account is now activated.';
+   }
+   if(get_url_parameter('activate-error')){
+    _message = 'An error occurred during the activation of your account. Please register again.';
+   }
+   if(get_url_parameter('activate-nokey')){
+    _message = 'An activation key is required. Please register again.';
    }
    if(_message){
      setTimeout(function(){
           show_notification(_message);
-        },1000)
+        },500)
     }
 }
 saved_form_confirmation(); 
@@ -212,6 +238,7 @@ init_form_field_replace('login');
 init_form_field_replace('reset-password-form');
 init_form_field_replace('update-password-form');
 init_form_field_replace('role-selection-form');
+init_form_field_replace('search-form');
 
 $(window).on( 'DOMMouseScroll mousewheel', function ( event ) {
   if( event.originalEvent.detail > 0 || event.originalEvent.wheelDelta < 0 ) { 

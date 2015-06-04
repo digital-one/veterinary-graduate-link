@@ -7,7 +7,7 @@ init_form_field_replace = function(_form_id){
 
     if(_form_id){
        _form = $('#'+_form_id);
-       console.log(_form);
+     //  console.log(_form);
       _checkboxes = $('input[type=checkbox]',_form);
     }
     _checkboxes.each(function(){
@@ -25,12 +25,12 @@ init_form_field_replace = function(_form_id){
         $(_box).add(_label).on('click',function(){
             if(_box.hasClass('checked')){
                 _box.removeClass('checked');
-                $(this).next().prop('checked', false);
-              //  $(this).next().attr('checked', false)
+              //  _this.prop('checked', false);
+           $(this).next('input[type=checkbox]').attr('checked', false)
             } else {
                 _box.addClass('checked');
-               // $(this).next().attr('checked', true)
-                $(this).next().prop('checked', true);
+             $(this).next('input[type=checkbox]').attr('checked', true)
+             //  _this.prop('checked', true);
             }
          
         })
@@ -102,9 +102,18 @@ var _radios = $('input[type=radio]');
         _this = $(this)
         _parent_li = _this.parents('li'), 
         _label = $('.gfield_label',_parent_li).text();
-        _this.select2({
+
+        if(_parent_li.hasClass('multi-select')){
+           _this.select2({
+          placeholder: _label
+        });
+        } else {
+           _this.select2();
+        }
+       
+      /*  _this.select2({
             'placeholder':_label
-        })
+        }) */
     })
 
   }

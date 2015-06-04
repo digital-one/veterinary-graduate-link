@@ -42,55 +42,124 @@
 <h2>Please complete at least one of these fields:</h2>
 </div>
 </header>
-<form>
+<form id="candidate-search" method="post" action="">
 	<div class="gform_body">
 	<ul class="form-body row">
 <li class="small-12 medium-6 large-4 gfield columns">
 <input type="text" name="ref" placeholder="Ref. No" tabindex="1" />
 </li>
-<li class="small-12 medium-6 large-4 gfield columns no-label">
+<li class="small-12 medium-6 large-4 gfield columns no-label multi-select">
 	<label class="gfield_label">Location</label>
-<select name="location"  tabindex="2"><option value="">Location</option></select>
+<select multiple name="locations[]" id="locations" tabindex="2" placeholder="Location">
+	<option value="">All Locations</option>
+	<?php
+       $args = array(
+          'orderby'=>'title',
+          'order'=>'ASC',
+          'hide_empty'=>0
+          );
+    if($terms = get_terms('region',$args)):
+      foreach($terms as $term):
+        //check if region has more than 1 location
+	$args = array(
+    'post_type' => 'cpt-location',
+    'posts_per_page' => -1,
+    'post_status' => 'publish',
+    'tax_query' => array(
+      array(
+      'taxonomy' => 'region',
+      'field' => 'id',
+      'terms' => $term->term_id
+      )
+    ),
+    'orderby' => 'name',
+    'order' => 'ASC'
+    );
+  $locations = get_posts($args);
+  $num_locations = count($locations);
+  if($num_locations>1):
+	echo '<optgroup label="'.$term->name.'">';
+  endif;
+      // get the associated locations
+  if($locations):
+  foreach($locations as $location):
+  	echo '<option value="'.$location->ID.'">'.$location->post_title.'</option>';
+      endforeach;
+    endif;
+     if($num_locations>1):
+	echo '</optgroup>';
+  endif;
+    endforeach;
+    endif;
+    ?>
+</select>
 </li>
 <li class="small-12 medium-6 large-4 gfield columns no-label">
 	<label class="gfield_label">Graduation Year</label>
-<select name="graduation_year"  tabindex="3"><option value="">Graduation Year</option></select>
+<select name="graduation_year"  tabindex="3"><option value="">Graduation Year</option>
+<?php
+ $year = date('Y');
+      for($i=0;$i<2;$i++):
+      	$val = $year-$i;
+      	echo '<option value="'.$val.'">'.$val.'</option>';
+      endfor;
+  ?>
+</select>
 </li>
 <li class="small-12 medium-6 large-4 gfield columns no-label">
 	<label class="gfield_label">University</label>
-<select name="university"  tabindex="4"><option value="">University</option></select>
+<select name="university"  tabindex="4">
+	<option value="">University</option>
+
+<?php
+  $args = array(
+    'post_type' => 'cpt-university',
+    'posts_per_page' => -1,
+    'post_status' => 'publish',
+    'orderby' => 'title',
+    'order' => 'ASC'
+    );
+      if($unis= get_posts($args)):
+        foreach($unis as $uni):
+        	echo '<option value="'.$uni->ID.'">'.$uni->post_title.'</option>';
+          endforeach;
+      endif;
+?>
+</select>
 </li>
 <li class="small-12 medium-6 large-4 gfield columns gfield_checkbox">
-	<div class="half"><input type="checkbox" value="1" name="small-animal" id="small-animal"   tabindex="5" /><label for="small-animal">Small Animal</label></div>
-	<div class="half"><input type="checkbox" value="1" name="farm-animal" id="farm-animal"   tabindex="6" /><label for="small-animal">Farm Animal</label></div>
+	<div class="half"><input type="checkbox" value="small animal" name="small_animal" id="small_animal"   tabindex="5" /><label for="small-animal">Small Animal</label></div>
+	<div class="half"><input type="checkbox" value="farm animal" name="farm_animal" id="farm_animal"   tabindex="6" /><label for="small-animal">Farm Animal</label></div>
 </li>
 <li class="small-12 medium-6 large-4 gfield columns gfield_checkbox">
-	<div class="half"><input type="checkbox" value="1" name="equine" id="equine"   tabindex="7" /><label for="equine">Equine</label></div>
-	<div class="half"><input type="checkbox" value="1" name="exotics" id="exotics"   tabindex="8" /><label for="exotics">Exotics</label></div>
+	<div class="half"><input type="checkbox" value="equine" name="equine" id="equine"   tabindex="7" /><label for="equine">Equine</label></div>
+	<div class="half"><input type="checkbox" value="exotics" name="exotics" id="exotics"   tabindex="8" /><label for="exotics">Exotics</label></div>
 </li>
 <li class="small-12 medium-6 large-4 gfield columns gfield_checkbox">
-<div class="half"><input type="checkbox" value="1" name="medicine" id="medicine"   tabindex="9" /><label for="medicine">Medicine</label></div>
-	<div class="half"><input type="checkbox" value="1" name="surgery" id="surgery"   tabindex="10" /><label for="surgery">Surgery</label></div>
+<div class="half"><input type="checkbox" value="medicine" name="medicine" id="medicine"   tabindex="9" /><label for="medicine">Medicine</label></div>
+	<div class="half"><input type="checkbox" value="surgery" name="surgery" id="surgery"   tabindex="10" /><label for="surgery">Surgery</label></div>
 </li>
 <li class="small-12 medium-6 large-4 gfield columns gfield_checkbox">
-<div class="half"><input type="checkbox" value="1" name="out-of-hours" id="out-of-hours"   tabindex="11" /><label for="out-of-hours">Out of Hours</label></div>
-	<div class="half"><input type="checkbox" value="1" name="weekends" id="weekends"   tabindex="12" /><label for="weekends">Weekends</label></div>
+<div class="half"><input type="checkbox" value="out of hours" name="out_of_hours" id="out_of_hours"   tabindex="11" /><label for="out_of_hours">Out of Hours</label></div>
+	<div class="half"><input type="checkbox" value="weekends" name="weekends" id="weekends"   tabindex="12" /><label for="weekends">Weekends</label></div>
 </li>
 <li class="small-12 medium-6 large-4 columns gfield gfield_checkbox end">
-<div class="half"><input type="checkbox" value="1" name="nights" id="nights"   tabindex="13" /><label for="nights">Nights</label></div>
-	<div class="half"><input type="checkbox" value="1" name="internship" id="internship" tabindex="14" /><label for="internship">Internship</label></div>
+<div class="half"><input type="checkbox" value="nights" name="nights" id="nights"   tabindex="13" /><label for="nights">Nights</label></div>
+	<div class="half"><input type="checkbox" value="internship" name="internship" id="internship" tabindex="14" /><label for="internship">Internship</label></div>
 </li>
 </ul>
 </div>
 <div class="gform_footer row">
 <div class="small-12 columns"><button type="submit" class="icon-button search">Search</button><a href="<?php echo get_permalink(19) ?>" title="My Shortlist" class="icon-button shortlist">My Shortlist</a></div>
 </div>
+<input type="hidden" name="action" id="action" value="candidate_search" />
 </form>
 </section>
 <!--/search form-->
 <!--search results-->
 <section id="search-results" >
 	<div id="posts">
+<?php echo do_shortcode('[candidate-search-results]'); ?>
 		<!--item-->
 <article class="post candidate row">
 <div class="small-12 columns">

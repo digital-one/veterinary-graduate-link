@@ -12,6 +12,71 @@ add_filter( 'gform_pre_render_7', 'change_field_html' );
 add_action("gform_user_registration_validation", "validate_password", 10, 3); //custom validation of the password
 add_filter("gform_user_registration_validation_message", "update_validation_msgs", 10, 2); //change the default username validation msg as were using email address
 
+//populate gravity forms dropdown menus with locations
+add_filter( 'gform_pre_render_1', 'populate_locations' );
+add_filter( 'gform_pre_validation_1', 'populate_locations' );
+add_filter( 'gform_pre_submission_filter_1', 'populate_locations' );
+add_filter( 'gform_admin_pre_render_1', 'populate_locations' );
+
+add_filter( 'gform_pre_render_2', 'populate_locations' );
+add_filter( 'gform_pre_validation_2', 'populate_locations' );
+add_filter( 'gform_pre_submission_filter_2', 'populate_locations' );
+add_filter( 'gform_admin_pre_render_2', 'populate_locations' );
+
+add_filter( 'gform_pre_render_5', 'populate_locations' );
+add_filter( 'gform_pre_validation_5', 'populate_locations' );
+add_filter( 'gform_pre_submission_filter_5', 'populate_locations' );
+add_filter( 'gform_admin_pre_render_5', 'populate_locations' );
+
+add_filter( 'gform_pre_render_6', 'populate_locations' );
+add_filter( 'gform_pre_validation_6', 'populate_locations' );
+add_filter( 'gform_pre_submission_filter_6', 'populate_locations' );
+add_filter( 'gform_admin_pre_render_6', 'populate_locations' );
+
+//populate dropdown menus with unis
+
+add_filter( 'gform_pre_render_1', 'populate_universities' );
+add_filter( 'gform_pre_validation_1', 'populate_universities' );
+add_filter( 'gform_pre_submission_filter_1', 'populate_universities' );
+add_filter( 'gform_admin_pre_render_1', 'populate_universities' );
+
+add_filter( 'gform_pre_render_2', 'populate_universities' );
+add_filter( 'gform_pre_validation_2', 'populate_universities' );
+add_filter( 'gform_pre_submission_filter_2', 'populate_universities' );
+add_filter( 'gform_admin_pre_render_2', 'populate_universities' );
+
+add_filter( 'gform_pre_render_5', 'populate_universities' );
+add_filter( 'gform_pre_validation_5', 'populate_universities' );
+add_filter( 'gform_pre_submission_filter_5', 'populate_universities' );
+add_filter( 'gform_admin_pre_render_5', 'populate_universities' );
+
+add_filter( 'gform_pre_render_6', 'populate_universities' );
+add_filter( 'gform_pre_validation_6', 'populate_universities' );
+add_filter( 'gform_pre_submission_filter_6', 'populate_universities' );
+add_filter( 'gform_admin_pre_render_6', 'populate_universities' );
+
+//populate dropdown menus with graduation years
+
+add_filter( 'gform_pre_render_1', 'populate_graduation_years' );
+add_filter( 'gform_pre_validation_1', 'populate_graduation_years' );
+add_filter( 'gform_pre_submission_filter_1', 'populate_graduation_years' );
+add_filter( 'gform_admin_pre_render_1', 'populate_graduation_years' );
+
+add_filter( 'gform_pre_render_2', 'populate_graduation_years' );
+add_filter( 'gform_pre_validation_2', 'populate_graduation_years' );
+add_filter( 'gform_pre_submission_filter_2', 'populate_graduation_years' );
+add_filter( 'gform_admin_pre_render_2', 'populate_graduation_years' );
+
+add_filter( 'gform_pre_render_5', 'populate_graduation_years' );
+add_filter( 'gform_pre_validation_5', 'populate_graduation_years' );
+add_filter( 'gform_pre_submission_filter_5', 'populate_graduation_years' );
+add_filter( 'gform_admin_pre_render_5', 'populate_graduation_years' );
+
+add_filter( 'gform_pre_render_6', 'populate_graduation_years' );
+add_filter( 'gform_pre_validation_6', 'populate_graduation_years' );
+add_filter( 'gform_pre_submission_filter_6', 'populate_graduation_years' );
+add_filter( 'gform_admin_pre_render_6', 'populate_graduation_years' );
+
 
 /**
 * Gravity Forms Custom Activation Template
@@ -26,6 +91,99 @@ return;
 require_once( $template_path );
 exit();
 } 
+
+function populate_graduation_years($form){
+  foreach ( $form['fields'] as &$field ) :
+        if ( $field->type != 'select' || strpos( $field->cssClass, 'grad-years' ) === false ):
+          continue;
+        endif;
+        $choices = array();
+      $year = date('Y');
+      for($i=0;$i<2;$i++):
+        $choices[] = array('text'=>$year-$i,'value'=>$year-$i);
+      endfor;
+ $field->placeholder = 'Graduation Year';
+    $field->choices = $choices;
+      endforeach;
+       return $form;
+}
+
+function populate_universities( $form){
+   foreach ( $form['fields'] as &$field ) :
+        if ( $field->type != 'select' || strpos( $field->cssClass, 'universities' ) === false ):
+          continue;
+        endif;
+      $choices=array();
+      $args = array(
+    'post_type' => 'cpt-university',
+    'posts_per_page' => -1,
+    'post_status' => 'publish',
+    'orderby' => 'title',
+    'order' => 'ASC'
+    );
+      if($unis= get_posts($args)):
+        foreach($unis as $uni):
+           $choices[] = array('text'=> $uni->post_title, 'value'=>$uni->ID);
+          endforeach;
+        endif;
+      $field->placeholder = 'Universities';
+    $field->choices = $choices;
+    endforeach;
+    return $form;
+}
+
+function populate_locations( $form ) {
+
+  foreach ( $form['fields'] as &$field ) :
+        if ( $field->type != 'multiselect' || strpos( $field->cssClass, 'locations' ) === false ):
+            continue;
+        endif;
+        $choices = array();
+  //get the location regions
+        $args = array(
+          'orderby'=>'title',
+          'order'=>'ASC',
+          'hide_empty'=>0
+          );
+    if($terms = get_terms('region',$args)):
+      foreach($terms as $term):
+        //check if more than 1 location in region
+
+        $args = array(
+    'post_type' => 'cpt-location',
+    'posts_per_page' => -1,
+    'post_status' => 'publish',
+    'tax_query' => array(
+      array(
+      'taxonomy' => 'region',
+      'field' => 'id',
+      'terms' => $term->term_id
+      )
+    ),
+    'orderby' => 'name',
+    'order' => 'ASC'
+    );
+  $locations = get_posts($args);
+  $num_locations = count($locations);
+  if($num_locations>1):
+    $choices[] = array('text' => $term->name, 'value'=>'start');
+  endif;
+      // get the associated locations
+  if($locations):
+  foreach($locations as $location):
+      $choices[] = array('text'=> $location->post_title, 'value'=>$location->ID);
+      endforeach;
+    endif;
+    endforeach;
+    endif;
+    $field->placeholder = 'Locations';
+    $field->choices = $choices;
+    endforeach;
+
+    return $form;
+  }
+
+
 
 
 

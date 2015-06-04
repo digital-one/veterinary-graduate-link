@@ -1,3 +1,7 @@
+<?php
+wp_redirect(home_url().'/?activate-nokey=1');
+exit();
+/*
 <h2><?php _e('Activation Key Required') ?></h2>
 <form name="activateform" id="activateform" method="post" action="<?php echo add_query_arg( array( 'page' => 'gf_activation' ) ); ?>">
     <p>
@@ -8,3 +12,5 @@
         <input id="submit" type="submit" name="Submit" class="submit" value="<?php esc_attr_e('Activate') ?>" />
     </p>
 </form>
+*/
+?>

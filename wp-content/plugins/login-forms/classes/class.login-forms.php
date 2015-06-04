@@ -15,7 +15,8 @@
 
 	function __construct() {
 
-      $this->_use_ajax = !empty(get_option('use_ajax')) ? get_option('use_ajax') : 0;
+    $use_ajax = get_option('use_ajax');
+      $this->_use_ajax = !empty($use_ajax) ? get_option('use_ajax') : 0;
 
   // add_action('wp_ajax_reset_pwd', array($this, 'ajax_reset_pwd')); //logged in user
    // add_action( 'wp_ajax_nopriv_reset_pwd', array($this, 'ajax_reset_pwd')); //not logged in user
@@ -78,7 +79,8 @@ function process_login(){
 if(!empty($_POST)):
     //handle login form post
  $error=false;
-  $redirect = !empty(get_option('login_redirect_page_id')) ? get_permalink(get_option('login_redirect_page_id')) : '';
+$id = get_option('login_redirect_page_id');
+  $redirect = !empty($id) ? get_permalink(get_option('login_redirect_page_id')) : '';
     $use_remember_me = get_option('login_remember_me') ? 1 : 0;
     //  $status['show_form_id'] = 'login';
     $this->_user_email = urldecode($_POST['user_email']);
@@ -151,6 +153,7 @@ function process_reset_password(){
      else:
       $this->_user_email = trim($_POST['user_email']);
       $user_data = get_user_by('email',$this->_user_email); 
+      //print_r($user_data);
       $is_admin = isset($user_data->caps['administrator']) ? true : false;
       if(empty($user_data) || $is_admin)://delete the condition $user_data->caps[administrator] == 1, if you want to allow password reset for admins also
       $msg = get_option('reset_pwd_no_user_msg');
@@ -158,8 +161,8 @@ function process_reset_password(){
       $this->_message = $msg;
       $error = true;
       else:
-        $this->user_login = $user_data->user_login;
-        $this->user_email = $user_data->user_email;
+        $this->_user_login = $user_data->user_login;
+        $this->_user_email = $user_data->user_email;
 
         $this->_user_key = $wpdb->get_var($wpdb->prepare("SELECT user_activation_key FROM $wpdb->users WHERE user_login = %s", $this->_user_email));
         if(empty($this->_user_key))://generate reset key
@@ -171,7 +174,7 @@ function process_reset_password(){
           //$admin =  new login_forms_admin();
           if($this->sendPasswordResetEmail()):
           $msg = get_option('reset_pwd_link_sent_msg');
-        $msg = !empty($msg) ? $msg : $user_data->user_login.' Check your email for the confirmation link to reset your password. url='.strtolower($this->_validate_url() . "action=reset_pwd_confirm&key=".$this->_user_key."&login=" . rawurlencode($user_data->user_login));
+        $msg = !empty($msg) ? $msg : 'Check your email for the confirmation link to reset your password.';
           $this->_message = $msg;
           //redirect to login page
          // $redirect_id = get_option('login_page_id');
@@ -255,7 +258,8 @@ function process_update_password(){
         $this->_message = $msg;
       $error=true;
         endif;
-         $redirect_url = !empty(get_option('login_page_id')) ? get_permalink(get_option('login_page_id')).'?action=reset_success' : '';
+        $id = get_option('login_page_id');
+         $redirect_url = !empty($id) ? get_permalink(get_option('login_page_id')).'?action=reset_success' : '';
       if(!$error):
       //password ok, update user details
      wp_set_password($pwd,$user_id);
@@ -425,14 +429,28 @@ private function _validate_url() {
 		}
 
 	private function sendPasswordResetEmail(){
+    $email = new wp_email('password-reset');
+    $message = $email->get_message();
+    $title = $email->get_title();
+    $user = get_user_by('email',$this->_user_email);
+    $first_name = $user->first_name;
+    $subject = $email->get_subject();
+    $validate_url = $this->_validate_url() . "action=reset_pwd_confirm&key=".$this->_user_key."&login=" . rawurlencode($this->_user_login);
+    $siteurl = get_option('siteurl');
+    $username = $this->_user_login;
+    $find = array('%title%','%first_name%','%site_url%','%username%','%validate_url%');
+        $replace = array($title, $first_name, $siteurl, $username, $validate_url );
+        $html = str_replace($find, $replace, $message);
     //send  password reset confirmation email
+        /*
     $message = __('Someone requested that the password be reset for the following account:') . "\r\n\r\n";
     $message .= get_option('siteurl') . "\r\n\r\n";
     $message .= sprintf(__('Username: %s'), $this->_user_login) . "\r\n\r\n";
     $message .= __('If this was a mistake, just ignore this email and nothing will happen.') . "\r\n\r\n";
     $message .= __('To reset your password, visit the following address:') . "\r\n\r\n";
     $message .= $this->_validate_url() . "action=reset_pwd_confirm&key=".$this->_user_key."&login=" . rawurlencode($this->_user_login) . "\r\n";
-    if ( $message && !wp_mail($this->_user_email, 'Password Reset Request', $message) ):
+    */
+    if ( $message && !wp_mail($this->_user_email, $subject, $html) ):
       return false;
     endif;
     return true;

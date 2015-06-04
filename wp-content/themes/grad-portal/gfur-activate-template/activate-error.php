@@ -1,5 +1,7 @@
 <?php
-
+wp_redirect(home_url().'/?activate-error=1');
+exit;
+/*
 global $gw_activate_template;
     $page = get_post(421); 
 $result = $gw_activate_template->result;
@@ -51,3 +53,5 @@ echo do_shortcode($banner->post_content);
 </aside>
 </div>
 </div>
+*/
+?>

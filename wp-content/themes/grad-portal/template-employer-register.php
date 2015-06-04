@@ -29,6 +29,13 @@
     ?>
 </div>
 </div>
+ <?php
+/*
+ $email = new wp_email('activate-account');
+$message = $email->get_message();
+echo $message;
+*/
+ ?>
 <!--/breadcrumbs-->
 <?php
 //(id, display title, display desc, display inactive, field values, ajax, tab index)

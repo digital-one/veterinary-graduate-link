@@ -80,13 +80,11 @@ class GWActivateTemplate {
         add_action( 'wp_head', array( $this, 'do_activate_header' ) );
        // add_action( 'wp_head', array( $this, 'wpmu_activate_stylesheet' ) );
 
-        get_header();
+      //  get_header();
 
         ?>
-
-        <div id="content" class="widecolumn">
-
-            <?php if ( !$this->has_activation_key() ) {
+<?php /* <div id="content" class="widecolumn"> */ ?>
+<?php if ( !$this->has_activation_key() ) {
 
                 get_template_part( $this->template_folder . '/activate', 'no-key' );
 
@@ -107,7 +105,7 @@ class GWActivateTemplate {
 
             } ?>
 
-        </div>
+    <?php /*    </div> 
 
         <script type="text/javascript">
             var key_input = document.getElementById('key');
@@ -117,7 +115,7 @@ class GWActivateTemplate {
         <?php
 
         get_footer();
-
+*/
     }
 
 }

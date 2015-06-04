@@ -59,11 +59,11 @@ function scripts_and_styles() {
     
 
 		 //google maps api
-	  wp_register_script( 'google_maps_api', "http" . ($_SERVER['SERVER_PORT'] == 443 ? "s" : "") . "://maps.google.com/maps/api/js?sensor=true", false, null );
-	  wp_enqueue_script( 'google_maps_api' );
+	//  wp_register_script( 'google_maps_api', "http" . ($_SERVER['SERVER_PORT'] == 443 ? "s" : "") . "://maps.google.com/maps/api/js?sensor=true", false, null );
+	 // wp_enqueue_script( 'google_maps_api' );
 
-	  wp_register_script(  'gmap', get_stylesheet_directory_uri() . '/js/jquery.gmap.js', array(), null, false  );
-	  wp_enqueue_script( 'gmap' );
+	 // wp_register_script(  'gmap', get_stylesheet_directory_uri() . '/js/jquery.gmap.js', array(), null, false  );
+	 // wp_enqueue_script( 'gmap' );
 
 	 wp_register_script( 'scripts', get_stylesheet_directory_uri() . '/js/scripts.js', array(), null, false  );
 		wp_enqueue_script( 'scripts' );	
