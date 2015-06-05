@@ -4189,6 +4189,10 @@ footer#posts-footer {
   article.post footer .buttons a {
     margin: 0 0 0 20px;
   }
+  /* line 240, ../sass/components/_global.scss */
+  article.post footer .buttons form {
+    display: inline-block;
+  }
 }
 /* line 1, ../sass/components/_notification.scss */
 #notification-panel {
@@ -5724,12 +5728,17 @@ button {
   border-bottom: 1px solid #474747;
 }
 
+/* line 7, ../sass/templates/_search-candidates.scss */
+article.candidate main.profile {
+  display: none;
+}
+
 @media only screen and (min-width: 48rem) {
-  /* line 11, ../sass/templates/_search-candidates.scss */
+  /* line 16, ../sass/templates/_search-candidates.scss */
   #search-results li footer {
     text-align: right;
   }
-  /* line 13, ../sass/templates/_search-candidates.scss */
+  /* line 18, ../sass/templates/_search-candidates.scss */
   #search-results li footer a {
     margin-left: 20px;
     margin-bottom: 0;

@@ -7,8 +7,10 @@ class gradportaluser {
 
 
 		function __construct($user){
+			
 			$this->set_user($user);
-			$this->_user_meta = get_user_meta($this->get_id());
+			//$this->_user_meta = get_user_meta($this->get_id());
+			//$this->_shortlist = $this->_user_meta["_shortlist"][0];	
 		}
 
 		protected function set_user($user) {
@@ -80,6 +82,8 @@ class gradportaluser {
 					endif;
 		}
 
+		
+  			//
 	}
 
 	?>

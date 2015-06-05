@@ -65,6 +65,76 @@ $('body').on('submit','#role-selection form',function(){
     return true;*/
 })
 
+//show candidate profile
+
+$('.icon-button.profile').on('click',function(e){
+    e.preventDefault();
+  var _article = $(this).parents('article'),
+      _profile = $('main.profile',_article),
+      _this = $(this);
+      if(_profile.hasClass('active')){
+        _this.text('Show Profile');
+        _profile.removeClass('active').slideUp(100);
+      } else {
+        _this.text('hide Profile');
+        _profile.addClass('active').slideDown(100);
+      }
+
+
+})
+
+
+/*
+// shortlist button control
+$('form.shortlist a.plus').on('click',function(e){
+  e.preventDefault();
+  _form = $(this).parent('form');
+  ajax_shortlist_add(_form);
+});
+$('form.shortlist a.minus').on('click',function(e){
+  e.preventDefault();
+  _form = $(this).parent('form');
+  ajax_shortlist_remove(_form);
+});
+
+
+ajax_shortlist_add = function(_form){
+var dat = $(_form).find(':input').serialize();
+console.log(dat);
+ $.ajax( {
+    type: "POST",
+    url: MyAjax.ajaxurl,
+    dataType: "json",
+    data: dat,
+    success: function(data) {
+      console.log(data);
+      
+        
+       
+        }
+});
+
+}
+
+ajax_shortlist_remove = function(_form){
+var dat = $(_form).find(':input').serialize();
+console.log(dat);
+ $.ajax( {
+    type: "POST",
+    url: MyAjax.ajaxurl,
+    dataType: "json",
+    data: dat,
+    success: function(data) {
+      console.log(data);
+      
+       
+        }
+} );
+
+
+}
+*/
+
 //add option groups to location dropdown field in forms
 
 

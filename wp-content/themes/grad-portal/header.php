@@ -1,7 +1,10 @@
 <?php 
 global $current_user;
 global $vgl_user;
+global $shortlist;
 $vgl_user = new gradportaluser($current_user);
+$shortlist = new shortlist();
+$shortlist->set_current_user($current_user);
 global $login;
 $login = new login_forms();
 $login->init_form();

@@ -3,6 +3,11 @@
 	margin-bottom: 50px;
 	border-bottom: 1px solid $grey;
 }
+article.candidate{
+	main.profile{
+		display: none;
+	}
+}
 
 @media #{$medium-up} { 
 

@@ -3,6 +3,7 @@ $(function(){
 activate_search = function(){
 $('#candidate-search').on('submit',function(e){
         e.preventDefault();
+
       _form = $(this); 
        _form.off('submit');
     candidate_search(_form);
@@ -10,7 +11,7 @@ $('#candidate-search').on('submit',function(e){
 }
 
 candidate_search = function(_form){
-
+    console.log('search')
 var dat = _form.find(':input').serialize();
  $.ajax( {
     type: "POST",
@@ -18,12 +19,11 @@ var dat = _form.find(':input').serialize();
     dataType: "json",
     data: dat,
     success: function(data) {
-       // console.log(data);
+       console.log(data);
     	if(data.total_results==0){
         _message = 'Sorry, no results found.';
-       // show_notification(_message);
-       // activate_search();
-         _form.submit();
+        show_notification(_message);
+        activate_search();
         } else {
        _form.submit();
         }

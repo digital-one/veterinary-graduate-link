@@ -1,0 +1,176 @@
+<?php
+ /**
+ * Plugin Name: Grad Portal User Shortlist
+ * Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
+ * Description: Shortlist functionality
+ * Version: 0.1
+ * Author: Digital One
+ * Author URI: http://www.digital-one.co.uk
+ * License: Private. Only Digital One customers are allowed to use this plugin
+ */
+  class shortlist {
+
+  	var $_shortlist;
+  	var $_shortlist_user;
+  	var $_user;
+  	var $_user_id;
+
+  	function __construct(){
+  		
+  			
+  		}
+
+  		function set_admin(){
+  			add_action( 'wp_enqueue_scripts', array($this,'enqueue_scripts'), 0 );
+  			add_action( 'wp_loaded', array($this,'set_current_user'), 0 );
+  			add_action('wp_ajax_shortlist_add_me', array($this, 'ajax_add_to_shortlist')); 
+  			add_action( 'wp_ajax_nopriv_shortlist_add_me', array($this, 'ajax_add_to_shortlist')); //not logged in user
+  			add_action('wp_ajax_shortlist_remove_me', array($this, 'ajax_remove_from_shortlist')); 
+  			add_action( 'wp_ajax_nopriv_shortlist_remove_me', array($this, 'ajax_remove_from_shortlist')); 
+  		}
+
+  			function enqueue_scripts(){
+  if(!is_admin()):
+  //wp_deregister_script( 'jquery' );
+    wp_register_script( 'jquery', "http" . ($_SERVER['SERVER_PORT'] == 443 ? "s" : "") . "://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js", false, null );
+    wp_enqueue_script( 'jquery' );
+    wp_register_script( 'shortlist', plugin_dir_url( __FILE__ ). '/libraries/shortlist.js', array(), '1.0.0', false );
+ wp_enqueue_script( 'shortlist' );
+  wp_localize_script( 'shortlist', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+    endif;
+	}
+
+	 function set_current_user($user){
+			global $current_user;
+			$this->_user_id = $current_user->ID;
+	} 
+
+  	function get_shortlist(){
+			if($this->_shortlist = get_user_meta($this->_user_id,'_shortlist',true)):
+				return $this->_shortlist;
+			endif;
+  			return false;
+  		}
+
+  		function get_shortlist_candidates(){
+  			if($this->get_shortlist()):
+  			if (strpos($this->_shortlist,',') !== false):
+  			$_shortlist_arr = explode(',',$this->_shortlist);
+  			else:
+
+  			$_shortlist_arr = array($this->_shortlist);
+  			endif;
+  			endif;
+  			return $_shortlist_arr;
+  		}
+
+  		function has_candidates(){
+  			if($this->get_shortlist()):
+  			$_shortlist_arr = $this->get_shortlist_candidates();
+  			if(count($_shortlist_arr)>0):
+  				return true;
+  			endif;
+  			endif;
+  			return false;
+  		}
+  		function total_shortlist_candidates(){
+  			$total=0;
+  			if($this->get_shortlist()):
+  			$_shortlist_arr = $this->get_shortlist_candidates();
+  			$_total = count($_shortlist_arr);
+  			endif;
+  			return $_total;
+  		}
+
+  		function shortlist_total(){
+  			$_total=0;
+  			if($this->get_shortlist()):
+  			$_shortlist_arr = $this->get_shortlist_candidates();
+  			$_total = count($_shortlist_arr);
+  			endif;
+  			$_label = ' Candidate';
+  			if($_total!=1) $_label = $_label.'s';
+  			return $_total.$_label;
+  		}
+
+  		function candidate_added($_candidate){
+  			if($this->get_shortlist()):
+  				$_shortlist_arr = $this->get_shortlist_candidates();
+  			if(in_array($_candidate,$_shortlist_arr)):
+  				return true;
+			endif;
+			endif;
+		return false;
+  		}
+
+  		function ajax_add_to_shortlist(){
+
+  			$_error = false;
+  			$_user_id  = $_POST['user_id'];
+  			$_candidate = $_POST['candidate_id'];
+  			$_meta = get_user_meta( $_user_id );
+  			if($this->get_shortlist()):
+  				$_shortlist_arr = $this->get_shortlist_candidates();
+  			if(!in_array($_candidate,$_shortlist_arr)):
+  				array_push($_shortlist_arr, $_candidate ); //add the candidate to the shortlist
+  			endif;
+  				$_shortlist_str = implode(',',$_shortlist_arr); //convert back to comma string
+  			else: 
+			$_shortlist_str = $_candidate;
+  			endif;
+  			update_user_meta($_user_id, '_shortlist', $_shortlist_str);
+  			$this->_shortlist = $_shortlist_str;
+  			$_shortlist_length = $this->shortlist_total($_user_id);
+
+  			echo json_encode(array('error'=>$_error,'meta'=>get_user_meta($this->_user_id,'_shortlist',true),'shortlist'=>$_shortlist_str,'candidates'=>$_shortlist_length,'total'=>$this->total_shortlist_candidates()));
+  			die();
+  	}
+
+  		function ajax_remove_from_shortlist(){
+  			$_error=true;
+  			$_user_id  = $_POST['user_id'];
+  			$_candidate = $_POST['candidate_id'];
+  			//if($this->get_shortlist()):
+  			$_shortlist_arr = $this->get_shortlist_candidates();
+  			for($i=0;$i<= count($_shortlist_arr);$i++):
+  				if($_shortlist_arr[$i] == $_candidate):
+  					if(count($_shortlist_arr)>=1):
+  					unset($_shortlist_arr[$i]);
+  				//$_new_shortlist_arr = array_values($_shortlist_arr);
+  				//$_shortlist_arr = $_new_shortlist_arr;
+  					else:
+  						$_shortlist_arr = array();
+  						endif;
+
+  					
+  					
+  					
+  				if(count($_shortlist_arr)>1):
+  				$_shortlist_str = implode(',',$_shortlist_arr);
+  				endif;
+  				if(count($_shortlist_arr)==1):
+  					$_shortlist_str= end($_shortlist_arr);
+  					endif;
+  				if(count($_shortlist_arr)==0):
+  					$_shortlist_str='';
+  				endif;
+  				update_user_meta($_user_id, '_shortlist', $_shortlist_str);
+  				//echo json_encode($_shortlist_arr);
+  				//$this->_shortlist = $_shortlist_str;
+  					$_error= false;
+  					endif;
+  				endfor;
+  				//endif;
+  				$_shortlist_length = count($_shortlist_arr);
+  				echo json_encode(array('error'=>$_error,'meta'=>get_user_meta($this->_user_id,'_shortlist',true),'shortlist'=> $_shortlist_str,'candidates'=>$_shortlist_length,'total'=>0));
+  				
+  				
+  				die();
+  			}
+
+  		
+  }
+  $shortlist = new shortlist();
+  $shortlist->set_admin();
+
+  	

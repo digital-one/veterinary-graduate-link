@@ -90,11 +90,12 @@ return $sql;
 
   	function candidate_search_results(){
       global $wpdb;
+ if(!empty($_POST) and $_POST['search']==1):
   		ob_start();
   		$sql = $this->get_search_query();
    
   $candidates = $wpdb->get_results($sql);
- print_r($candidates);
+ //print_r($candidates);
   		//$user_query = new WP_User_Query( $args );
   		$number = 10;
   		$page = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -104,62 +105,28 @@ return $sql;
 		$total_pages = intval($total_results / $number) + 1;
 		if(!empty($candidates)):
 			foreach($candidates as $user):
-				$candidate = get_user_by('id',$user->ID);
-        $ref = get_user_meta($candidate->ID,'reference',true);
-
-     // echo '<hr />';
-				//$candidate_info = get_userdata($candidate->ID);
-				?>
-				<?php /*
-<!--item-->
-<article class="post candidate row">
-<div class="small-12 columns">
-	<div class="inner-wrap">
-	<div class="row">
-<div class="small-12 columns">
-<header><h3>REF NO: V12302-GA</h3><p><i class="fa fa-graduation-cap"></i>  <strong>GRADUATED FROM:</strong> Glasgow <strong>IN:</strong> April 2011</p><p><i class="fa fa-map-marker"></i> <strong>WILLING TO WORK IN:</strong> Yorkshire &amp; Humberside, Essex, Wales, North East</p>
-</header>
-<div class="row categories">
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Small Animal:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Farm Animal:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Equine:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Exotics:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Medicine:</strong> <i class="fa fa-times"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Surgery:</strong> <i class="fa fa-times"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Out of Hours:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Weekends:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Nights:</strong> <i class="fa fa-times"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns end"><strong>Internship:</strong> <i class="fa fa-times"></i></div>
-	</div>
-	<main class="profile">
-<p>Lorem ipsum dolor sit amet, eu enim nostrum scribentur ius, ei vix suas oporteat. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. </p>
-<p>Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. 
-</p>
-</main>
-<footer><div class="buttons"><a href="" class="icon-button profile">Show Profile</a><a href="" class="icon-button plus">Shortlist Me</a></div></footer>
-</div>
-</article>
-<!--/item-->
-*/ ?>
-			<?php
+      $user_id = $user->ID;
+      //echo $user_id;
+        include( locate_template( 'partials/content-candidate-loop.php' ));
 			endforeach;
 		endif;
 		$output = ob_get_contents();
   		ob_end_clean();
   		return $output;
+      endif;
   	}
 
   	function ajax_search_has_results(){
-  		$args = $this->get_search_args();
-  		$user_query = new WP_User_Query( $args );
-		$total_results = $user_query->total_users;
+      global $wpdb;
+  	$sql = $this->get_search_query();
+    $candidates = $wpdb->get_results($sql);
+		$total_results = count($candidates);
 		if($total_results):
       echo json_encode(array('error'=>false,'total_results'=> $total_results));
 		else:
-    
-			echo json_encode(array('error'=>true,'total_results'=> $total_results));
+    echo json_encode(array('error'=>true,'total_results'=> $total_results));
 		endif;
-		exit();
+		die();
   	}
 //
   }
