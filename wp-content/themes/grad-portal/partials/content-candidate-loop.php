@@ -7,7 +7,11 @@
         $bio = get_user_meta($user->ID,'bio',true);
         $grad_year = get_user_meta($user->ID,'graduation_year',true);
         $locations = get_user_meta($user->ID,'locations',true);
+        if(!is_array($locations)):
         $locations_array = explode(',',$locations);
+        else:
+          $locations_array = $locations;
+        endif;
         $locations_str = "";
         foreach($locations_array as $location_id):
           $location = get_post($location_id);
@@ -15,6 +19,7 @@
             $locations_str.=', ';
             $locations_str.= ucfirst($location->post_title);
         endforeach;
+
         $locations = $locations_str;
         $metas = array(
           array('meta_key'=>'small_animal','meta_label'=>'Small Animal'),
@@ -38,7 +43,7 @@
 	<div class="inner-wrap">
 	<div class="row">
 <div class="small-12 columns">
-<header><h3>REF NO: <?php echo $ref ?></h3><p><i class="fa fa-graduation-cap"></i>  <strong>GRADUATED FROM:</strong> <?php echo $uni->post_title ?> <strong>IN:</strong> <?php echo $grad_year ?></p><p><i class="fa fa-map-marker"></i> <strong>WILLING TO WORK IN:</strong> <?php echo $locations ?></p>
+<header><h3>REF NO: SV-<?php echo $ref ?></h3><p><i class="fa fa-graduation-cap"></i>  <strong>GRADUATED FROM:</strong> <?php echo $uni->post_title ?> <strong>IN:</strong> <?php echo $grad_year ?></p><p><i class="fa fa-map-marker"></i> <strong>WILLING TO WORK IN:</strong> <?php echo $locations ?></p>
 </header>
 <div class="row categories">
   <?php 

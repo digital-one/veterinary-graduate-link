@@ -28,7 +28,7 @@ class candidate_search {
 }
 
 
-  	function get_search_query(){
+  	function get_search_query($number_posts, $order){
 
  $meta = array(
   'reference',
@@ -47,9 +47,11 @@ class candidate_search {
   );
 $join="";
 $and = "";
-$or = "";
 $j=2;
 $c=1;
+
+$or = "";
+
 for($i=0; $i<count($meta);$i++):
 if(isset($_POST[$meta[$i]]) and !empty($_POST[$meta[$i]])):
   $c++;
@@ -72,14 +74,20 @@ $or .= "um".$j.".meta_key ='locations' AND FIND_IN_SET('".$location_id."', um".$
   endforeach;
   $or.=")";
 endif;
-$sql = "SELECT u.ID
-FROM wp_users AS u 
+$sql = "SELECT u.ID, um.meta_value as ref
+FROM wp_users AS u
 LEFT JOIN wp_usermeta AS um1 ON u.ID = um1.user_id";
+$sql.= " LEFT JOIN wp_usermeta um ON u.ID = um.user_id AND um.meta_key = 'reference'";
 $sql.= $join;
-$sql.= " WHERE  um1.meta_key = 'wp_capabilities' AND um1.meta_value LIKE '%candidate%'";
+$sql.= " WHERE um1.meta_key = 'wp_capabilities' AND um1.meta_value LIKE '%candidate%'";
 $sql.= $and;
 $sql.= $or;
-
+if(isset($_REQUEST['page'])):
+  $page =  $_REQUEST['page'];
+  $start = $page * 10;
+$sql.= ' LIMIT '.$start.', '.$number_posts;
+  endif;
+$sql.= ' ORDER BY ref '.$order;
 return $sql;
   	}
 
@@ -88,12 +96,17 @@ return $sql;
   	}
 
 
-  	function candidate_search_results(){
+  	function candidate_search_results($atts){
       global $wpdb;
- if(!empty($_POST) and $_POST['search']==1):
+       extract (shortcode_atts(array(
+            'order'=>'DESC',
+            'number_posts' => 10
+            ),$atts));
+
+ if(!empty($_REQUEST) and $_REQUEST['search']==1):
   		ob_start();
-  		$sql = $this->get_search_query();
-   
+  		$sql = $this->get_search_query($number_posts,$order);
+    echo $sql;
   $candidates = $wpdb->get_results($sql);
  //print_r($candidates);
   		//$user_query = new WP_User_Query( $args );

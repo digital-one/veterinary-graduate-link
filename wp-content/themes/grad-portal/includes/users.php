@@ -15,6 +15,7 @@ function save_extra_profile_fields( $user_id ) {
     $user = get_user_by('id',$user_id);
       $gp_user = new gradportaluser($user);
       if($gp_user->is_candidate()):
+
         $out_of_hours = isset($_POST['out_of_hours']) ? $_POST['out_of_hours'] : '';
         $weekends = isset($_POST['weekends']) ? $_POST['weekends'] : '';
         $nights = isset($_POST['nights']) ? $_POST['nights'] : '';
@@ -26,6 +27,7 @@ function save_extra_profile_fields( $user_id ) {
         $medicine = isset($_POST['medicine']) ? $_POST['medicine'] : '';
         $surgery = isset($_POST['surgery']) ? $_POST['surgery'] : '';
         $locations = isset($_POST['locations']) ? $_POST['locations'] : '';
+         update_user_meta( $user_id, 'reference', $_POST['reference'] );
      update_user_meta( $user_id, 'telephone_no', $_POST['telephone_no'] );
      update_user_meta( $user_id, 'mobile_no', $_POST['mobile_no'] );
      update_user_meta( $user_id, 'postcode', $_POST['postcode'] );
@@ -83,6 +85,7 @@ function show_extra_profile_fields($user){
 <h3>Candidate Profile Information</h3>
 <table class="form-table">
 <tbody>
+  <tr><th><label for="reference">Reference</label></th><td><input id="reference" class="regular-text" type="text" value="<?php echo esc_attr( get_the_author_meta( 'reference', $user->ID))?>" name="reference" /></td></tr>
 <tr><th><label for="telephone_no">Telephone</label></th><td><input id="telephone_no" class="regular-text" type="text" value="<?php echo esc_attr( get_the_author_meta( 'telephone_no', $user->ID))?>" name="telephone_no" /></td></tr>
 <tr><th><label for="mobile_no">Mobile</label></th><td><input id="mobile_no" class="regular-text" type="text" value="<?php echo  esc_attr( get_the_author_meta( 'mobile_no', $user->ID)) ?>" name="mobile_no" /></td></tr>
 <tr><th><label for="postcode">Postcode</label></th><td><input id="postcode" class="regular-text" type="text" value="<?php echo  esc_attr( get_the_author_meta( 'postcode', $user->ID)) ?>" name="postcode" /></td></tr>
