@@ -3,8 +3,8 @@ global $vgl_user;
 global $shortlist;
 ?>
 	<!--breadcrumbs-->
-	<div id="page-header" class="row">
-<div class="small-12 columns">
+	<div id="page-header">
+
 	<div class="breadcrumbs">
 <?php if(function_exists('bcn_display')):
         bcn_display();
@@ -21,6 +21,6 @@ global $shortlist;
 </span> in <a href="<?php echo get_permalink(19) ?>">your shortlist</a></span></div>
 <?php endif ?>
 
-</div>
+
 </div>
 <!--/breadcrumbs-->
