@@ -20,6 +20,9 @@
 	.notification{
 		display: none;
 		padding: 20px 0 10px;
+		p{
+			margin-bottom: 0;
+		}
 	}
 	&.reset_success{
 		.notification{
@@ -89,6 +92,8 @@
 		}
 	}
 	menu.confirm{
+		@include centered-menu;
+		padding-top:20px;
 		li{
 			margin:0 10px;
 		}

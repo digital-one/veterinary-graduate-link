@@ -10,7 +10,10 @@ $('body').on('click','form.shortlist a.plus',function(e){
 $('body').on('click','form.shortlist a.minus',function(e){
   e.preventDefault();
   _form = $(this).parent('form');
-  ajax_shortlist_remove(_form);
+   show_notification('Are you sure you want to remove this candidate from your shortlist?',1,function(){
+      ajax_shortlist_remove(_form);
+   });
+
 });
 
 
@@ -28,13 +31,10 @@ var dat = $(_form).find(':input').serialize();
         $('.shortlist-link span.count').html(data.candidates);
         $('.icon-button',_form).removeClass('plus').addClass('minus').text('Remove Me');
          $('input[name=action]',_form).val('shortlist_remove_me');
-         if(data.total==0){
-          $('.icon-button.shortlist').hide();
-          $('.shortlist-link').hide();
-         } else {
-          $('.icon-button.shortlist').show();
-          $('.shortlist-link').show();
-         }
+         $('.icon-button.shortlist').show();
+         $('.shortlist-link').show();
+         show_notification('Candidate has been added to your shortlist');
+        
       }
       
         }
@@ -62,6 +62,7 @@ var dat = $(_form).find(':input').serialize();
           $('.icon-button.shortlist').show();
           $('.shortlist-link').show();
          }
+         //show_notification('Are you sure you want to remove this candidate from your shortlist?',1);
 
        }
       

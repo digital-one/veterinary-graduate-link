@@ -177,11 +177,9 @@ global $shortlist;
 <!--/search form-->
 <!--search results-->
 <section id="search-results" >
-	<div id="posts">
+	<?php /* <div id="posts"> */ ?>
 <?php echo do_shortcode('[candidate-search-results]'); ?>
-
-</div>
-<footer id="posts-footer"><a href="" class="more-posts"><i class="fa fa-cog fa-spin"></i> Loading more results</a></footer>
+  <?php /* </div> */ ?>
 </section>
 
 <!--search results-->

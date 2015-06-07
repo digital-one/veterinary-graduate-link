@@ -4219,19 +4219,23 @@ footer#posts-footer {
   display: none;
   padding: 20px 0 10px;
 }
-/* line 26, ../sass/components/_notification.scss */
+/* line 23, ../sass/components/_notification.scss */
+#notification-panel .notification p {
+  margin-bottom: 0;
+}
+/* line 29, ../sass/components/_notification.scss */
 #notification-panel.reset_success .notification#login-form {
   display: block;
 }
-/* line 33, ../sass/components/_notification.scss */
+/* line 36, ../sass/components/_notification.scss */
 #notification-panel.reset_pwd_confirm .notification#update-password-form {
   display: block;
 }
-/* line 40, ../sass/components/_notification.scss */
+/* line 43, ../sass/components/_notification.scss */
 #notification-panel.invalid_key .notification#reset-password-form {
   display: block;
 }
-/* line 45, ../sass/components/_notification.scss */
+/* line 48, ../sass/components/_notification.scss */
 #notification-panel a.close {
   top: 0;
   right: 0;
@@ -4239,7 +4243,7 @@ footer#posts-footer {
   left: auto;
   position: absolute;
 }
-/* line 48, ../sass/components/_notification.scss */
+/* line 51, ../sass/components/_notification.scss */
 #notification-panel .form-body {
   width: 100%;
   position: relative;
@@ -4260,30 +4264,30 @@ footer#posts-footer {
   position: relative;
   right: 50%;
 }
-/* line 52, ../sass/components/_notification.scss */
+/* line 55, ../sass/components/_notification.scss */
 #notification-panel .form-body li {
   margin: 0 10px;
 }
-/* line 56, ../sass/components/_notification.scss */
+/* line 59, ../sass/components/_notification.scss */
 #notification-panel li.remember {
   text-align: center;
   margin-bottom: 20px;
 }
-/* line 59, ../sass/components/_notification.scss */
+/* line 62, ../sass/components/_notification.scss */
 #notification-panel li.remember div.checkbox-wrap {
   margin: 0 auto;
   display: inline-block;
 }
-/* line 66, ../sass/components/_notification.scss */
+/* line 69, ../sass/components/_notification.scss */
 #notification-panel .gform_footer .buttons {
   display: inline-block;
   margin: 0 auto 10px;
 }
-/* line 70, ../sass/components/_notification.scss */
+/* line 73, ../sass/components/_notification.scss */
 #notification-panel .gform_footer .buttons .icon-button {
   margin: 0 20px 20px 20px;
 }
-/* line 75, ../sass/components/_notification.scss */
+/* line 78, ../sass/components/_notification.scss */
 #notification-panel .gform_footer .notification-btn {
   height: 40px;
   line-height: 40px;
@@ -4291,19 +4295,40 @@ footer#posts-footer {
   width: 100%;
   display: block;
 }
-/* line 84, ../sass/components/_notification.scss */
+/* line 87, ../sass/components/_notification.scss */
 #notification-panel .form-footer {
   display: block;
 }
-/* line 87, ../sass/components/_notification.scss */
+/* line 90, ../sass/components/_notification.scss */
 #notification-panel .form-footer a, #notification-panel .form-footer button {
   margin: 0 15px;
 }
-/* line 92, ../sass/components/_notification.scss */
+/* line 94, ../sass/components/_notification.scss */
+#notification-panel menu.confirm {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding-top: 20px;
+}
+/* line 5, ../sass/helpers/mixins/_centered-menu.scss */
+#notification-panel menu.confirm ul {
+  clear: left;
+  float: left;
+  position: relative;
+  left: 50%;
+  text-align: center;
+}
+/* line 11, ../sass/helpers/mixins/_centered-menu.scss */
+#notification-panel menu.confirm ul li {
+  display: inline-block;
+  position: relative;
+  right: 50%;
+}
+/* line 97, ../sass/components/_notification.scss */
 #notification-panel menu.confirm li {
   margin: 0 10px;
 }
-/* line 95, ../sass/components/_notification.scss */
+/* line 100, ../sass/components/_notification.scss */
 #notification-panel menu.confirm a {
   width: 50px;
   height: 50px;
@@ -4321,18 +4346,18 @@ footer#posts-footer {
   color: white;
   text-transform: uppercase;
 }
-/* line 106, ../sass/components/_notification.scss */
+/* line 111, ../sass/components/_notification.scss */
 #notification-panel menu.confirm a:link, #notification-panel menu.confirm a:visited {
   border: 4px solid white;
 }
-/* line 109, ../sass/components/_notification.scss */
+/* line 114, ../sass/components/_notification.scss */
 #notification-panel menu.confirm a:hover, #notification-panel menu.confirm a:active {
   background-color: white;
   color: #2a3644;
 }
 
 @media only screen and (min-width: 30rem) {
-  /* line 125, ../sass/components/_notification.scss */
+  /* line 130, ../sass/components/_notification.scss */
   #notification-panel .gform_footer .buttons .icon-button {
     margin: 0 20px;
   }

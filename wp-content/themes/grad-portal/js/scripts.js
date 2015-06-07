@@ -65,6 +65,79 @@ $('body').on('submit','#role-selection form',function(){
     return true;*/
 })
 
+
+//candidate results pagination
+
+var _loadElement =  '#posts',
+    _resultsElement = '#search-results', //only need this as no results are initially shown on page
+    _pagingElement = '#posts-footer',
+    _btnElement = 'a.more-posts';
+
+load_posts = function(){
+
+if($(_loadElement).length){
+var _windowMiddle = $(window).height()/2,
+  _windowHeight = $(window).height(),
+  _offset = $(_resultsElement).offset(),
+  _postsHeight = $(_resultsElement).height(),
+  _scrollTop = $(window).scrollTop(),
+  _postsBottom = _offset.top + _postsHeight,
+  _scrollAmount  = _postsBottom - _windowMiddle,
+  _footerHeight = $(_pagingElement).outerHeight(),
+  _lastScrollTop,
+  _waypoint = (_postsHeight - _windowHeight) + 400;
+if(_scrollTop > _waypoint && _scrollDirection=='down'){
+  $(_btnElement).trigger('click');
+}
+if(_lastScrollTop < _scrollTop){
+  _scrollDirection='down';
+} else {
+  _scrollDirection='up';
+}
+  _lastScrollTop = _scrollTop;
+}
+}
+
+load_posts_click = function(e){
+
+  e.preventDefault();
+  var _this = e.currentTarget,
+    _url = $(_this).attr('href');
+   // _loadElement =  '#posts',
+  //  _pagingElement = '#posts-footer',
+  //  _btnElement = 'a.more-posts';
+
+    if(!$(_btnElement).hasClass('end')){
+  $(_this).data("label",$(_this).text());
+  $(window).off('scroll',load_posts); //stop the scroll action
+  $(_btnElement).off('click', load_posts_click); //stop the click action
+  $(_this).addClass('loading');
+
+  $.get(_url).done(function(data){
+  $(_btnElement).on('click', load_posts_click);  
+  $(window).on('scroll',load_posts);
+  $(_btnElement).removeClass('loading');
+  var _obj = $(data).find(_loadElement),
+    _paging = $(data).find(_pagingElement),
+    _btn = $(data).find(_btnElement);
+    _items = _obj.children();
+    $(_pagingElement).remove();
+     $(_loadElement).append(_items);
+    if(_paging!=null){
+  $(_loadElement).after(_paging);
+    }
+  //$(_this).attr('href',_btn.attr('href')); //update the paging link
+  //$(_this).attr('class',_btn.attr('class'));
+ 
+  //_container.append(_items).masonry('appended',_items);
+  });
+  }
+}
+
+$('body').on('click','a.more-posts',load_posts_click);
+$(window).on('scroll',load_posts);
+
+
 //show candidate profile
 
 $('.icon-button.profile').on('click',function(e){
@@ -206,6 +279,22 @@ $('.notification-btn').on('click',function(e){
      $('.menu-toggle').hide();
 }
 })
+show_overlay = function(){
+  $('body').prepend('<div id="overlay" />');
+  $('#overlay').css({
+    position:'fixed',
+    left: '0',
+    top: '0',
+    display: 'block',
+    width: '100%',
+    height: '100%',
+    'z-index': 9999,
+    'background-color': 'transparent'
+  })
+}
+hide_overlay = function(){
+  $('#overlay').remove();
+}
 // notification message
 reset_notification = function(){
     $('#notification-panel .notification').each(function(){
@@ -217,21 +306,35 @@ hide_notification = function(){
     $('#notification-panel .active').slideUp(100).removeClass('active');
     $('#account-links').show();
     $('.menu-toggle').show();
+    hide_overlay();
 }
 show_notification = function(_message,_confirm,_callback){
+  show_overlay();
     _confirm = typeof _confirm !== 'undefined' ? _confirm : 0;
     _callback = typeof _callback !== 'undefined' ? _callback : 0;
-    $('#notification').html(_message).addClass('active');
+    $('#notification .confirm').hide();
+    $('#notification').addClass('active');
+    $('#notification p').html(_message);
     $('#account-links').hide();
     $('.menu-toggle').hide();
     if(_confirm){
-       // $('#notification .confirm').show();
+       $('#notification .confirm').show();
     } else {
       //  $('#notification .confirm').hide();
         setTimeout(function(){
           hide_notification();
         },4000)
 
+    }
+    if(_callback){
+      $('#notification .confirm .yes').on('click',function(e){
+        e.preventDefault();
+        _callback();
+        hide_notification();
+      })
+      $('#notification .confirm .no').on('click',function(e){
+        hide_notification();
+      })
     }
         $('#notification').slideDown(100);
 }

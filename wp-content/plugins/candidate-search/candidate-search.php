@@ -28,7 +28,7 @@ class candidate_search {
 }
 
 
-  	function get_search_query($number_posts, $order){
+  	function get_search_query($page,$number_posts, $order){
 
  $meta = array(
   'reference',
@@ -82,12 +82,14 @@ $sql.= $join;
 $sql.= " WHERE um1.meta_key = 'wp_capabilities' AND um1.meta_value LIKE '%candidate%'";
 $sql.= $and;
 $sql.= $or;
-if(isset($_REQUEST['page'])):
-  $page =  $_REQUEST['page'];
-  $start = $page * 10;
+
+$sql.= ' ORDER BY ref '.$order;
+
+if($page):
+  $start = ($page - 1) * $number_posts;
 $sql.= ' LIMIT '.$start.', '.$number_posts;
   endif;
-$sql.= ' ORDER BY ref '.$order;
+
 return $sql;
   	}
 
@@ -97,25 +99,32 @@ return $sql;
 
 
   	function candidate_search_results($atts){
+      global $post;
       global $wpdb;
        extract (shortcode_atts(array(
             'order'=>'DESC',
-            'number_posts' => 10
+            'number_posts' => 2
             ),$atts));
 
- if(!empty($_REQUEST) and $_REQUEST['search']==1):
+ if(!empty($_REQUEST) and $_REQUEST['search']==1 or get_query_var('paged')):
   		ob_start();
-  		$sql = $this->get_search_query($number_posts,$order);
-    echo $sql;
-  $candidates = $wpdb->get_results($sql);
+    $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
+  	$sql = $this->get_search_query(0, -1,$order);
+    //echo $sql.'<hr />';
+    $all_candidates = $wpdb->get_results($sql);
+    $total_candidates = count($all_candidates);
+    $sql = $this->get_search_query($page, $number_posts,$order);
+    // echo $sql.'<hr />';
+    $candidates = $wpdb->get_results($sql);
  //print_r($candidates);
   		//$user_query = new WP_User_Query( $args );
-  		$number = 10;
+
   		$page = (get_query_var('paged')) ? get_query_var('paged') : 1;
-  		$offset = ($page - 1) * $number;
+  		//$offset = ($page - 1) * $number;
   		//$candidates = $user_query->get_results();
       $total_results = count($candidates);
-		$total_pages = intval($total_results / $number) + 1;
+      $total_pages = intval($total_candidates/ $number_posts) + 1;
+echo '<div id="posts">';
 		if(!empty($candidates)):
 			foreach($candidates as $user):
       $user_id = $user->ID;
@@ -123,6 +132,28 @@ return $sql;
         include( locate_template( 'partials/content-candidate-loop.php' ));
 			endforeach;
 		endif;
+echo '</div>';
+   $current_page = max(1, get_query_var('paged'));
+    if ($current_page < $total_pages):
+  $next_page = $current_page+1;
+    echo '<footer id="posts-footer"><a href="'.get_permalink($post->ID).'page/'.$next_page.'/" class="more-posts"><i class="fa fa-cog fa-spin"></i> Loading more results</a></footer>';
+endif;
+/*
+    if ($total_candidates > $total_results):
+        echo '<div id="pagination" class="clearfix">';
+        echo '<span class="pages">Pages:</span>';
+          $current_page = max(1, get_query_var('paged'));
+          echo paginate_links(array(
+                'base' => get_pagenum_link(1) . '%_%',
+                'format' => 'page/%#%/',
+                'current' => $current_page,
+                'total' => $total_pages,
+                'prev_next'    => false,
+                'type'         => 'list',
+            ));
+        echo '</div>';
+    endif;
+*/
 		$output = ob_get_contents();
   		ob_end_clean();
   		return $output;
@@ -131,9 +162,11 @@ return $sql;
 
   	function ajax_search_has_results(){
       global $wpdb;
-  	$sql = $this->get_search_query();
+  	$sql = $this->get_search_query(0, -1,'DESC');
     $candidates = $wpdb->get_results($sql);
 		$total_results = count($candidates);
+   // echo json_encode(array('sql'=>$sql,'results'=>$total_results));
+   // die();
 		if($total_results):
       echo json_encode(array('error'=>false,'total_results'=> $total_results));
 		else:
