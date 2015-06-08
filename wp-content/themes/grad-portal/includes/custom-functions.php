@@ -173,9 +173,32 @@ function comment_template($comment, $args, $depth) {
         }
 
 
+function get_archives_link_mod ( $link_html ) {
 
+$month='';
+if(!empty($_SESSION)):
+  $month = $_SESSION['month'];
+endif;
+if(!empty($_REQUEST)):
+  $month = $_REQUEST['month'];
+endif;
 
-
+if(!empty($month)):
+//  http://gradportal.localhost/2015/06/
+  preg_match ("/value='(.+?)'/", $link_html, $url);
+  $temp = explode('/',$month);
+  $post_month = $temp[4];
+  $post_year = $temp[3];
+  $link = explode('/',$url[1]);
+  $link_month = $link[4];
+  $link_year = $link[3];
+  if($link_month == $post_month and $link_year == $post_year):
+     $link_html = str_replace("<option", "<option selected='selected'", $link_html);
+    endif;
+    
+endif;
+return $link_html;
+}
 
 
 class subMenu extends Walker_Nav_Menu {

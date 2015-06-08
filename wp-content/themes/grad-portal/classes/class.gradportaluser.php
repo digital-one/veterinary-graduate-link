@@ -77,7 +77,7 @@ class gradportaluser {
 			return $this->_user_meta["postcode"][0];
 		}
 		public function get_telephone(){
-			return $this->_user_meta["telephone"][0];
+			return $this->_user_meta["telephone_no"][0];
 		}
 		public function get_email() {
 			return $this->user_email;

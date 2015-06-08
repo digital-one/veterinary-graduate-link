@@ -20,16 +20,7 @@
 <main id="main" role="main">
 	<div class="row">
 		<div class="xsmall-12 small-9 small-centered medium-uncentered medium-12 columns">
-		<!--breadcrumbs-->
-<div id="page-header">
-	<div class="breadcrumbs">
-<?php if(function_exists('bcn_display')):
-        bcn_display();
-    endif;
-    ?>
-</div>
-</div>
-<!--/breadcrumbs-->
+<?php get_template_part('partials/content','breadcrumbs' );  ?>
 <?php
 //(id, display title, display desc, display inactive, field values, ajax, tab index)
 gravity_form(6, false, false, false, '', true, 1);

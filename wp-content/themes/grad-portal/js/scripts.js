@@ -73,6 +73,11 @@ var _loadElement =  '#posts',
     _pagingElement = '#posts-footer',
     _btnElement = 'a.more-posts';
 
+
+refresh_vars=  function(){
+  _isMobile = $(window).width() < 768;
+}
+
 load_posts = function(){
 
 if($(_loadElement).length){
@@ -252,7 +257,7 @@ $(window).on('scroll resize',function(){
 })
 
 //make gravity forms place nice with foundation markup
-$('.gform_body').addClass('row');
+$('.page-template-template-candidate-register .gform_body, .page-template-template-employer-register .gform_body, .page-template-template-employer-profile .gform_body, .page-template-template-candidate-profile .gform_body').addClass('row');
 
 if($('.g-recaptcha').length){
 var _target_li = $('.g-recaptcha').parents('li').eq(0);
@@ -278,8 +283,10 @@ $('.notification-btn').on('click',function(e){
     reset_notification();
     _elms.removeClass('active');
      _target.slideDown(100).addClass('active');
+     if(_isMobile){
      $('#account-links').hide();
      $('.menu-toggle').hide();
+     }
 }
 })
 show_overlay = function(){
@@ -307,8 +314,10 @@ reset_notification = function(){
 }
 hide_notification = function(){
     $('#notification-panel .active').slideUp(100).removeClass('active');
+    if(_isMobile){
     $('#account-links').show();
     $('.menu-toggle').show();
+    }
     hide_overlay();
 }
 show_notification = function(_message,_confirm,_callback){
@@ -336,6 +345,7 @@ show_notification = function(_message,_confirm,_callback){
         hide_notification();
       })
       $('#notification .confirm .no').on('click',function(e){
+         e.preventDefault();
         hide_notification();
       })
     }
@@ -398,6 +408,10 @@ function saved_form_confirmation(){
    if(get_url_parameter('account-deleted')){
     _message = 'Your account has been successfully deleted.';
    }
+   if(get_url_parameter('shortlist-sent')){
+    _message = 'Your shortlist has been successfully sent.';
+   }
+   
    if(_message){
      setTimeout(function(){
           show_notification(_message);

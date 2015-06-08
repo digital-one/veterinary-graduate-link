@@ -122,6 +122,11 @@ button{
 	label{
 		display: none;
 	}
+	input{
+		&:first-child{
+			margin-bottom:10px;
+		}
+	}
 }
 .ginput_container{
 	display: block;
@@ -206,6 +211,18 @@ button{
 }
 .ca-field{
 	display: none;
+}
+#gform_9{
+	.gform_body{
+		display: none;
+	}
+	.gform_footer{
+		margin-top: 0;
+		padding-top:0;
+		width:240px;
+		display: inline-block;
+		float: right;
+	}
 }
 
 /* ========================= Select2 =========================  */
@@ -548,6 +565,13 @@ button{
 	.gfield_checkbox{
 		li{
 			margin-bottom: 0;
+		}
+	}
+	.ginput_complex{
+		input{
+			&:first-child{
+				margin-bottom:0px;
+			}
 		}
 	}
 

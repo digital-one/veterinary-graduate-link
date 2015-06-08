@@ -32,8 +32,10 @@ global $vgl_user;
 	if($shortlist->has_candidates()):
 	$candidates = $shortlist->get_shortlist_candidates();
 foreach($candidates as $user_id):
+	if(get_user_by('id',$user_id)): //check if user exists
   	//echo $user_id;
     include( locate_template( 'partials/content-candidate-loop.php' ));
+	endif;
 		endforeach;
 	else:
  include( locate_template( 'partials/content-no-candidates.php' ));
@@ -44,9 +46,9 @@ foreach($candidates as $user_id):
 <footer>
 <?php
 //(id, display title, display desc, display inactive, field values, ajax, tab index)
-gravity_form(9, false, false, false, '', false, 1);
+gravity_form(9, false, false, false, '', true, 1);
 ?>
-	<a href="" class="icon-button tick align-right">Submit List</a>
+	<?php /* <a href="" class="icon-button tick align-right">Submit List</a> */ ?>
 
 <?php 
 if(isset($_SESSION)):

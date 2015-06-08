@@ -148,10 +148,17 @@ article.post{
 		border:4px solid $vgl-blue;
 		margin-bottom: 20px;
 		@include border-radius(10px);
+		position: relative;
+		overflow: hidden;
 		&:before{
 			content:"";
 			padding-top:100%;
 			display: block;
+		}
+		img{
+			@include abs-pos(0,auto,auto,0);
+			width:100%;
+			height:auto;
 		}
 	}
 	.inner-wrap{

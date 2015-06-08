@@ -6,7 +6,8 @@ add_filter( 'gform_field_input', 'change_checkbox_structure', 10, 5 );
 add_filter( 'gform_field_input', 'change_radio_structure', 10, 5 );
 add_filter( 'gform_submit_button', 'form_submit_button', 10, 2 );
 add_filter( 'gform_ajax_spinner_url', 'custom_gform_spinner' );
-
+add_filter( 'excerpt_more', 'new_excerpt_more' );
+add_filter("gform_confirmation_anchor", create_function("","return false;")); //return false after ajax submit
 
 add_filter( 'gform_pre_render_7', 'change_field_html' );
 add_action("gform_user_registration_validation", "validate_password", 10, 3); //custom validation of the password
@@ -85,7 +86,7 @@ add_filter('gform_field_value_user_email', 'email_population');
 add_filter('gform_field_value_user_telephone', 'telephone_population');
 add_filter('gform_field_value_user_postcode', 'postcode_population');
 add_filter('gform_field_value_user_shortlist', 'shortlist_population');
-
+add_filter('gform_field_value_user_reference', 'reference_population');
 add_filter( 'gform_notification', 'change_shortlist_user_email', 10, 3 ); //change the user notification email address to be dynamic
 
 function change_shortlist_user_email( $notification, $form, $entry ) {
@@ -135,6 +136,17 @@ function shortlist_population(){
   $shortlist = new shortlist();
   $shortlist->set_current_user($current_user);
   return $shortlist->get_shortlist_candidate_refs();
+}
+function reference_population(){
+   global $wpdb;
+    $sql = "SELECT u.*, um.meta_value as ref FROM wp_users as u LEFT JOIN wp_usermeta um ON u.ID = um.user_id AND um.meta_key = 'reference'  LEFT JOIN wp_usermeta AS um1 ON u.ID = um1.user_id  WHERE um1.meta_key = 'wp_capabilities' AND um1.meta_value LIKE '%candidate%' AND u.ID = um.user_id AND um.meta_key='reference'  ORDER By user_registered DESC LIMIT 1";
+    $candidate = $wpdb->get_row($sql);
+    $ref = $candidate->ref;
+    //$ref = get_user_meta($candidate->ID,'reference',true);
+    $next_ref = ($ref+1);
+    if($next_ref<10000) $leading='00';
+    if($next_ref>= 10000  and $next_ref < 100000) $leading='0';
+    return $leading.$next_ref;
 }
 
 /**
@@ -666,4 +678,14 @@ $form = RGFormsModel::get_form_meta($form_id, true);
         </div>{$strength}";
     }
 }
+
+
+// Change default excerpt
+function new_excerpt_more( $more ) {
+  //return ' <a class="read-more" href="'. get_permalink( get_the_ID() ) . '">' . __('Read More', 'your-text-domain') . '</a>';
+  return '&hellip;';
+}
+
+
+
 

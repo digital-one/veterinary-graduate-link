@@ -1,76 +1,75 @@
+<?php /* Template Name: Single */ ?>
 <?php get_header() ?>
-	<div id="content" class="row">
-<!--main content-->
-<main id="main" role="main" class="small-12 medium-9 columns">
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<?php
+$class='';
+$has_pic = false;
+if(has_post_thumbnail()):
+list($src,$w,$h) = wp_get_attachment_image_src(get_post_thumbnail_id(),'square-image');
+$class='pic ';
+$has_pic = true;
+endif;
+?>
+<!--intro-->
+<section id="intro" class="blog-color">
 <div class="row">
-
-<!--article-->
-<div class="small-12 columns bottom-spaced box padding-2x end">
-	<div class="box-outer">
-	<?php
-if(have_posts()):
-while (have_posts() ) : the_post(); 
-?>
-<article id="post" class="dotted-links">
-	<div class="box-content<?php if(!has_post_thumbnail(get_the_ID())): ?> no-bottom-padding<?php endif ?>">
-<header>
-<h1><strong><?php the_title() ?></strong></h1>
-<p><small>By <a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' )); ?>"><?php the_author_link( get_the_author_meta( 'ID' )) ?></a> on <time datetime="<?php the_time('Y-m-j') ?>"><?php the_time(__( 'F j, Y, H:i A' )) ?></time></small></p>
-</header>
-<?php the_content() ?>
-
-<footer>
-	<?php if( has_tag()): ?>
-<ul class="meta"><li><i class="fa fa-tag"></i><small><?php // echo $tag_list ;?><?php the_tags('',', ') ?></small></li></ul>
-<?php endif ?>
-<menu class="share"><span>Share:</span><ul class="share"><li class="twitter"><a href="#">Twitter</a></li><li class="facebook"><a href="">Facebook</a></li></ul></menu>
-
-</footer>
-
-</div>
-<?php if(has_post_thumbnail( get_the_ID())): ?> 
-
-<figure>
-<?php
-list($src,$w,$h) = wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()),'large-image');
-?>
-<img src="<?php echo $src ?>" />
-</figure>
-<?php endif ?>
-<div class="box-content">
-<a href="<?php echo get_permalink(55) ?>" class="button">back to articles</a>
-</div>
-</article>
-<?php
-// If comments are open or we have at least one comment, load up the comment template.
-if (comments_open() || get_comments_number()):
-	comments_template();
-endif;
-?>
-<?php
-endwhile;
-endif;
-wp_reset_query();
-?>
-<?php /* </ul> */ ?>
+<div class="xsmall-12 small-9 small-centered medium-uncentered medium-8 columns">
+	<div>
+<h1>Blogs &amp; Advice</h1>
+<p>Lorem ipsum dolor sit amet, eu enim nostrum scribentur ius, ei vix suas oporteat. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel.</p>
+<p>Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel.</p><p>Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. </p>
+<p>Ysonet legere accommodare te mel. </p>
 </div>
 </div>
-<!--/article-->
-</main>
-<!--/main content-->
-<!--sidebar-->
-<?php get_sidebar('blog'); ?>
-<!--/sidebar-->
-</div>
-<!--/row-->
-<!--row-->
-<section id="contacts-bar" class="row">
-<div class="small-12 columns box orange bottom-spaced">
-	<div class="box-outer"><div class="box-content">
-<nav><span>Speak to one of our solicitors</span><ul><li><i class="fa fa-phone-square"></i><a href="tel:01132449931">0113 244 9931</a></li><li><i class="fa fa-envelope"></i><a href="mailto:info@levisolicitors.co.uk">info@levisolicitors.co.uk</a></li><li><i class="fa fa-check-square"></i><a href="#">Request a call-back team</a></li></ul></nav>
-</div>
-</div>
+<div class="small-12 medium-4 columns"><div class="page-icon"><img src="<?php echo get_template_directory_uri(); ?>/images/icon-blogs-advice.svg" onerror="this.onerror=null; this.src='<?php echo get_template_directory_uri(); ?>/images/icon-blogs-advice.png'" /></div></div>
 </div>
 </section>
-<!--/row-->
+
+	<!--main-->
+<main id="main" role="main">
+		<div class="row">
+		<div class="xsmall-12 small-9 small-centered medium-uncentered medium-12 columns">
+		<?php get_template_part('partials/content','breadcrumbs' );  ?>
+<?php get_template_part('partials/content','blog-archive-form' ); ?>
+<!--search results-->
+<section id="archive">
+	<div id="posts">
+<article class="post row">
+<div class="small-12 columns">
+	<div class="inner-wrap">
+	<div class="row">
+<?php if($has_pic): ?>
+<aside class="small-12 medium-3 columns"><figure><img src="<?php echo $src ?>" alt="" /></figure></aside>
+<main class="small-12 medium-9 columns">
+<?php else : ?>
+<main class="small-12 columns">
+<?php endif ?>
+
+	<header><h3><?php the_title() ?></h3><p><small><strong>Posted on:</strong> <time datetime="<?php the_time('Y-m-j') ?>"><?php the_time(__( 'F j, Y' )) ?></time> <strong>By:</strong> <?php the_author_link( get_the_author_meta( 'ID' )) ?></small></p></header>
+<?php the_content () ?>
+<footer><?php get_template_part('partials/content','social-menu' );  ?><span class="buttons">
+<?php if(get_field('article_doc')): ?>
+	<a href="<?php the_field('article_doc') ?>" target="_blank" class="icon-button download">Download</a>
+<?php endif ?>
+<?php if(!empty($_SESSION)): ?>
+	<a href="<?php echo get_permalink(8) ?>?cat=<?php echo $_SESSION['cat'] ?>&amp;month=<?php echo $_SESSION['month'] ?>" class="icon-button search">Back to results</a>
+<?php else : ?>
+<a href="<?php echo get_permalink(8) ?>" class="icon-button search">Back to posts</a>
+<?php endif ?>
+</span></footer>
+</main>
+</div>
+</div>
+</div>
+</article>
+
+</section>
+
+<!--search results-->
+</div>
+</div>
+</main>
+<!--/main-->
+<?php endwhile ?>
+<?php endif ?>
 <?php get_footer() ?> 

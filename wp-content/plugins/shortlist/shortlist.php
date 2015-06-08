@@ -6,12 +6,12 @@
  * Version: 0.1
  * Author: Digital One
  * Author URI: http://www.digital-one.co.uk
- * License: Private. Only Digital One customers are allowed to use this plugin
+ * License: Private. Only Digital oci_new_collection(connection, tdo) customers are allowed to use this plugin
  */
   class shortlist {
 
   	var $_shortlist;
-  	var $_shortlist_user;
+  	var $_shortlist_user;  
   	var $_user;
   	var $_user_id;
 
@@ -57,12 +57,13 @@
       function get_shortlist_candidate_refs(){
         $refs='';
         if($candidates = $this->get_shortlist_candidates()):
-          foreach($candidates as $candidates):
-            $_user = get_user($candidate);
+          foreach($candidates as $candidate):
+            if($_user = get_user_by( 'id', $candidate)):
             $_gp_user = new gradportaluser($_user);
             if(!empty($refs)) $refs.=', ';
             $profile_url = get_edit_user_link($candidate);
             $refs.= '<a href="'.$profile_url.'" target="_blank">'.$_gp_user->get_reference().'</a>';
+            endif;
             endforeach;
           endif;
           return $refs;
