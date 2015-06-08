@@ -34,6 +34,7 @@
 //(id, display title, display desc, display inactive, field values, ajax, tab index)
 gravity_form(6, false, false, false, '', true, 1);
 ?>
+<footer id="form-footer" class="row"><div class="xsmall-12 columns">To delete your account <a class="delete-user"><em><strong>CLICK HERE</strong></em></a></div></footer>
 </div>
 </div>
 </main>

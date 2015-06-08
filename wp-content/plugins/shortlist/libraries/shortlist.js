@@ -12,9 +12,11 @@ $('body').on('click','form.shortlist a.minus',function(e){
   _form = $(this).parent('form');
    show_notification('Are you sure you want to remove this candidate from your shortlist?',1,function(){
       ajax_shortlist_remove(_form);
+     
    });
 
 });
+
 
 
 ajax_shortlist_add = function(_form){
@@ -52,6 +54,10 @@ var dat = $(_form).find(':input').serialize();
     success: function(data) {
       if(console) console.log(data);
       if(!data.error){
+        if($('body').hasClass('page-template-template-your-shortlist')){ //if on shortlist page, reload the page
+           location.href = location.href
+       } else {
+
         $('.shortlist-link span.count').html(data.candidates);
          $('.icon-button',_form).removeClass('minus').addClass('plus').text('Shortlist Me');
          $('input[name=action]',_form).val('shortlist_add_me');
@@ -63,7 +69,8 @@ var dat = $(_form).find(':input').serialize();
           $('.shortlist-link').show();
          }
          //show_notification('Are you sure you want to remove this candidate from your shortlist?',1);
-
+          
+        }
        }
       
        

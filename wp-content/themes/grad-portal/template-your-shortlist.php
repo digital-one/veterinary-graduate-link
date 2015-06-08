@@ -1,5 +1,9 @@
 <?php /* Template Name: Your Shortlist */ ?>
 <?php get_header() ?>
+<?php
+global $shortlist;
+global $vgl_user;
+?>
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 <!--intro-->
@@ -21,66 +25,42 @@
 <main id="main" role="main">
 	<div class="row">
 		<div class="xsmall-12 small-9 small-centered medium-uncentered medium-12 columns">
-	<!--breadcrumbs-->
-	<div id="page-header" class="row">
-<div class="small-12 columns">
-	<div class="breadcrumbs">
-<?php if(function_exists('bcn_display')):
-        bcn_display();
-    endif;
-    ?>
-</div>
-<div class="shortlist-link"><i class="fa fa-user"></i> 0 Candidates in <a href="<?php echo get_permalink(19) ?>">your shortlist</a></span></div>
-</div>
-</div>
-<!--/breadcrumbs-->
+	<?php get_template_part('partials/content','breadcrumbs' );  ?>
 <!--search results-->
 <section id="search-results" >
-<ul>
-	<li>
-<header><h3>REF NO: V12302-GA</h3><p><i class="fa fa-graduation-cap"></i>  <strong>GRADUATED FROM:</strong> Glasgow <strong>IN:</strong> April 2011</p><p><i class="fa fa-map-marker"></i> <strong>WILLING TO WORK IN:</strong> Yorkshire &amp; Humberside, Essex, Wales, North East</p>
+	<?php
+	if($shortlist->has_candidates()):
+	$candidates = $shortlist->get_shortlist_candidates();
+foreach($candidates as $user_id):
+  	//echo $user_id;
+    include( locate_template( 'partials/content-candidate-loop.php' ));
+		endforeach;
+	else:
+ include( locate_template( 'partials/content-no-candidates.php' ));
 
-</header>
-<div class="row categories">
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Small Animal:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Farm Animal:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Equine:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Exotics:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Medicine:</strong> <i class="fa fa-times"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Surgery:</strong> <i class="fa fa-times"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Out of Hours:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Weekends:</strong> <i class="fa fa-check"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong>Nights:</strong> <i class="fa fa-times"></i></div>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns end"><strong>Internship:</strong> <i class="fa fa-times"></i></div>
-	</div>
-<main>
-<p>Lorem ipsum dolor sit amet, eu enim nostrum scribentur ius, ei vix suas oporteat. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. </p>
-<p>Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. 
-</p>
-</main>
-<footer><a href="" class="icon-button profile">Show Profile</a><a href="" class="icon-button minus">Remove Me</a></footer>
-	</li>
-	
-	<li>
-<header><h3>REF NO: V12302-GA</h3><p><i class="fa fa-graduation-cap"></i>  <strong>GRADUATED FROM:</strong> Glasgow <strong>IN:</strong> April 2011</p><p><i class="fa fa-map-marker"></i> <strong>WILLING TO WORK IN:</strong> Yorkshire &amp; Humberside, Essex, Wales, North East</p></header>
-<main>
-<p>Lorem ipsum dolor sit amet, eu enim nostrum scribentur ius, ei vix suas oporteat. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. </p>
-<p>Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. 
-</p>
-</main>
-<footer><a href="" class="icon-button profile">Show Profile</a><a href="" class="icon-button minus">Remove Me</a></footer>
-	</li>
-	<li>
-<header><h3>REF NO: V12302-GA</h3><p><i class="fa fa-graduation-cap"></i>  <strong>GRADUATED FROM:</strong> Glasgow <strong>IN:</strong> April 2011</p><p><i class="fa fa-map-marker"></i> <strong>WILLING TO WORK IN:</strong> Yorkshire &amp; Humberside, Essex, Wales, North East</p></header>
-<main>
-<p>Lorem ipsum dolor sit amet, eu enim nostrum scribentur ius, ei vix suas oporteat. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. </p>
-<p>Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. 
-</p>
-</main>
-<footer><a href="" class="icon-button profile">Show Profile</a><a href="" class="icon-button minus">Remove Me</a></footer>
-	</li>
-</ul>
-<footer><a href="" class="icon-button tick align-right">Submit List</a><a href="" class="icon-button search align-left">Back to Results</a></footer>
+	endif;
+?>
+
+<footer>
+<?php
+//(id, display title, display desc, display inactive, field values, ajax, tab index)
+gravity_form(9, false, false, false, '', false, 1);
+?>
+	<a href="" class="icon-button tick align-right">Submit List</a>
+
+<?php 
+if(isset($_SESSION)):
+	$params="";
+foreach($_SESSION as $k=>$v):
+if(!empty($params)) $params.='&';
+$params.=$k.'='.urlencode($v);
+endforeach;
+?>
+<a href="<?php echo get_permalink(6) ?>?<?php echo $params ?>" title="" class="icon-button search align-left">Back to Results</a></footer>
+<?php else : ?>
+	<a href="<?php echo get_permalink(6) ?>" title="" class="icon-button search align-left">Back to Search</a>
+<?php endif ?>
+</footer>
 </section>
 
 <!--search results-->

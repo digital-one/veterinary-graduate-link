@@ -77,6 +77,65 @@ add_filter( 'gform_pre_validation_6', 'populate_graduation_years' );
 add_filter( 'gform_pre_submission_filter_6', 'populate_graduation_years' );
 add_filter( 'gform_admin_pre_render_6', 'populate_graduation_years' );
 
+//populate dynamic values into hidden fields
+add_filter('gform_field_value_user_firstname', 'firstname_population');
+add_filter('gform_field_value_user_surname', 'surname_population');
+add_filter('gform_field_value_user_organisation', 'organisation_population');
+add_filter('gform_field_value_user_email', 'email_population');
+add_filter('gform_field_value_user_telephone', 'telephone_population');
+add_filter('gform_field_value_user_postcode', 'postcode_population');
+add_filter('gform_field_value_user_shortlist', 'shortlist_population');
+
+add_filter( 'gform_notification', 'change_shortlist_user_email', 10, 3 ); //change the user notification email address to be dynamic
+
+function change_shortlist_user_email( $notification, $form, $entry ) {
+  global $current_user;
+  $gp_user = new gradportaluser($current_user);
+
+    if ( $notification['name'] == 'Shortlist User Notification' ):
+        $notification['toType'] = 'email'; 
+        $notification['to'] = $gp_user->get_email();
+    endif;
+return $notification;
+}
+
+function firstname_population(){
+  global $current_user;
+  $gp_user = new gradportaluser($current_user);
+  return $gp_user->get_firstname();
+}
+function surname_population(){
+  global $current_user;
+  $gp_user = new gradportaluser($current_user);
+  return $gp_user->get_surname();
+}
+function email_population(){
+  global $current_user;
+  $gp_user = new gradportaluser($current_user);
+  return $gp_user->get_email();
+}
+
+function organisation_population(){
+  global $current_user;
+  $gp_user = new gradportaluser($current_user);
+  return $gp_user->get_organisation();
+}
+function telephone_population(){
+  global $current_user;
+  $gp_user = new gradportaluser($current_user);
+  return $gp_user->get_telephone();
+}
+function postcode_population(){
+  global $current_user;
+  $gp_user = new gradportaluser($current_user);
+  return $gp_user->get_postcode();
+}
+function shortlist_population(){
+  global $current_user;
+  $shortlist = new shortlist();
+  $shortlist->set_current_user($current_user);
+  return $shortlist->get_shortlist_candidate_refs();
+}
 
 /**
 * Gravity Forms Custom Activation Template
@@ -123,7 +182,8 @@ function populate_universities( $form){
     );
       if($unis= get_posts($args)):
         foreach($unis as $uni):
-           $choices[] = array('text'=> $uni->post_title, 'value'=>$uni->ID);
+           //$choices[] = array('text'=> $uni->post_title, 'value'=>$uni->ID);
+         $choices[] = array('text'=> $uni->post_title, 'value'=>$uni->post_title);
           endforeach;
         endif;
       $field->placeholder = 'Universities';
@@ -171,7 +231,8 @@ function populate_locations( $form ) {
       // get the associated locations
   if($locations):
   foreach($locations as $location):
-      $choices[] = array('text'=> $location->post_title, 'value'=>$location->ID);
+     //$choices[] = array('text'=> $location->post_title, 'value'=>$location->ID);
+     $choices[] = array('text'=> $location->post_title, 'value'=>$location->post_title);
       endforeach;
     endif;
     endforeach;
@@ -179,7 +240,6 @@ function populate_locations( $form ) {
     $field->placeholder = 'Locations';
     $field->choices = $choices;
     endforeach;
-
     return $form;
   }
 
@@ -196,10 +256,8 @@ function update_validation_msgs($message, $form){
 
 
 function validate_password($form, $config, $pagenum){
-
-   $error=false;
-   
- //   endif;
+  $error=false;
+ //endif;
  foreach( $form['fields'] as &$field ):
      $password = rgpost( 'input_' . $field->id );
     $confirm  = rgpost( 'input_' . $field->id . '_2' );

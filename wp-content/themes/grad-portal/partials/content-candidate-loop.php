@@ -1,12 +1,12 @@
  <?php 
     global $shortlist;
-        $ref = get_user_meta($user->ID,'reference',true);
-        $uni_id = get_user_meta($user->ID,'university',true);
+        $ref = get_user_meta($user_id,'reference',true);
+        $uni_id = get_user_meta($user_id,'university',true);
         $uni = get_post($uni_id);
 
-        $bio = get_user_meta($user->ID,'bio',true);
-        $grad_year = get_user_meta($user->ID,'graduation_year',true);
-        $locations = get_user_meta($user->ID,'locations',true);
+        $bio = get_user_meta($user_id,'bio',true);
+        $grad_year = get_user_meta($user_id,'graduation_year',true);
+        $locations = get_user_meta($user_id,'locations',true);
         if(!is_array($locations)):
         $locations_array = explode(',',$locations);
         else:
@@ -34,7 +34,7 @@
           array('meta_key'=>'internship','meta_label'=>'Internship')
           );
         foreach($metas as $k=>$meta):
-        ${$meta['meta_key']} = get_user_meta($user->ID,$meta['meta_key'],true);
+        ${$meta['meta_key']} = get_user_meta($user_id,$meta['meta_key'],true);
         endforeach;
         ?>
 		<!--item-->
@@ -61,14 +61,14 @@
 global $vgl_user;
  if($vgl_user->is_employer()): ?>
   <form class="shortlist">
-  <?php if(!$shortlist->candidate_added($user->ID)): ?>
+  <?php if(!$shortlist->candidate_added($user_id)): ?>
   <a href="" class="icon-button  plus">Shortlist Me</a>
    <input type="hidden" name="action" value="shortlist_add_me" />
    <?php else : ?>
     <a href="" class="icon-button  minus">Remove Me</a>
    <input type="hidden" name="action" value="shortlist_remove_me" />
  <?php endif ?>
-  <input type="hidden" name="candidate_id" value="<?php echo $user->ID ?>" />
+  <input type="hidden" name="candidate_id" value="<?php echo $user_id ?>" />
   <input type="hidden" name="user_id" value="<?php echo $vgl_user->get_id() ?>" />
 </form>
 <?php endif ?>

@@ -42,6 +42,7 @@
 
 	 function set_current_user($user){
 			global $current_user;
+      $this->_user = $current_user;
 			$this->_user_id = $current_user->ID;
 	} 
 
@@ -52,6 +53,21 @@
   			return false;
   		}
 
+
+      function get_shortlist_candidate_refs(){
+        $refs='';
+        if($candidates = $this->get_shortlist_candidates()):
+          foreach($candidates as $candidates):
+            $_user = get_user($candidate);
+            $_gp_user = new gradportaluser($_user);
+            if(!empty($refs)) $refs.=', ';
+            $profile_url = get_edit_user_link($candidate);
+            $refs.= '<a href="'.$profile_url.'" target="_blank">'.$_gp_user->get_reference().'</a>';
+            endforeach;
+          endif;
+          return $refs;
+      }
+
   		function get_shortlist_candidates(){
   			if($this->get_shortlist()):
   			if (strpos($this->_shortlist,',') !== false):
@@ -60,8 +76,9 @@
 
   			$_shortlist_arr = array($this->_shortlist);
   			endif;
+        return $_shortlist_arr;
   			endif;
-  			return $_shortlist_arr;
+  			return false;
   		}
 
   		function has_candidates(){
@@ -102,6 +119,29 @@
 			endif;
 		return false;
   		}
+
+      function submit_shortlist(){
+        //send shortlist email to admin
+        $email = new wp_email('shortlist-submission-admin');
+        $message = $email->get_message();
+        $user = $this->_user;
+        $title = $email->get_title();
+        $shortlist = $this->get_shortlist_candidates();
+        $find = array('%title%','%shortlist%','%user_email%');
+        $replace = array($title, $first_name, $login_url, $user_email );
+        $html = str_replace($find, $replace, $message);
+        @wp_mail(get_option('admin_email'), $email->get_subject(), $html);
+        //send shortlist email to client
+         $email = new wp_email('shortlist-submission');
+        $message = $email->get_message();
+        $title = $email->get_title();
+        $first_name = $user->first_name;
+        $user_email = $user->user_email;
+        $find = array('%title%','%first_name%','%user_email%');
+        $replace = array($title, $first_name, $user_email );
+        $html = str_replace($find, $replace, $message);
+        @wp_mail($user_email, $email->get_subject(), $html);
+      }
 
   		function ajax_add_to_shortlist(){
 

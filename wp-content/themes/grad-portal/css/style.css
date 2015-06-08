@@ -4145,51 +4145,57 @@ footer#posts-footer {
   text-align: center;
 }
 
+/* line 200, ../sass/components/_global.scss */
+footer#form-footer {
+  text-align: right;
+  padding-top: 20px;
+}
+
 /* Media Queries */
 @media only screen and (min-width: 48rem) {
-  /* line 205, ../sass/components/_global.scss */
+  /* line 209, ../sass/components/_global.scss */
   #intro {
     padding: 40px 0 20px;
   }
-  /* line 208, ../sass/components/_global.scss */
+  /* line 212, ../sass/components/_global.scss */
   #intro .columns:last-child {
     display: block;
   }
-  /* line 212, ../sass/components/_global.scss */
+  /* line 216, ../sass/components/_global.scss */
   #intro .columns:first-child div {
     padding-right: 30px;
   }
 
-  /* line 218, ../sass/components/_global.scss */
+  /* line 222, ../sass/components/_global.scss */
   .breadcrumbs {
     float: left;
     margin-bottom: 0;
   }
 
-  /* line 222, ../sass/components/_global.scss */
+  /* line 226, ../sass/components/_global.scss */
   .shortlist-link {
     float: right;
   }
 
-  /* line 226, ../sass/components/_global.scss */
+  /* line 230, ../sass/components/_global.scss */
   article.post figure {
     margin-bottom: 0;
   }
-  /* line 230, ../sass/components/_global.scss */
+  /* line 234, ../sass/components/_global.scss */
   article.post footer menu.social {
     float: left;
     display: inline-block;
     margin: 0;
   }
-  /* line 235, ../sass/components/_global.scss */
+  /* line 239, ../sass/components/_global.scss */
   article.post footer .buttons {
     float: right;
   }
-  /* line 237, ../sass/components/_global.scss */
+  /* line 241, ../sass/components/_global.scss */
   article.post footer .buttons a {
     margin: 0 0 0 20px;
   }
-  /* line 240, ../sass/components/_global.scss */
+  /* line 244, ../sass/components/_global.scss */
   article.post footer .buttons form {
     display: inline-block;
   }
@@ -5758,12 +5764,17 @@ article.candidate main.profile {
   display: none;
 }
 
+/* line 12, ../sass/templates/_search-candidates.scss */
+#search-results footer {
+  padding-top: 50px;
+}
+
 @media only screen and (min-width: 48rem) {
-  /* line 16, ../sass/templates/_search-candidates.scss */
+  /* line 21, ../sass/templates/_search-candidates.scss */
   #search-results li footer {
     text-align: right;
   }
-  /* line 18, ../sass/templates/_search-candidates.scss */
+  /* line 23, ../sass/templates/_search-candidates.scss */
   #search-results li footer a {
     margin-left: 20px;
     margin-bottom: 0;

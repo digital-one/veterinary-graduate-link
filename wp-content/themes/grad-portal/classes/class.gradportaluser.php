@@ -9,7 +9,7 @@ class gradportaluser {
 		function __construct($user){
 			
 			$this->set_user($user);
-			//$this->_user_meta = get_user_meta($this->get_id());
+			$this->_user_meta = get_user_meta($this->get_id());
 			//$this->_shortlist = $this->_user_meta["_shortlist"][0];	
 		}
 
@@ -67,7 +67,18 @@ class gradportaluser {
 		public function get_surname() {
 			return $this->_user_meta["last_name"][0];		
 		}
-
+		public function get_reference(){
+			return $this->_user_meta["reference"][0];
+		}
+		public function get_organisation(){
+			return $this->_user_meta["organisation_name"][0];
+		}
+		public function get_postcode(){
+			return $this->_user_meta["postcode"][0];
+		}
+		public function get_telephone(){
+			return $this->_user_meta["telephone"][0];
+		}
 		public function get_email() {
 			return $this->user_email;
 		}

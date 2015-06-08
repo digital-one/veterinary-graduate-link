@@ -1,6 +1,8 @@
 <?php
 
 // Add custom functions
+get_template_part('classes/class.gradportaluser');
+
 require_once( 'includes/custom-functions.php' ); 
 get_template_part('includes/users');
 get_template_part('includes/gravity-forms');
@@ -8,7 +10,7 @@ get_template_part('includes/menus');
 get_template_part('includes/post-types');
 //get_template_part('includes/email');
 //Classes
-get_template_part('classes/class.gradportaluser');
+
 
 // Add theme support post thumbnails
 add_theme_support('post-thumbnails');

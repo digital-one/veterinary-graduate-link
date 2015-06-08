@@ -53,18 +53,18 @@ $c=1;
 $or = "";
 
 for($i=0; $i<count($meta);$i++):
-if(isset($_POST[$meta[$i]]) and !empty($_POST[$meta[$i]])):
+if(isset($_REQUEST[$meta[$i]]) and !empty($_REQUEST[$meta[$i]])):
   $c++;
   $join.= " LEFT JOIN wp_usermeta AS um".$c." ON u.ID = um".$c.".user_id";
-  $and .= " AND um".$c.".meta_key = '".$meta[$i]."' AND um".$c.".meta_value = '".$_POST[$meta[$i]]."'";
+  $and .= " AND um".$c.".meta_key = '".$meta[$i]."' AND um".$c.".meta_value = '".$_REQUEST[$meta[$i]]."'";
   $j = $c+1;
   endif;
 endfor;
 
 
-  if(isset($_POST['locations']) and !empty($_POST['locations'])):
+  if(isset($_REQUEST['locations']) and !empty($_REQUEST['locations'])):
     $join.= " LEFT JOIN wp_usermeta AS um".$j." ON u.ID = um".$j.".user_id";
-    $locations = $_POST['locations'];
+    $locations = $_REQUEST['locations'];
   $and .= " AND (";
 foreach($locations as $location_id):
   if(!empty($or)):

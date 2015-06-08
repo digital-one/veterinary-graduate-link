@@ -8,6 +8,11 @@ article.candidate{
 		display: none;
 	}
 }
+#search-results{
+	footer{
+		padding-top: 50px;
+	}
+}
 
 @media #{$medium-up} { 
 

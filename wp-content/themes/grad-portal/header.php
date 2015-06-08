@@ -1,4 +1,5 @@
 <?php 
+session_start();
 global $current_user;
 global $vgl_user;
 global $shortlist;
@@ -8,6 +9,18 @@ $shortlist->set_current_user($current_user);
 global $login;
 $login = new login_forms();
 $login->init_form();
+//if on employer page and user not employer, redirect.
+$employer_only_pages = array(19,29);
+if(in_array($post->ID,$employer_only_pages) and !$vgl_user->is_employer()):
+	wp_redirect(home_url());
+exit();
+endif;
+//if on candidate only page and user not candidate, redirect.
+$candidate_only_pages = array(27);
+if(in_array($post->ID,$candidate_only_pages) and !$vgl_user->is_candidate()):
+	wp_redirect(home_url());
+exit();
+endif;
 ?>
 <!doctype html>
 <!--[if lt IE 7]><html <?php language_attributes(); ?> class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->

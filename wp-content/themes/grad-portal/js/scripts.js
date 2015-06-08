@@ -251,6 +251,9 @@ $(window).on('scroll resize',function(){
     }
 })
 
+//make gravity forms place nice with foundation markup
+$('.gform_body').addClass('row');
+
 if($('.g-recaptcha').length){
 var _target_li = $('.g-recaptcha').parents('li').eq(0);
 _target_li.addClass('small-12 columns');
@@ -339,6 +342,12 @@ show_notification = function(_message,_confirm,_callback){
         $('#notification').slideDown(100);
 }
 
+$('.delete-user').on('click',function(e){
+  e.preventDefault();
+  show_notification('Are you sure you wish to delete your account?',true,function(){
+    location.href=home_url+'/delete-user.php';
+  })
+})
 //customisation to show candidate alert fields on checkbox select
 
 function show_ca_fields(){
@@ -385,6 +394,9 @@ function saved_form_confirmation(){
    }
    if(get_url_parameter('activate-nokey')){
     _message = 'An activation key is required. Please register again.';
+   }
+   if(get_url_parameter('account-deleted')){
+    _message = 'Your account has been successfully deleted.';
    }
    if(_message){
      setTimeout(function(){
