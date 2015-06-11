@@ -15,6 +15,9 @@
 	background-color: $vgl-blue;
 	color:white;
 	padding: 20px 0;
+	.home &{
+		background-color: #567C9B;
+	}
 	.columns:last-child{
 		display: none;
 	}

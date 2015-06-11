@@ -109,6 +109,12 @@ button{
 		display: none;
 	}
 }
+.gsection{
+	.gsection_description{
+		padding: 5px 0 0;
+		@include font-size(12px);
+	}
+}
 .gfield_checkbox{
 	label{
 		color: $vgl-blue;
@@ -116,6 +122,7 @@ button{
 	}
 	li{
 		margin-bottom: 10px;
+		padding-bottom:0;
 	}
 }
 .ginput_complex{
@@ -228,6 +235,7 @@ button{
 /* ========================= Select2 =========================  */
 
 
+
 .select2-container{
 	width:100% !important;
 	.select2-selection--single{
@@ -236,6 +244,7 @@ button{
 		@include border-radius(0);
 	}
 	.select2-search--inline{
+		width:100%;
 		.select2-search__field{
 			margin: 0;
 			padding: 0 10px;

@@ -55,9 +55,15 @@ var _radios = $('input[type=radio]');
         if($(_this).is(':checked')){
             _box.addClass('checked');
         }
-        $(_box).add(_label).on('click',function(){
-            _name = $(this).next().attr('name');
+        $(_box).add(_label).on('click',function(e){
+            if($(e.currentTarget).hasClass('radio')){
+                 _name = $(this).next().attr('name');
             _this_radio = $(this).next();
+            } else {
+                 _name = $(this).prev().attr('name');
+            _this_radio = $(this).prev();
+            }
+           
             _sibling_radios = $('input[name='+_name+']').not(_this_radio);
             _sibling_radios.each(function(){
                  $(this).next().prop('checked', false);

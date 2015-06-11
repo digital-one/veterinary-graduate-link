@@ -82,6 +82,12 @@ class gradportaluser {
 		public function get_email() {
 			return $this->user_email;
 		}
+		public function is_subscribed_to_candidate_alerts(){
+			if(isset($this->_user_meta["ca_signup"][0])):
+			return true;
+			endif;
+			return false;
+		}
 
 		public function get_profile_url(){
 			if($this->is_candidate()):

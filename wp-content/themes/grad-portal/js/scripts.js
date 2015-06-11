@@ -272,7 +272,7 @@ $('body').on('click','.cancel',function(e){
 
 $('.notification-btn').on('click',function(e){
     e.preventDefault();
-    _elms  =$('#notification, #role-selection, #login-form, #reset-password-request-form, #reset-password-form');
+    _elms  =$('#notification, #no-results, #role-selection, #login-form, #reset-password-request-form, #reset-password-form');
     _elms.hide();
     var _target = $('#'+$(this).attr('rel'));
     if($('#notification-panel .active').length){
@@ -283,8 +283,9 @@ $('.notification-btn').on('click',function(e){
     reset_notification();
     _elms.removeClass('active');
      _target.slideDown(100).addClass('active');
-     if(_isMobile){
+  
      $('#account-links').hide();
+        if(_isMobile){
      $('.menu-toggle').hide();
      }
 }
@@ -314,20 +315,22 @@ reset_notification = function(){
 }
 hide_notification = function(){
     $('#notification-panel .active').slideUp(100).removeClass('active');
-    if(_isMobile){
+   
     $('#account-links').show();
+     if(_isMobile){
     $('.menu-toggle').show();
     }
     hide_overlay();
 }
 show_notification = function(_message,_confirm,_callback){
-  show_overlay();
+  //show_overlay();
     _confirm = typeof _confirm !== 'undefined' ? _confirm : 0;
     _callback = typeof _callback !== 'undefined' ? _callback : 0;
     $('#notification .confirm').hide();
     $('#notification').addClass('active');
-    $('#notification p').html(_message);
+
     $('#account-links').hide();
+        $('#notification p').html(_message);
     $('.menu-toggle').hide();
     if(_confirm){
        $('#notification .confirm').show();

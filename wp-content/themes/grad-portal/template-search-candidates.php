@@ -39,14 +39,14 @@ global $shortlist;
 </header>
 <form id="candidate-search" method="post" action="">
 	<div class="gform_body">
-	<ul class="form-body row">
-<li class="small-12 medium-6 large-4 gfield columns">
+	<ul class="form-body small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+<li class="gfield columns">
 <input type="text" name="ref" placeholder="Ref. No" tabindex="1" value="<?php if(isset($_REQUEST['ref'])) echo urldecode($_REQUEST['ref']); ?>" />
 </li>
-<li class="small-12 medium-6 large-4 gfield columns no-label multi-select">
-	<label class="gfield_label">Locations</label>
+<li class="no-label multi-select">
+	<label class="gfield_label">Where are your vacancies based?</label>
 
-<select multiple name="locations[]" id="locations" tabindex="2" placeholder="Location">
+<select multiple name="locations[]" id="locations" tabindex="2" placeholder="Where are your vacancies based?">
    <?php
   if(isset($_REQUEST)):
     //save session data of search
@@ -101,8 +101,10 @@ global $shortlist;
     endif;
     ?>
 </select>
+<div class="gfield_description">You can choose more than one location</div>
 </li>
-<li class="small-12 medium-6 large-4 gfield columns no-label">
+<?php /*
+<li class="gfield no-label">
 	<label class="gfield_label">Graduation Year</label>
 <select name="graduation_year"  tabindex="3"><option value="">Graduation Year</option>
 <?php
@@ -115,10 +117,12 @@ global $shortlist;
   ?>
 </select>
 </li>
-<li class="small-12 medium-6 large-4 gfield columns no-label">
-	<label class="gfield_label">University</label>
+*/
+?>
+<li class="gfield no-label">
+	<label class="gfield_label">All Universities</label>
 <select name="university"  tabindex="4">
-	<option value="">University</option>
+	<option value="">All Universities</option>
 
 <?php
   $args = array(
@@ -139,36 +143,50 @@ global $shortlist;
 ?>
 </select>
 </li>
-<li class="small-12 medium-6 large-4 gfield columns gfield_checkbox">
-  <?php $checked = isset($_REQUEST['small_animal'])=='small_animal' ? ' checked="checked"' : ''; ?>
-	<div class="half"><input type="checkbox" value="small animal" name="small_animal" id="small_animal" tabindex="5" <?php echo $checked ?> /><label for="small-animal">Small Animal</label></div>
-   <?php $checked = isset($_REQUEST['farm_animal'])=='farm_animal' ? ' checked="checked"' : ''; ?>
-	<div class="half"><input type="checkbox" value="farm animal" name="farm_animal" id="farm_animal" tabindex="6" <?php echo $checked ?> /><label for="small-animal">Farm Animal</label></div>
+</ul>
+<ul class="form-body small-block-grid-1">
+<li id="field_2_17" class="ca-field field_sublabel_below field_description_below" style="display: list-item;">
+<label class="gfield_label">Does your candidate need to work:</label>
+<div class="ginput_container">
+<ul class="gfield_checkbox small-block-grid-2 medium-block-grid-4 large-block-grid-6" id="input_2_17">
+   <?php $checked = isset($_REQUEST['out_of_hours'])=='out_of_hours' ? ' checked="checked"' : ''; ?>
+  <li class="gchoice_17_1"><input type="checkbox" value="out of hours" name="out_of_hours" id="out_of_hours"   tabindex="11" <?php echo $checked ?> /><label for="out_of_hours">Out of Hours</label></li>
+     <?php $checked = isset($_REQUEST['weekends'])=='weekends' ? ' checked="checked"' : ''; ?>
+  <li class="gchoice_17_2"><input type="checkbox" value="weekends" name="weekends" id="weekends"   tabindex="12" <?php echo $checked ?> /><label for="weekends">Weekends</label></li>
+   <?php $checked = isset($_REQUEST['nights'])=='nights' ? ' checked="checked"' : ''; ?>
+  <li class="gchoice_17_3"><input type="checkbox" value="nights" name="nights" id="nights"   tabindex="13" <?php echo $checked ?> /><label for="nights">Nights</label></li>
+     <?php $checked = isset($_REQUEST['internship'])=='internship' ? ' checked="checked"' : ''; ?>
+  <li class="gchoice_17_4"><input type="checkbox" value="internship" name="internship" id="internship" tabindex="14" <?php echo $checked ?> /><label for="internship">Internship</label></li>
+</ul>
+</div>
 </li>
-<li class="small-12 medium-6 large-4 gfield columns gfield_checkbox">
-     <?php $checked = isset($_REQUEST['equine'])=='equine' ? ' checked="checked"' : ''; ?>
-	<div class="half"><input type="checkbox" value="equine" name="equine" id="equine"   tabindex="7" <?php echo $checked ?> /><label for="equine">Equine</label></div>
-     <?php $checked = isset($_REQUEST['exotics'])=='exotics' ? ' checked="checked"' : ''; ?>
-	<div class="half"><input type="checkbox" value="exotics" name="exotics" id="exotics"   tabindex="8"  <?php echo $checked ?> /><label for="exotics">Exotics</label></div>
-</li>
-<li class="small-12 medium-6 large-4 gfield columns gfield_checkbox">
-     <?php $checked = isset($_REQUEST['medicine'])=='medicine' ? ' checked="checked"' : ''; ?>
-<div class="half"><input type="checkbox" value="medicine" name="medicine" id="medicine"   tabindex="9"  <?php echo $checked ?> /><label for="medicine">Medicine</label></div>
-   <?php $checked = isset($_REQUEST['surgery'])=='surgery' ? ' checked="checked"' : ''; ?>
-	<div class="half"><input type="checkbox" value="surgery" name="surgery" id="surgery"   tabindex="10"  <?php echo $checked ?> /><label for="surgery">Surgery</label></div>
-</li>
-<li class="small-12 medium-6 large-4 gfield columns gfield_checkbox">
-     <?php $checked = isset($_REQUEST['out_of_hours'])=='out_of_hours' ? ' checked="checked"' : ''; ?>
-<div class="half"><input type="checkbox" value="out of hours" name="out_of_hours" id="out_of_hours"   tabindex="11" <?php echo $checked ?> /><label for="out_of_hours">Out of Hours</label></div>
-   <?php $checked = isset($_REQUEST['weekends'])=='weekends' ? ' checked="checked"' : ''; ?>
-	<div class="half"><input type="checkbox" value="weekends" name="weekends" id="weekends"   tabindex="12" <?php echo $checked ?> /><label for="weekends">Weekends</label></div>
-</li>
-<li class="small-12 medium-6 large-4 columns gfield gfield_checkbox end">
-     <?php $checked = isset($_REQUEST['nights'])=='nights' ? ' checked="checked"' : ''; ?>
-<div class="half"><input type="checkbox" value="nights" name="nights" id="nights"   tabindex="13" <?php echo $checked ?> /><label for="nights">Nights</label></div>
-   <?php $checked = isset($_REQUEST['internship'])=='internship' ? ' checked="checked"' : ''; ?>
-	<div class="half"><input type="checkbox" value="internship" name="internship" id="internship" tabindex="14" <?php echo $checked ?> /><label for="internship">Internship</label></div>
-</li>
+
+<li id="field_2_18" class="ca-field field_sublabel_below field_description_below" style="display: list-item;">
+  <label class="gfield_label">Basic interests:</label>
+  <div class="ginput_container">
+    <ul class="gfield_checkbox  small-block-grid-2 medium-block-grid-4 large-block-grid-6" id="input_2_18">
+      <?php $checked = isset($_REQUEST['small_animal'])=='small_animal' ? ' checked="checked"' : ''; ?>
+      <li class="small-6 medium-3 large-2 columns  gchoice_18_1">
+    <input type="checkbox" value="small animal" name="small_animal" id="small_animal" tabindex="5" <?php echo $checked ?> /><label for="small-animal">Small Animal</label></li>
+     <?php $checked = isset($_REQUEST['farm_animal'])=='farm_animal' ? ' checked="checked"' : ''; ?>
+        <li class="small-6 medium-3 large-2 columns  gchoice_18_2"><input type="checkbox" value="farm animal" name="farm_animal" id="farm_animal" tabindex="6" <?php echo $checked ?> /><label for="small-animal">Farm Animal</label></li>
+         <?php $checked = isset($_REQUEST['equine'])=='equine' ? ' checked="checked"' : ''; ?>
+        <li class="small-6 medium-3 large-2 columns  gchoice_18_3"><input type="checkbox" value="equine" name="equine" id="equine"   tabindex="7" <?php echo $checked ?> /><label for="equine">Equine</label></li>
+           <?php $checked = isset($_REQUEST['exotics'])=='exotics' ? ' checked="checked"' : ''; ?>
+        <li class="small-6 medium-3 large-2 columns  end gchoice_18_4"><input type="checkbox" value="exotics" name="exotics" id="exotics"   tabindex="8"  <?php echo $checked ?> /><label for="exotics">Exotics</label></li>
+      </ul>
+    </div></li>
+
+<li id="field_2_19" class="ca-field field_sublabel_below field_description_below" style="display: list-item;">
+  <label class="gfield_label">Further interests:</label>
+  <div class="ginput_container">
+    <ul class="gfield_checkbox row" id="input_2_19">
+        <?php $checked = isset($_REQUEST['medicine'])=='medicine' ? ' checked="checked"' : ''; ?>
+      <li class="small-6 medium-3 large-2 columns  gchoice_19_1"><input type="checkbox" value="medicine" name="medicine" id="medicine"   tabindex="9"  <?php echo $checked ?> /><label for="medicine">Medicine</label></li>
+       <?php $checked = isset($_REQUEST['surgery'])=='surgery' ? ' checked="checked"' : ''; ?>
+      <li class="small-6 medium-3 large-2 columns  end gchoice_19_2"><input type="checkbox" value="surgery" name="surgery" id="surgery"   tabindex="10"  <?php echo $checked ?> /><label for="surgery">Surgery</label></li>
+    </ul></div></li>
+   
 </ul>
 </div>
 <div class="gform_footer row">

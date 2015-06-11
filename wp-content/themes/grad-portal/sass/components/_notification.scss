@@ -91,6 +91,11 @@
 			margin: 0 15px;
 		}
 	}
+	#no-results{
+		p{
+			margin-bottom: 20px;
+		}
+	}
 	menu.confirm{
 		@include centered-menu;
 		padding-top:20px;

@@ -2,10 +2,31 @@
 	@extend %full-width;
 	position: relative;
 	margin-bottom:15px;
+	@include transition(background-color .3s ease);
 	&:before{
 		content:"";
 		padding-top:100%;
 		display: block;
+	}
+	&.search-color{
+		&:hover,&:active{
+			background-color: $search-color-hover !important;
+		}
+	}
+	&.blog-color{
+		&:hover,&:active{
+			background-color: $blog-color-hover !important;
+		}
+	}
+	&.profile-color{
+		&:hover,&:active{
+			background-color: $profile-color-hover !important;
+		}
+	}
+	&.contact-color{
+		&:hover,&:active{
+			background-color: $contact-color-hover !important;
+		}
 	}
 }
 .icon{

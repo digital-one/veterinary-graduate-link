@@ -88,6 +88,18 @@ add_filter('gform_field_value_user_postcode', 'postcode_population');
 add_filter('gform_field_value_user_shortlist', 'shortlist_population');
 add_filter('gform_field_value_user_reference', 'reference_population');
 add_filter( 'gform_notification', 'change_shortlist_user_email', 10, 3 ); //change the user notification email address to be dynamic
+add_filter("gform_disable_notification", "disable_notification", 10, 4); //disable notifications
+
+
+function disable_notification($is_disabled, $notification, $form, $entry){
+ 
+
+    if($notification["name"] == "Candidate Registration User Notification" or $notification["name"] == "Employer Registration User Notification"){
+        return true;
+    }
+  return $is_disabled;
+}
+
 
 function change_shortlist_user_email( $notification, $form, $entry ) {
   global $current_user;
@@ -180,6 +192,7 @@ function populate_graduation_years($form){
 }
 
 function populate_universities( $form){
+
    foreach ( $form['fields'] as &$field ) :
         if ( $field->type != 'select' || strpos( $field->cssClass, 'universities' ) === false ):
           continue;
@@ -198,7 +211,10 @@ function populate_universities( $form){
          $choices[] = array('text'=> $uni->post_title, 'value'=>$uni->post_title);
           endforeach;
         endif;
-      $field->placeholder = 'Universities';
+      $field->placeholder = 'All Universities';
+      if($form['id']==1 or $form['id']==5):
+ $field->placeholder = 'University of Study';
+        endif;
     $field->choices = $choices;
     endforeach;
     return $form;

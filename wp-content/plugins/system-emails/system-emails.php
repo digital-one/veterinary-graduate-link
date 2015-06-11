@@ -57,7 +57,7 @@
     //$message .= sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
     //$message .= sprintf(__('E-mail: %s'), $user->user_email) . "\r\n";
     // $to, $subject, $message, $headers, $attachments
-    @wp_mail(get_option('admin_email'), $email->get_subject(), $html);
+   // @wp_mail(get_option('admin_email'), $email->get_subject(), $html); //send to admin
 
     if ( empty($plaintext_pass) )
         return;
@@ -69,15 +69,15 @@
     $first_name = $user->first_name;
     $user_email = $user->user_email;
     //$profile_url = $gp_user->get_profile_url();
-    $find = array('%title%','%user_profile_url%','%user_email%');
-        $replace = array($title, $login_url, $user_email );
+    $find = array('%title%', '%first_name%','%user_profile_url%','%user_email%');
+        $replace = array($title, $first_name, $login_url, $user_email );
         $html = str_replace($find, $replace, $message);
 
   //  $message  = sprintf(__('Username: %s'), $user->user_login) . "\r\n";
    // $message .= sprintf(__('Password: %s'), $plaintext_pass) . "\r\n";
    // $message .= wp_login_url() . "\r\n";
      // $to, $subject, $message, $headers, $attachments
-    wp_mail($user->user_email, $email->get_subject(), $html);
+    wp_mail($user->user_email, $email->get_subject(), $html); //send to user
 
 }
 endif;
@@ -222,7 +222,7 @@ function register_cptax_email_type() {
         $message = $email->get_message();
 
         $find = array('%title%','%activation_url%','%user_email%');
-        $replace = array($title, $first_name, site_url( "?page=gf_activation&key=$key"), $user_email );
+        $replace = array($title, site_url( "?page=gf_activation&key=$key"), $user_email );
         $html = str_replace($find, $replace, $message);
 
 wp_mail( $user_email, $subject, $html);

@@ -1,12 +1,16 @@
 //colours
 $vgl-blue: #2a3644;
 $search: #f17a72;
+$search-color-hover: lighten($search,5%);
 $blog: #78bcaf;
+$blog-color-hover: lighten($blog,5%);
 $profile: #e05e66;
+$profile-color-hover: lighten($profile,5%);
 $secondary: #306480;
 $grey: #474747;
 $light-grey: #efefef;
 $contact: #306480;
+$contact-color-hover: lighten($contact,5%);
 
 //fonts
 $open-sans : 'Open Sans', sans-serif;

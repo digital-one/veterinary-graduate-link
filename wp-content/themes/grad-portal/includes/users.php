@@ -115,8 +115,8 @@ function show_extra_profile_fields($user){
     );
       if($unis= get_posts($args)):
         foreach($unis as $uni):
-           $selected = get_the_author_meta( 'university', $user->ID)== $uni->ID ? ' selected="selected"' : '';  
-            echo '<option value="'.$uni->ID.'"'.$selected.'>'.$uni->post_title.'</option>';
+           $selected = get_the_author_meta( 'university', $user->ID)== $uni->post_title ? ' selected="selected"' : '';  
+            echo '<option value="'.$uni->post_title.'"'.$selected.'>'.$uni->post_title.'</option>';
           endforeach;
       endif;
 ?>
@@ -163,8 +163,8 @@ $selected_locations = explode(',',get_the_author_meta( 'locations', $user->ID));
       // get the associated locations
   if($locations):
   foreach($locations as $location):
-         $selected = in_array($location->ID, $selected_locations) ? ' selected="selected"' : '';  
-    echo '<option value="'.$location->ID.'"'.$selected.'>'.$location->post_title.'</option>';
+         $selected = in_array($location->post_title, $selected_locations) ? ' selected="selected"' : '';  
+    echo '<option value="'.$location->post_title.'"'.$selected.'>'.$location->post_title.'</option>';
       endforeach;
     endif;
      if($num_locations>1):

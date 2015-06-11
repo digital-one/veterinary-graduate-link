@@ -7,10 +7,12 @@
 <div class="row">
 <div class="xsmall-12 small-9 small-centered medium-uncentered medium-8 columns">
 	<div>
-<h1>Blogs &amp; Advice</h1>
-<p>Lorem ipsum dolor sit amet, eu enim nostrum scribentur ius, ei vix suas oporteat. Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel.</p>
-<p>Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel.</p><p>Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Magna idque pro te, ius platonem consequat ex. Dicant delenit eleifend an mei, wisi disputationi sit ut.Persius volumus principes sed ea, sed erant omnes ex. Sed ex harum ancillae indoctum, sonet legere accommodare te mel. </p>
-<p>Ysonet legere accommodare te mel. </p>
+		<?php
+		$page = get_post(8);
+		echo $page->post_content;
+		wp_reset_query();
+		?>
+
 </div>
 </div>
 <div class="small-12 medium-4 columns"><div class="page-icon"><img src="<?php echo get_template_directory_uri(); ?>/images/icon-blogs-advice.svg" onerror="this.onerror=null; this.src='<?php echo get_template_directory_uri(); ?>/images/icon-blogs-advice.png'" /></div></div>
@@ -50,8 +52,8 @@ $args = array(
 $cat='';
 $month='';
 if(!empty($_SESSION)):
-	$cat = $_SESSION['cat'];
-	$month = $_SESSION['month'];
+	if(!empty($_SESSION['cat'])) $cat = $_SESSION['cat'];
+	if(!empty($_SESSION['month'])) $month = $_SESSION['month'];
 endif;
 if(!empty($_REQUEST)):
 	$cat = $_REQUEST['cat'];

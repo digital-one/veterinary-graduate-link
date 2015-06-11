@@ -4,6 +4,15 @@ h1,h2,h3,h4{
 	font-weight:600;
 	line-height: 120%;
 	margin: 0 0 15px;
+	a{
+		&:link,&:visited{
+			color: $vgl-blue;
+			text-decoration: none;
+		}
+		&:hover,&:active{
+			color: $secondary;
+		}
+	}
 }
 p{
 	@include font-size(14px);

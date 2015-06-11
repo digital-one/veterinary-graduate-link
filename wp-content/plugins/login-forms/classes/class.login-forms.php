@@ -437,9 +437,10 @@ private function _validate_url() {
     $subject = $email->get_subject();
     $validate_url = $this->_validate_url() . "action=reset_pwd_confirm&key=".$this->_user_key."&login=" . rawurlencode($this->_user_login);
     $siteurl = get_option('siteurl');
+    $user_email = $user->user_email;
     $username = $this->_user_login;
-    $find = array('%title%','%first_name%','%site_url%','%username%','%validate_url%');
-        $replace = array($title, $first_name, $siteurl, $username, $validate_url );
+    $find = array('%title%','%first_name%','%site_url%','%username%','%validate_url%','%user_email%');
+        $replace = array($title, $first_name, $siteurl, $username, $validate_url,$user_email );
         $html = str_replace($find, $replace, $message);
     //send  password reset confirmation email
         /*

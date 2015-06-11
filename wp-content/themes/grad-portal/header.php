@@ -78,14 +78,33 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 		<div class="form-body">
 		<p>Are you an:</p>
 		<ul>
-			<li><input type="radio" name="role" id="role-employer" value="employer" /> <label for ="role-employer">Employer</label></li>
-			<li><input type="radio" name="role" id="role-candidate" value="candidate" /> <label for ="role-candidate">Job Seeker</label></li>
+			<li><input type="radio" name="role" id="role-employer" value="employer" /> <label class="label" for="role-employer">Employer</label></li>
+			<li><input type="radio" name="role" id="role-candidate" value="candidate" /> <label class="label" for ="role-candidate">Job Seeker</label></li>
 		</ul>
 		</div>
 		<footer class="form-footer"><a class="icon-button cancel">Cancel</a><button type="submit" class="icon-button tick">Confirm</button></footer>
 	</form>
 </div>
 <!-- /role confirmation -->
+
+<!-- alert confirmation -->
+<div id="no-results" class="notification">
+	<?php if($vgl_user->is_employer()): ?>
+	<?php if($vgl_user->is_subscribed_to_candidate_alerts()): ?>
+	<p>No results found! Update your Candidate Alert preferences so you know when a candidate is available that matches your criteria</p>
+		<footer class="form-footer"><a class="icon-button cancel">Close</a><a href="<?php echo $vgl_user->get_profile_url() ?>" class="icon-button tick">Update</a></footer>
+	<?php else: ?>
+	<p>No results found! Sign up to Candidate Alerts so you know when a candidate is available that matches your criteria</p>
+		<footer class="form-footer"><a class="icon-button cancel">Close</a><a href="<?php echo $vgl_user->get_profile_url() ?>" class="icon-button tick">Sign up</a></footer>
+<?php endif ?>
+		<?php else: ?>
+	<p>Sorry, no results found matching your criteria</p>
+	<footer class="form-footer"><a class="icon-button cancel">Close</a></footer>
+	<?php endif ?>
+		<a id="no-results-trigger" class="notification-btn" rel="no-results"></a>
+</div>
+<!-- /alert confirmation -->
+
 <!-- notification -->
 <div id="notification" class="notification">
 	<p>Notification message</p>

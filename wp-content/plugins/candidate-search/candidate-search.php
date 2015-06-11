@@ -56,7 +56,7 @@ for($i=0; $i<count($meta);$i++):
 if(isset($_REQUEST[$meta[$i]]) and !empty($_REQUEST[$meta[$i]])):
   $c++;
   $join.= " LEFT JOIN wp_usermeta AS um".$c." ON u.ID = um".$c.".user_id";
-  $and .= " AND um".$c.".meta_key = '".$meta[$i]."' AND um".$c.".meta_value = '".$_REQUEST[$meta[$i]]."'";
+  $and .= " AND um".$c.".meta_key = '".$meta[$i]."' AND um".$c.".meta_value = '".urldecode($_REQUEST[$meta[$i]])."'";
   $j = $c+1;
   endif;
 endfor;
@@ -66,11 +66,11 @@ endfor;
     $join.= " LEFT JOIN wp_usermeta AS um".$j." ON u.ID = um".$j.".user_id";
     $locations = $_REQUEST['locations'];
   $and .= " AND (";
-foreach($locations as $location_id):
+foreach($locations as $location):
   if(!empty($or)):
     $or .=" OR ";
   endif;
-$or .= "um".$j.".meta_key ='locations' AND FIND_IN_SET('".$location_id."', um".$j.".meta_value)";
+$or .= "um".$j.".meta_key ='locations' AND FIND_IN_SET('".urldecode($location)."', um".$j.".meta_value)";
   endforeach;
   $or.=")";
 endif;
@@ -168,9 +168,9 @@ endif;
    // echo json_encode(array('sql'=>$sql,'results'=>$total_results));
    // die();
 		if($total_results):
-      echo json_encode(array('error'=>false,'total_results'=> $total_results));
+      echo json_encode(array('sql'=>$sql,'error'=>false,'total_results'=> $total_results));
 		else:
-    echo json_encode(array('error'=>true,'total_results'=> $total_results));
+    echo json_encode(array('sql'=>$sql,'error'=>true,'total_results'=> $total_results));
 		endif;
 		die();
   	}

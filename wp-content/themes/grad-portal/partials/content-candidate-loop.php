@@ -1,8 +1,8 @@
  <?php 
     global $shortlist;
         $ref = get_user_meta($user_id,'reference',true);
-        $uni_id = get_user_meta($user_id,'university',true);
-        $uni = get_post($uni_id);
+        $uni = get_user_meta($user_id,'university',true);
+        //$uni = get_post($uni_id);
 
         $bio = get_user_meta($user_id,'bio',true);
         $grad_year = get_user_meta($user_id,'graduation_year',true);
@@ -13,11 +13,11 @@
           $locations_array = $locations;
         endif;
         $locations_str = "";
-        foreach($locations_array as $location_id):
-          $location = get_post($location_id);
+        foreach($locations_array as $location):
+         // $location = get_post($location_id);
           if(!empty($locations_str)) 
             $locations_str.=', ';
-            $locations_str.= ucfirst($location->post_title);
+            $locations_str.= ucfirst($location);
         endforeach;
 
         $locations = $locations_str;
@@ -43,7 +43,7 @@
 	<div class="inner-wrap">
 	<div class="row">
 <div class="small-12 columns">
-<header><h3>REF NO: SV-<?php echo $ref ?></h3><p><i class="fa fa-graduation-cap"></i>  <strong>GRADUATED FROM:</strong> <?php echo $uni->post_title ?> <strong>IN:</strong> <?php echo $grad_year ?></p><p><i class="fa fa-map-marker"></i> <strong>WILLING TO WORK IN:</strong> <?php echo $locations ?></p>
+<header><h3>REF NO: SV-<?php echo $ref ?></h3><p><i class="fa fa-graduation-cap"></i>  <strong>GRADUATED FROM:</strong> <?php echo $uni ?> <strong>IN:</strong> <?php echo $grad_year ?></p><p><i class="fa fa-map-marker"></i> <strong>WILLING TO WORK IN:</strong> <?php echo $locations ?></p>
 </header>
 <div class="row categories">
   <?php 

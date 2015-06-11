@@ -4,8 +4,8 @@ $cat='';
 $month='';
 
 if(!empty($_SESSION)):
-	$cat = $_SESSION['cat'];
-	$month = $_SESSION['month'];
+	if(!empty($_SESSION['cat'])) $cat = $_SESSION['cat'];
+	if(!empty($_SESSION['month'])) $month = $_SESSION['month'];
 endif;
 if(!empty($_REQUEST)):
 	$cat = $_REQUEST['cat'];
