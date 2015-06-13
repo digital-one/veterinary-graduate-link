@@ -64,9 +64,10 @@ $response = array();
 $response['message'] = $this->_message;
 $response['success'] = 0;
   else:
-    $redirect_id = get_option('login_redirect_page_id');
+        $redirect_id = get_option('login_redirect_page_id');
 $response['redirect'] = get_permalink($redirect_id);
 $response['success'] = 1;
+   
   endif;
 echo json_encode($response);
    die();
@@ -117,6 +118,22 @@ if(is_wp_error($user)):
   $msg = !empty($msg) ? $msg : "Registered email address or password incorrect.";
   $this->_message =$msg;
 else:
+
+   //if user is candidate and have deleted their account, block login
+//****remove this section for standard login check*******/
+    $vgl_user = new gradportaluser($user);
+  if($vgl_user->is_candidate()):
+    if($vgl_user->is_deleted()):
+      $error = true;
+     $msg = get_option('login_failed_error_msg');
+  $msg = !empty($msg) ? $msg : "Registered email address or password incorrect.";
+  $this->_message =$msg;
+  wp_logout(); //if user is deleted, log them out.
+      endif;
+    endif;
+    // end candidate check
+
+
   //login ok, redirect
   if(!$this->_use_ajax):
   wp_redirect($redirect);

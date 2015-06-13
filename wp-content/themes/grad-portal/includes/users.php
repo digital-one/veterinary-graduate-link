@@ -6,7 +6,36 @@ add_action( 'show_user_profile', 'show_extra_profile_fields' );
 add_action( 'edit_user_profile', 'show_extra_profile_fields' );
 add_action( 'personal_options_update', 'save_extra_profile_fields' );
 add_action( 'edit_user_profile_update', 'save_extra_profile_fields' );
+add_filter('manage_users_columns', 'add_user_ref_column');
+add_action('manage_users_custom_column',  'show_user_ref_column_content', 10, 3);
+add_action('init', 'add_user_rewrite_rules');
+add_filter('query_vars', 'user_query_vars');
 
+function add_user_rewrite_rules(){
+  add_rewrite_rule('^candidate-alerts/candidate/([^/]*)/?','index.php?pagename=search-candidates/candidate-profile&user_id=$matches[1]','top');
+}
+function user_query_vars($public_query_vars) {
+     $public_query_vars[] = "user_id";
+    return $public_query_vars;
+}
+
+
+
+
+function add_user_ref_column($columns) {
+    $columns['user_ref'] = 'Reference';
+    return $columns;
+}
+ 
+function show_user_ref_column_content($value, $column_name, $user_id) {
+
+    $user = get_userdata( $user_id );
+      $vgl_user = new gradportaluser($user);
+    $ref = get_user_meta($user_id,'reference',true);
+  if ( 'user_ref' == $column_name and $vgl_user->is_candidate() )
+      return 'SV-'.$ref;
+    return $value;
+}
 function save_extra_profile_fields( $user_id ) {
  
      if ( !current_user_can( 'edit_user', $user_id ) )
@@ -16,6 +45,8 @@ function save_extra_profile_fields( $user_id ) {
       $gp_user = new gradportaluser($user);
       if($gp_user->is_candidate()):
 
+        $searchable = isset($_POST['searchable']) ? $_POST['searchable'] : '';
+        $deleted = isset($_POST['deleted']) ? $_POST['deleted'] : '';
         $out_of_hours = isset($_POST['out_of_hours']) ? $_POST['out_of_hours'] : '';
         $weekends = isset($_POST['weekends']) ? $_POST['weekends'] : '';
         $nights = isset($_POST['nights']) ? $_POST['nights'] : '';
@@ -27,7 +58,7 @@ function save_extra_profile_fields( $user_id ) {
         $medicine = isset($_POST['medicine']) ? $_POST['medicine'] : '';
         $surgery = isset($_POST['surgery']) ? $_POST['surgery'] : '';
         $locations = isset($_POST['locations']) ? $_POST['locations'] : '';
-         update_user_meta( $user_id, 'reference', $_POST['reference'] );
+        update_user_meta( $user_id, 'reference', $_POST['reference'] );
      update_user_meta( $user_id, 'telephone_no', $_POST['telephone_no'] );
      update_user_meta( $user_id, 'mobile_no', $_POST['mobile_no'] );
      update_user_meta( $user_id, 'postcode', $_POST['postcode'] );
@@ -44,6 +75,8 @@ function save_extra_profile_fields( $user_id ) {
      update_user_meta( $user_id, 'exotics', $exotics );
      update_user_meta( $user_id, 'medicine', $medicine );
      update_user_meta( $user_id, 'surgery', $surgery);
+     update_user_meta( $user_id, 'searchable', $searchable);
+      update_user_meta( $user_id, 'deleted', $deleted);
      endif;
      if($gp_user->is_employer()):
     // print_r($_POST);
@@ -58,7 +91,7 @@ function save_extra_profile_fields( $user_id ) {
         $exotics = isset($_POST['ca_exotics']) ? $_POST['ca_exotics'] : '';
         $medicine = isset($_POST['ca_medicine']) ? $_POST['ca_medicine'] : '';
         $surgery = isset($_POST['ca_surgery']) ? $_POST['ca_surgery'] : '';
-        $locations = isset($_POST['ca_locations']) ? $_POST['ca_locations'] : '';
+        $locations = isset($_POST['ca_locations']) ? implode(',',$_POST['ca_locations']) : '';
      update_user_meta( $user_id, 'organisation_name', $_POST['organisation_name'] );  
      update_user_meta( $user_id, 'telephone_no', $_POST['telephone_no'] );
     update_user_meta( $user_id, 'postcode', $_POST['postcode'] );
@@ -85,6 +118,26 @@ function show_extra_profile_fields($user){
 <h3>Candidate Profile Information</h3>
 <table class="form-table">
 <tbody>
+   <tr><th><label for="graduation_year">Deleted</label></th><td>
+<select id="deleted" name="deleted">
+ <?php  $selected = get_the_author_meta( 'deleted', $user->ID)== '1' ? ' selected="selected"' : ''; ?>
+   <option value="1"<?php echo $selected ?>>Yes</option>
+    <?php  $selected = get_the_author_meta( 'deleted', $user->ID)== '0' ? ' selected="selected"' : ''; ?>
+    <option value="0"<?php echo $selected ?>>No</option>
+</select>
+</td>
+</tr>
+
+  <tr><th><label for="graduation_year">Searchable</label></th><td>
+<select id="searchable" name="searchable">
+ <?php  $selected = get_the_author_meta( 'searchable', $user->ID)== '1' ? ' selected="selected"' : ''; ?>
+   <option value="1"<?php echo $selected ?>>Yes</option>
+    <?php  $selected = get_the_author_meta( 'searchable', $user->ID)== '0' ? ' selected="selected"' : ''; ?>
+    <option value="0"<?php echo $selected ?>>No</option>
+</select>
+</td>
+</tr>
+
   <tr><th><label for="reference">Reference</label></th><td><input id="reference" class="regular-text" type="text" value="<?php echo esc_attr( get_the_author_meta( 'reference', $user->ID))?>" name="reference" /></td></tr>
 <tr><th><label for="telephone_no">Telephone</label></th><td><input id="telephone_no" class="regular-text" type="text" value="<?php echo esc_attr( get_the_author_meta( 'telephone_no', $user->ID))?>" name="telephone_no" /></td></tr>
 <tr><th><label for="mobile_no">Mobile</label></th><td><input id="mobile_no" class="regular-text" type="text" value="<?php echo  esc_attr( get_the_author_meta( 'mobile_no', $user->ID)) ?>" name="mobile_no" /></td></tr>
@@ -261,7 +314,7 @@ endif;
 </td></tr>
 <tr><th><label for="ca_university">University</label></th><td>
 <select id="university" name="ca_university">
-    <option value="">University</option>
+    <option value="">All Universities</option>
   <?php
   $args = array(
     'post_type' => 'cpt-university',
@@ -272,8 +325,8 @@ endif;
     );
       if($unis= get_posts($args)):
         foreach($unis as $uni):
-           $selected = get_the_author_meta( 'ca_university', $user->ID)== $uni->ID ? ' selected="selected"' : '';  
-            echo '<option value="'.$uni->ID.'"'.$selected.'>'.$uni->post_title.'</option>';
+           $selected = get_the_author_meta( 'ca_university', $user->ID)== $uni->post_title ? ' selected="selected"' : '';  
+            echo '<option value="'.$uni->post_title.'"'.$selected.'>'.$uni->post_title.'</option>';
           endforeach;
       endif;
 ?>
@@ -288,7 +341,7 @@ else :
     endif;
   ?>
 <select multiple id="ca_locations" name="ca_locations[]">
-    <option value="">Locations</option>
+    <option value="">All Locations</option>
  <?php
        $args = array(
           'orderby'=>'title',
@@ -320,8 +373,8 @@ else :
       // get the associated locations
   if($locations):
   foreach($locations as $location):
-         $selected = in_array($location->ID, $selected_locations) ? ' selected="selected"' : '';  
-    echo '<option value="'.$location->ID.'"'.$selected.'>'.$location->post_title.'</option>';
+         $selected = in_array($location->post_title, $selected_locations) ? ' selected="selected"' : '';  
+    echo '<option value="'.$location->post_title.'"'.$selected.'>'.$location->post_title.'</option>';
       endforeach;
     endif;
      if($num_locations>1):

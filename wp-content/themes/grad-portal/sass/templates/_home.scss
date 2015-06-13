@@ -42,6 +42,14 @@
 	}
 
 }
+#page-links{
+	footer{
+		text-align: center;
+	}
+	a.icon-button{
+		margin:0 auto;
+	}
+}
 @media #{$xsmall-only} { 
 	.page-links-xsmall{
 		@include block-grid(
@@ -74,6 +82,14 @@
 			$per-row: 4,
 			$spacing: $block-grid-default-spacing
 		)
+	}
+	#page-links{
+		footer{
+			text-align: left;
+		}
+		a.icon-button{
+			margin:0;
+		}
 	}
 
 }

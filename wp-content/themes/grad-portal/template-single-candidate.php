@@ -1,4 +1,4 @@
-<?php /* Template Name: Search Candidates */ ?>
+<?php /* Template Name: Single Candidate */ ?>
 <?php
 global $vgl_user;
 global $shortlist;
@@ -204,9 +204,23 @@ global $shortlist;
 <!--/search form-->
 <!--search results-->
 <section id="search-results" >
-	<?php /* <div id="posts"> */ ?>
-<?php echo do_shortcode('[candidate-search-results]'); ?>
-  <?php /* </div> */ ?>
+<?php
+global $wp_query;
+if($user_id = get_query_var('user_id')):
+if($user = get_user_by('id',$user_id)):
+$vgl_user = new gradportaluser($user);
+if($vgl_user->is_candidate()):
+include( locate_template( 'partials/content-candidate-loop.php' ));
+else:
+include( locate_template( 'partials/content-no-candidate-found.php' ));
+endif;
+else:
+include( locate_template( 'partials/content-no-candidate-found.php' ));
+endif;
+endif;
+//echo $wp_query->query_vars('user_id');
+?>
+ 
 </section>
 
 <!--search results-->

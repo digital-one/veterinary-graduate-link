@@ -4,7 +4,6 @@ init_form_field_replace = function(_form_id){
     //checkbox replacements
    
    var _checkboxes = $('input[type=checkbox]');
-
     if(_form_id){
        _form = $('#'+_form_id);
      //  console.log(_form);
@@ -39,15 +38,16 @@ init_form_field_replace = function(_form_id){
 
     //radio replacements
 var _radios = $('input[type=radio]');
-
+  //  console.log(_form);
     if(_form_id){
      _radios = $('input[type=radio]',_form);
     }
-
+    if(_radios.length){
+       // console.log(_radios);
     _radios.each(function(){
         var _parent_li = $(this).parents('li').eq(0),
             _box = $("<div>", {class: "radio"}),
-            _label = $('label',_parent_li);
+            _label = $('label',_parent_li),
             _this = $(this);
         _parent_li.addClass('replace-radio');
         //_this.before(_box).hide();
@@ -56,20 +56,9 @@ var _radios = $('input[type=radio]');
             _box.addClass('checked');
         }
         $(_box).add(_label).on('click',function(e){
-            if($(e.currentTarget).hasClass('radio')){
-                 _name = $(this).next().attr('name');
-            _this_radio = $(this).next();
-            } else {
-                 _name = $(this).prev().attr('name');
-            _this_radio = $(this).prev();
-            }
-           
-            _sibling_radios = $('input[name='+_name+']').not(_this_radio);
-            _sibling_radios.each(function(){
-                 $(this).next().prop('checked', false);
-                 $(this).prev().removeClass('checked');
-            })
-            if(_box.hasClass('checked')){
+            //console.log(e.currentTarget);
+
+             if(_box.hasClass('checked')){
                 _box.removeClass('checked');
                 $(this).next().prop('checked', false);
               //  $(this).next().attr('checked', false)
@@ -78,11 +67,23 @@ var _radios = $('input[type=radio]');
                // $(this).next().attr('checked', true)
                 $(this).next().prop('checked', true);
             }
+
+            
+            _name = $(this).siblings('input[type=radio]').attr('name');
+            _this_radio = $(this).siblings('input[type=radio]');
+
+            _sibling_radios = $('input[name='+_name+']').not(_this_radio);
+            console.log
+            _sibling_radios.each(function(){
+                 $(this).next().prop('checked', false);
+                 $(this).prev().removeClass('checked');
+            })
+           
          
         })
     })
 
-
+}
 
     //file input replacements
 

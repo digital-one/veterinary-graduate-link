@@ -79,14 +79,49 @@ class gradportaluser {
 		public function get_telephone(){
 			return $this->_user_meta["telephone_no"][0];
 		}
+		public function get_locations(){
+			return $this->_user_meta["locations"][0];
+		}
+		public function get_university(){
+			return $this->_user_meta["university"][0];
+		}
+		public function get_graduation_year(){
+			return $this->_user_meta["graduation_year"][0];
+		}
+		public function get_profile_single_url(){
+			$url = home_url().'/candidate-alerts/candidate/'.$this->get_id();
+			return $url;
+		}
 		public function get_email() {
 			return $this->user_email;
+		}
+		public function is_deleted(){
+			return $this->_user_meta["deleted"][0];
+		}
+		public function is_searchable(){
+			return $this->_user_meta["searchable"][0];
 		}
 		public function is_subscribed_to_candidate_alerts(){
 			if(isset($this->_user_meta["ca_signup"][0])):
 			return true;
 			endif;
 			return false;
+		}
+		public function get_candidate_alert_meta(){
+			$meta = array();
+			$meta['locations'] = isset($this->_user_meta["ca_locations"][0]) ? $this->_user_meta["ca_locations"][0] : '';
+			$meta['university'] = isset($this->_user_meta["ca_university"][0]) ? $this->_user_meta["ca_university"][0] : '';
+			$meta['out_of_hours'] = isset($this->_user_meta["ca_out_of_hours"][0]) ? $this->_user_meta["ca_out_of_hours"][0] : '';
+			$meta['weekends'] = isset($this->_user_meta["ca_weekends"][0]) ? $this->_user_meta["ca_weekends"][0] : '';
+			$meta['nights'] = isset($this->_user_meta["ca_nights"][0]) ? $this->_user_meta["ca_nights"][0] : '';
+			$meta['internship'] = isset($this->_user_meta["ca_internship"][0]) ? $this->_user_meta["ca_internship"][0] : '';
+			$meta['small_animal'] = isset($this->_user_meta["ca_small_animal"][0]) ? $this->_user_meta["ca_small_animal"][0] : '';
+			$meta['farm_animal'] = isset($this->_user_meta["ca_farm_animal"][0]) ? $this->_user_meta["ca_farm_animal"][0] : '';
+			$meta['equine'] = isset($this->_user_meta["ca_equine"][0]) ? $this->_user_meta["ca_equine"][0] : '';
+			$meta['exotics'] = isset($this->_user_meta["ca_exotics"][0]) ? $this->_user_meta["ca_exotics"][0]  : '';
+			$meta['medicine'] = isset($this->_user_meta["ca_medicine"][0]) ? $this->_user_meta["ca_medicine"][0] : '';
+			$meta['surgery'] = isset($this->_user_meta["ca_surgery"][0]) ? $this->_user_meta["ca_surgery"][0] : '';
+			return $meta;
 		}
 
 		public function get_profile_url(){

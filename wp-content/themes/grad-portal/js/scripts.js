@@ -257,7 +257,7 @@ $(window).on('scroll resize',function(){
 })
 
 //make gravity forms place nice with foundation markup
-$('.page-template-template-candidate-register .gform_body, .page-template-template-employer-register .gform_body, .page-template-template-employer-profile .gform_body, .page-template-template-candidate-profile .gform_body').addClass('row');
+$('.page-template-template-candidate-register .gform_body, .page-template-template-employer-register .gform_body, .page-template-template-employer-profile .gform_body, .page-template-template-candidate-profile .gform_body, .page-template-template-contact .gform_body').addClass('row');
 
 if($('.g-recaptcha').length){
 var _target_li = $('.g-recaptcha').parents('li').eq(0);
@@ -283,6 +283,7 @@ $('.notification-btn').on('click',function(e){
     reset_notification();
     _elms.removeClass('active');
      _target.slideDown(100).addClass('active');
+     show_overlay();
   
      $('#account-links').hide();
         if(_isMobile){
@@ -323,7 +324,7 @@ hide_notification = function(){
     hide_overlay();
 }
 show_notification = function(_message,_confirm,_callback){
-  //show_overlay();
+  show_overlay();
     _confirm = typeof _confirm !== 'undefined' ? _confirm : 0;
     _callback = typeof _callback !== 'undefined' ? _callback : 0;
     $('#notification .confirm').hide();

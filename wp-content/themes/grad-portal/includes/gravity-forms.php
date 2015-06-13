@@ -86,9 +86,117 @@ add_filter('gform_field_value_user_email', 'email_population');
 add_filter('gform_field_value_user_telephone', 'telephone_population');
 add_filter('gform_field_value_user_postcode', 'postcode_population');
 add_filter('gform_field_value_user_shortlist', 'shortlist_population');
-add_filter('gform_field_value_user_reference', 'reference_population');
+//add_filter('gform_field_value_user_reference', 'reference_population');
 add_filter( 'gform_notification', 'change_shortlist_user_email', 10, 3 ); //change the user notification email address to be dynamic
 add_filter("gform_disable_notification", "disable_notification", 10, 4); //disable notifications
+add_action( 'gform_after_submission', 'delete_shortlist', 10, 2 );
+
+add_action("gform_user_registered", "add_candidate_reference_meta", 10, 4); //assign a candidate reference number on registration, then fire candidate alerts
+add_action("gform_user_updated", "user_updated", 10, 4); //on candidate profile update, fire candidate alerts
+
+function add_candidate_reference_meta($user_id, $config, $entry, $user_pass) {  
+    $user = get_user_by('id',$user_id);
+    $vgl_user = new gradportaluser($user);
+    if($vgl_user->is_candidate()):  
+      $ref = reference_population();
+    update_user_meta($user_id, 'reference', $ref);
+     send_candidate_alert($user);
+    endif;
+   
+}
+
+function user_updated($user_id, $user_config, $entry, $user_pass){
+     $user = get_user_by('id',$user_id);
+    $vgl_user = new gradportaluser($user);
+    if($vgl_user->is_candidate()):  
+      send_candidate_alert($user);
+      endif;
+}
+
+function send_candidate_alert($user){
+//  print_r($user);
+$reference = get_user_meta($user->ID,'reference',true);
+$locations_str = get_user_meta($user->ID,'locations',true);
+$candidate_locations = explode(',',$locations_str);
+$university = get_user_meta($user->ID,'university',true);
+$graduation_year = get_user_meta($user->ID,'graduation_year',true);
+$out_of_hours = get_user_meta($user->ID,'out_of_hours',true);
+$weekends = get_user_meta($user->ID,'weekends',true);
+$nights = get_user_meta($user->ID,'nights',true);
+$internship = get_user_meta($user->ID,'internship',true);
+$small_animal = get_user_meta($user->ID,'small_animal',true);
+$farm_animal= get_user_meta($user->ID,'farm_animal',true);
+$equine= get_user_meta($user->ID,'equine',true);
+$exotics= get_user_meta($user->ID,'exotics',true);
+$medicine= get_user_meta($user->ID,'medicine',true);
+$surgery = get_user_meta($user->ID,'surgery',true);
+//loop all users with employer role
+   $args = array(
+    'role' => 'employer'
+    );
+   if($employers = get_users($args)):
+    foreach($employers as $employer):
+      $vgl_user = new gradportaluser($employer);
+      $ca_meta = $vgl_user->get_candidate_alert_meta();
+     // print_r($ca_meta);
+      if(is_array($ca_meta['locations'])):
+        $ca_locations = $ca_meta['locations'];
+      else:
+        $ca_locations = explode(',',$ca_meta['locations']);
+      endif;
+      $location_match = false;
+        $second_match = false;
+      foreach($candidate_locations as $location):
+        if(in_array($location,$ca_locations)):
+           $location_match = true;
+    //     echo 'location match';
+          endif;
+        endforeach;
+
+        if($location_match): //if there is a location match, then check for 1 more match
+      
+          foreach($ca_meta as $k=>$v):
+            if($k=='university' and $v == $university) $second_match = true;
+            if($k=='out_of_hours' and $v == $out_of_hours) $second_match = true;
+            if($k=='weekends' and $v == $weekends) $second_match = true;
+            if($k=='nights' and $v == $nights) $second_match = true;
+            if($k=='internship' and $v == $internship) $second_match = true;
+            if($k=='small_animal' and $v == $small_animal) $second_match = true;
+            if($k=='farm_animal' and $v == $farm_animal) $second_match = true;
+            if($k=='equine' and $v == $equine) $second_match = true;
+            if($k=='exotics' and $v == $exotics) $second_match = true;
+            if($k=='medicine' and $v == $medicine) $second_match = true;
+            if($k=='surgery' and $v == $surgery) $second_match = true;
+            endforeach;
+          endif;
+          if($second_match): //employer candidate alert prefs have 2 or more matches to candidate
+        //  echo 'second match - send email';
+            $email = new wp_email('candidate-alert');
+            $message = $email->get_message();
+            $title = $email->get_title();
+            $vgl_candidate = new gradportaluser($user);
+            $candidate_profile_url = $vgl_candidate->get_profile_single_url();
+            $first_name = $vgl_user->get_firstname();
+            $user_email = $vgl_user->get_email();
+            $subject = $email->get_subject();
+    $find = array('%title%','%first_name%','%ref%', '%university%','%graduation_year%', '%locations%','%candidate_profile_url%','%user_email%');
+        $replace = array($title, $first_name,$reference,$university,$graduation_year,$locations_str, $candidate_profile_url, $user_email );
+        $html = str_replace($find, $replace, $message);
+         wp_mail($user_email, $subject, $html); //send email to employer
+            endif;
+      endforeach;
+    endif; 
+}
+
+function delete_shortlist( $entry, $form ) {
+
+    if($form['id']==9): //if shortlist form
+     global $current_user;
+     $shortlist = new shortlist();
+     $shortlist->set_current_user($current_user);
+     $shortlist->delete_shortlist();
+     endif;
+}
 
 
 function disable_notification($is_disabled, $notification, $form, $entry){
@@ -233,14 +341,17 @@ function populate_locations( $form ) {
           'order'=>'ASC',
           'hide_empty'=>0
           );
-    if($terms = get_terms('region',$args)):
-      foreach($terms as $term):
+   // if($terms = get_terms('region',$args)):
+    //  foreach($terms as $term):
+
+
         //check if more than 1 location in region
 
         $args = array(
     'post_type' => 'cpt-location',
     'posts_per_page' => -1,
     'post_status' => 'publish',
+    /*
     'tax_query' => array(
       array(
       'taxonomy' => 'region',
@@ -248,14 +359,17 @@ function populate_locations( $form ) {
       'terms' => $term->term_id
       )
     ),
+    */
     'orderby' => 'name',
     'order' => 'ASC'
     );
   $locations = get_posts($args);
   $num_locations = count($locations);
+  /*
   if($num_locations>1):
     $choices[] = array('text' => $term->name, 'value'=>'start');
   endif;
+  */
       // get the associated locations
   if($locations):
   foreach($locations as $location):
@@ -263,8 +377,8 @@ function populate_locations( $form ) {
      $choices[] = array('text'=> $location->post_title, 'value'=>$location->post_title);
       endforeach;
     endif;
-    endforeach;
-    endif;
+  //  endforeach;
+ //   endif;
     $field->placeholder = 'Locations';
     $field->choices = $choices;
     endforeach;

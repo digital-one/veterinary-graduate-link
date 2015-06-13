@@ -1,5 +1,9 @@
  <?php 
     global $shortlist;
+    $deleted = get_user_meta($user_id,'deleted',true);
+      $archived = false;
+      if($shortlist->candidate_is_in_archive($user_id)) $archived = true;
+
         $ref = get_user_meta($user_id,'reference',true);
         $uni = get_user_meta($user_id,'university',true);
         //$uni = get_post($uni_id);
@@ -43,14 +47,30 @@
 	<div class="inner-wrap">
 	<div class="row">
 <div class="small-12 columns">
-<header><h3>REF NO: SV-<?php echo $ref ?></h3><p><i class="fa fa-graduation-cap"></i>  <strong>GRADUATED FROM:</strong> <?php echo $uni ?> <strong>IN:</strong> <?php echo $grad_year ?></p><p><i class="fa fa-map-marker"></i> <strong>WILLING TO WORK IN:</strong> <?php echo $locations ?></p>
+  <?php
+  $alerts = [];
+  $alert_list='';
+  if($archived) $alerts[] = 'Previously submitted';
+  if($deleted) $alerts[] = 'This candidate is no longer available';
+  if($alerts):
+    $alert_list = '<ul class="alerts">';
+  foreach($alerts as $alert):
+    $alert_list.='<li>'.$alert.'</li>';
+  endforeach;
+  $alert_list .= '</ul>';
+  endif;
+  ?>
+<header><h3>REF NO: SV-<?php echo $ref ?></h3><?php echo $alert_list ?><p><i class="fa fa-graduation-cap"></i>  <strong>GRADUATED FROM:</strong> <?php echo $uni ?> <strong>IN:</strong> <?php echo $grad_year ?></p><p><i class="fa fa-map-marker"></i> <strong>WILLING TO WORK IN:</strong> <?php echo $locations ?></p>
 </header>
 <div class="row categories">
   <?php 
+  $c=1;
+  $last  = count($metas);
   foreach ($metas as $k=>$meta):
     $class = !empty(${$meta['meta_key']}) ? 'fa-check' : 'fa-times';
   ?>
-	<div class="xsmall-6 small-4 medium-3 large-2 columns"><strong><?php echo $meta['meta_label'] ?>:</strong> <i class="fa <?php echo $class ?>"></i></div>
+	<div class="xsmall-6 small-4 medium-3 large-2 columns<?php if($c==$last): ?> end<?php endif; ?>"><strong><?php echo $meta['meta_label'] ?>:</strong> <i class="fa <?php echo $class ?>"></i></div>
+  <?php $c++; ?>
     <?php endforeach; ?>
 	</div>
 	<main class="profile">
@@ -61,6 +81,7 @@
 global $vgl_user;
  if($vgl_user->is_employer()): ?>
   <form class="shortlist">
+    <?php if(!$deleted and !$archived): ?>
   <?php if(!$shortlist->candidate_added($user_id)): ?>
   <a href="" class="icon-button  plus">Shortlist Me</a>
    <input type="hidden" name="action" value="shortlist_add_me" />
@@ -71,6 +92,7 @@ global $vgl_user;
   <input type="hidden" name="candidate_id" value="<?php echo $user_id ?>" />
   <input type="hidden" name="user_id" value="<?php echo $vgl_user->get_id() ?>" />
 </form>
+<?php endif ?>
 <?php endif ?>
 </div></footer>
 </div>

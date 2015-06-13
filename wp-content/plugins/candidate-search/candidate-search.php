@@ -43,7 +43,9 @@ class candidate_search {
   'equine',
   'exotics',
   'medicine',
-  'surgery'
+  'surgery',
+  'searchable',
+  'deleted'
   );
 $join="";
 $and = "";
@@ -101,9 +103,12 @@ return $sql;
   	function candidate_search_results($atts){
       global $post;
       global $wpdb;
+      global $current_user;
+      global $vgl_user;
+      global $shortlist;
        extract (shortcode_atts(array(
             'order'=>'DESC',
-            'number_posts' => 2
+            'number_posts' => 10
             ),$atts));
 
  if(!empty($_REQUEST) and $_REQUEST['search']==1 or get_query_var('paged')):
@@ -125,13 +130,25 @@ return $sql;
       $total_results = count($candidates);
       $total_pages = intval($total_candidates/ $number_posts) + 1;
 echo '<div id="posts">';
+  //if candidate is logged in, check their listing isnt currently searchable. If not, show it.
+  if($vgl_user->is_candidate()):
+    $is_searchable = get_user_meta($vgl_user->get_id(),'searchable',true) ? get_user_meta($vgl_user->get_id(),'searchable',true) : 0;
+    if(!$is_searchable):
+       $user_id = $vgl_user->get_id();
+      $deleted = get_user_meta($user_id,'deleted',true);
+      $archived = false;
+      if($shortlist->candidate_is_in_archive($user_id)) $archived = true;
+      //echo $user_id;
+      include( locate_template( 'partials/content-candidate-loop.php' ));
+    endif;
+    endif;
 		if(!empty($candidates)):
 			foreach($candidates as $user):
       $user_id = $user->ID;
       //echo $user_id;
-        include( locate_template( 'partials/content-candidate-loop.php' ));
-			endforeach;
-		endif;
+      include( locate_template( 'partials/content-candidate-loop.php' ));
+      endforeach;
+		  endif;
 echo '</div>';
    $current_page = max(1, get_query_var('paged'));
     if ($current_page < $total_pages):

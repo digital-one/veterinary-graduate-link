@@ -29,7 +29,7 @@
     </tr>
     <tr>
      <td align="center" valign="top" style="padding-top:15px; padding-right:15px; padding-bottom:15px; padding-left:15px; background-color:#2A3644; font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:12px; line-height:100%; color:#FFFFFF;" bgcolor="#2A3644">
-    You have received this email because <strong><i>%user_email%</i></strong> submitted a shortlist on <a href="http://www.vetgradlink.com" target="_blank" style="color:#FFFFFF; text-decoration:none;"><strong><i>www.vetgradlink.com</i></strong></a>. If this is not you, please<a href="http://www.vetgradlink.com" target="_blank" style="color:#FFFFFF; text-decoration:none;"><strong><i> click here</i></strong></a>.
+    You have received this email because <strong><i>%user_email%</i></strong> submitted a shortlist on <a href="http://www.vetgradlink.com" target="_blank" style="color:#FFFFFF; text-decoration:none;"><strong><i>www.vetgradlink.com</i></strong></a>.
     </td>
     </tr>
     </tbody>

@@ -44,6 +44,7 @@ endif;
 <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
 <?php gravity_form_enqueue_scripts(1, true); ?>
 <?php gravity_form_enqueue_scripts(2, true); ?>
+<?php gravity_form_enqueue_scripts(7, true); ?>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -94,8 +95,8 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 	<p>No results found! Update your Candidate Alert preferences so you know when a candidate is available that matches your criteria</p>
 		<footer class="form-footer"><a class="icon-button cancel">Close</a><a href="<?php echo $vgl_user->get_profile_url() ?>" class="icon-button tick">Update</a></footer>
 	<?php else: ?>
-	<p>No results found! Sign up to Candidate Alerts so you know when a candidate is available that matches your criteria</p>
-		<footer class="form-footer"><a class="icon-button cancel">Close</a><a href="<?php echo $vgl_user->get_profile_url() ?>" class="icon-button tick">Sign up</a></footer>
+	<p>No results found! if you cannot find who you are looking for please sign up to be alerted when someone who fits your criteria is added to the site</p>
+		<footer class="form-footer"><a class="icon-button cancel">Close</a><a href="<?php echo $vgl_user->get_profile_url() ?>" class="icon-button tick">Sign up for alerts</a></footer>
 <?php endif ?>
 		<?php else: ?>
 	<p>Sorry, no results found matching your criteria</p>

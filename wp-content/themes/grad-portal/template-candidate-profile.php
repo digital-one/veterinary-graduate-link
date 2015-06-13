@@ -2,6 +2,10 @@
 <?php get_header() ?>
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
+<?php
+//$user = get_user_by('id',31);
+//send_candidate_alert($user);
+?>
 <!--intro-->
 <section id="intro" class="profile-color">
 <div class="row">

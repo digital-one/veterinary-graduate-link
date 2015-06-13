@@ -9,8 +9,40 @@ article.candidate{
 	}
 }
 #search-results{
-	footer{
-		padding-top: 50px;
+	li{
+		footer{
+			a{
+				margin: 0 20px 0 0;
+				margin-bottom:0;
+			}
+		}
+	}
+}
+#gform_wrapper_9{
+	float: none;
+	width: auto;
+	margin-bottom: 20px;
+	.gform_body{
+		display: none;
+	}
+	.gform_footer{
+		padding-top:0;
+	}
+}
+ul.alerts{
+	@extend .clearfix;
+	margin-bottom: 20px;
+	li{
+		display: inline-block;
+		float:left;
+		height:25px;
+		line-height: 25px;
+		padding: 0 8px;
+		text-transform: uppercase;
+		font-weight: 700;
+		margin-bottom: 4px;
+		background-color: $search;
+		color: white;
 	}
 }
 
@@ -21,12 +53,16 @@ article.candidate{
 			footer{
 				text-align: right;
 				a{
-					margin-left:20px;
+					margin: 0 0 0 20px;
 					margin-bottom:0;
 				}
 			}
 		}
 
+	}
+	#gform_wrapper_9{
+		float: right;
+		margin-bottom: 0;
 	}
 
 }

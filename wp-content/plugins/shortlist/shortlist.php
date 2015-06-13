@@ -11,6 +11,7 @@
   class shortlist {
 
   	var $_shortlist;
+    var $_shortlist_archive;
   	var $_shortlist_user;  
   	var $_user;
   	var $_user_id;
@@ -52,7 +53,12 @@
 			endif;
   			return false;
   		}
-
+      function get_shortlist_archive(){
+        if($this->_shortlist_archive = get_user_meta($this->_user_id,'_shortlist_archive',true)):
+      return $this->_shortlist_archive;
+      endif;
+      return false;
+      }
 
       function get_shortlist_candidate_refs(){
         $refs='';
@@ -82,6 +88,67 @@
   			return false;
   		}
 
+      function get_archive_shortlist_candidates(){
+        if($this->get_shortlist_archive()):
+        if (strpos($this->_shortlist_archive,',') !== false):
+        $_shortlist_arr = explode(',',$this->_shortlist_archive);
+        else:
+        $_shortlist_arr = array($this->_shortlist_archive);
+        endif;
+        return $_shortlist_arr;
+        endif;
+        return false;
+      }
+      function candidate_is_in_archive($candidate_id){
+        if($archive = $this->get_archive_shortlist_candidates()):
+          if(in_array($candidate_id, $archive)):
+            return true;
+          endif;
+          endif;
+          return false;
+      }
+
+      function add_shortlist_to_archive(){
+         if($candidates = $this->get_shortlist_candidates()):
+          $archive = array();
+         if($get = $this->get_archive_shortlist_candidates()) $archive = $get;
+            foreach($candidates as $candidate_id):
+                if(!in_array($candidate_id, $archive)):
+                  $archive[] = $candidate_id; //add candidate to archive
+                endif;
+              endforeach;
+              $_shortlist_str = implode(',',$archive);
+                update_user_meta($this->_user_id, '_shortlist_archive', $_shortlist_str);
+              return true;
+            endif;
+            return false;
+      }
+      function deleted_candidates_in_shortlist(){
+         $number = 0;
+        if($candidates = $this->get_shortlist_candidates()):
+          foreach($candidates as $candidate):
+            if(get_user_meta($candidate,'deleted',true)==1):
+              $number++;
+            endif;
+            if( get_userdata($candidate)===false):
+              $number++;
+              endif;
+            endforeach;
+            endif;
+            return $number;
+      }
+
+      function delete_shortlist(){
+        if($this->get_shortlist()):
+          $added_to_archive = $this->add_shortlist_to_archive();
+        if($added_to_archive):
+        delete_user_meta($this->_user_id, '_shortlist');
+      return true;
+      endif;
+      endif;
+      return false;
+      }
+
   		function has_candidates(){
   			if($this->get_shortlist()):
   			$_shortlist_arr = $this->get_shortlist_candidates();
@@ -95,10 +162,19 @@
   			$total=0;
   			if($this->get_shortlist()):
   			$_shortlist_arr = $this->get_shortlist_candidates();
-  			$_total = count($_shortlist_arr);
+  			$total = count($_shortlist_arr);
   			endif;
-  			return $_total;
+  			return $total;
   		}
+      function total_archive_shortlist_candidates(){
+        $total=0;
+        if($this->get_shortlist()):
+        $_shortlist_arr = $this->get_shortlist_archive_candidates();
+        $_total = count($_shortlist_arr);
+        endif;
+        return $_total;
+      }
+
 
   		function shortlist_total(){
   			$_total=0;

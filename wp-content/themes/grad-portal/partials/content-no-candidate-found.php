@@ -1,5 +1,5 @@
 <article class="post candidate row">
 <div class="small-12 columns">
-<h3>Currently no candidates in your shortlist.</h3>
+<h3>No candidate found.</h3>
 </div>
 </article>

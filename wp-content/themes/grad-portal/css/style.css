@@ -150,12 +150,12 @@ img {
 }
 
 /* line 172, ../bower_components/foundation/scss/foundation/components/_global.scss */
-.clearfix:before, #nav:before, #nav ul:before, #page-header:before, article.post footer:before, article.post footer menu.social:before, #notification-panel .form-body:before, #notification-panel .gform_footer .buttons:before, .gform_footer:before, .file-select-wrap .file-select:before, .clearfix:after, #nav:after, #nav ul:after, #page-header:after, article.post footer:after, article.post footer menu.social:after, #notification-panel .form-body:after, #notification-panel .gform_footer .buttons:after, .gform_footer:after, .file-select-wrap .file-select:after {
+.clearfix:before, #nav:before, #nav ul:before, .page-template-template-thanks #intro menu.social:before, #page-header:before, article.post footer:before, article.post footer menu.social:before, #notification-panel .form-body:before, #notification-panel .gform_footer .buttons:before, .gform_footer:before, .file-select-wrap .file-select:before, ul.alerts:before, .clearfix:after, #nav:after, #nav ul:after, .page-template-template-thanks #intro menu.social:after, #page-header:after, article.post footer:after, article.post footer menu.social:after, #notification-panel .form-body:after, #notification-panel .gform_footer .buttons:after, .gform_footer:after, .file-select-wrap .file-select:after, ul.alerts:after {
   content: " ";
   display: table;
 }
 /* line 173, ../bower_components/foundation/scss/foundation/components/_global.scss */
-.clearfix:after, #nav:after, #nav ul:after, #page-header:after, article.post footer:after, article.post footer menu.social:after, #notification-panel .form-body:after, #notification-panel .gform_footer .buttons:after, .gform_footer:after, .file-select-wrap .file-select:after {
+.clearfix:after, #nav:after, #nav ul:after, .page-template-template-thanks #intro menu.social:after, #page-header:after, article.post footer:after, article.post footer menu.social:after, #notification-panel .form-body:after, #notification-panel .gform_footer .buttons:after, .gform_footer:after, .file-select-wrap .file-select:after, ul.alerts:after {
   clear: both;
 }
 
@@ -3364,17 +3364,19 @@ button:focus, a:focus {
  *    `:before` to contain the top-margins of child elements.
  */
 /* line 11, ../sass/helpers/classes/_clearfix.scss */
-.clearfix:before, #nav:before, #nav ul:before, #page-header:before, article.post footer:before, article.post footer menu.social:before, #notification-panel .form-body:before, #notification-panel .gform_footer .buttons:before, .gform_footer:before, .file-select-wrap .file-select:before,
+.clearfix:before, #nav:before, #nav ul:before, .page-template-template-thanks #intro menu.social:before, #page-header:before, article.post footer:before, article.post footer menu.social:before, #notification-panel .form-body:before, #notification-panel .gform_footer .buttons:before, .gform_footer:before, .file-select-wrap .file-select:before, ul.alerts:before,
 .clearfix:after,
 #nav:after,
 #nav ul:after,
+.page-template-template-thanks #intro menu.social:after,
 #page-header:after,
 article.post footer:after,
 article.post footer menu.social:after,
 #notification-panel .form-body:after,
 #notification-panel .gform_footer .buttons:after,
 .gform_footer:after,
-.file-select-wrap .file-select:after {
+.file-select-wrap .file-select:after,
+ul.alerts:after {
   content: " ";
   /* 1 */
   display: table;
@@ -3382,7 +3384,7 @@ article.post footer menu.social:after,
 }
 
 /* line 16, ../sass/helpers/classes/_clearfix.scss */
-.clearfix:after, #nav:after, #nav ul:after, #page-header:after, article.post footer:after, article.post footer menu.social:after, #notification-panel .form-body:after, #notification-panel .gform_footer .buttons:after, .gform_footer:after, .file-select-wrap .file-select:after {
+.clearfix:after, #nav:after, #nav ul:after, .page-template-template-thanks #intro menu.social:after, #page-header:after, article.post footer:after, article.post footer menu.social:after, #notification-panel .form-body:after, #notification-panel .gform_footer .buttons:after, .gform_footer:after, .file-select-wrap .file-select:after, ul.alerts:after {
   clear: both;
 }
 
@@ -3391,7 +3393,7 @@ article.post footer menu.social:after,
  * Include this rule to trigger hasLayout and contain floats.
  */
 /* line 23, ../sass/helpers/classes/_clearfix.scss */
-.clearfix, #nav, #nav ul, #page-header, article.post footer, article.post footer menu.social, #notification-panel .form-body, #notification-panel .gform_footer .buttons, .gform_footer, .file-select-wrap .file-select {
+.clearfix, #nav, #nav ul, .page-template-template-thanks #intro menu.social, #page-header, article.post footer, article.post footer menu.social, #notification-panel .form-body, #notification-panel .gform_footer .buttons, .gform_footer, .file-select-wrap .file-select, ul.alerts {
   *zoom: 1;
 }
 
@@ -3825,6 +3827,10 @@ body {
 .home #main {
   padding-bottom: 0;
 }
+/* line 7, ../sass/components/_container.scss */
+.page-template-template-thanks #main {
+  min-height: 200px;
+}
 
 /* line 1, ../sass/components/_typography.scss */
 h1, h2, h3, h4 {
@@ -3929,24 +3935,67 @@ a:hover, a:active {
   height: auto;
   max-height: 280px;
 }
+/* line 41, ../sass/components/_global.scss */
+.page-template-template-thanks #intro {
+  display: block;
+}
+/* line 43, ../sass/components/_global.scss */
+.page-template-template-thanks #intro .columns:last-child {
+  display: block;
+}
+/* line 46, ../sass/components/_global.scss */
+.page-template-template-thanks #intro h1 {
+  padding-top: 90px;
+  background-image: url("../images/icon-thumbs-up.png");
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+/* line 49, ../sass/components/_global.scss */
+.svg .page-template-template-thanks #intro h1 {
+  background-image: url("../images/icon-thumbs-up.svg");
+}
+/* line 55, ../sass/components/_global.scss */
+.page-template-template-thanks #intro menu.social {
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+/* line 60, ../sass/components/_global.scss */
+.page-template-template-thanks #intro menu.social ul {
+  margin: 0 auto;
+  display: inline-block;
+  float: none;
+}
+/* line 66, ../sass/components/_global.scss */
+.page-template-template-thanks #intro footer {
+  margin-bottom: 10px;
+}
+/* line 68, ../sass/components/_global.scss */
+.page-template-template-thanks #intro footer a {
+  margin: 0 10px 20px;
+}
+/* line 70, ../sass/components/_global.scss */
+.page-template-template-thanks #intro footer a:last-child {
+  margin-bottom: 0;
+}
 
-/* line 42, ../sass/components/_global.scss */
+/* line 77, ../sass/components/_global.scss */
 #page-header {
   margin-bottom: 20px;
 }
 
-/* line 47, ../sass/components/_global.scss */
+/* line 82, ../sass/components/_global.scss */
 .breadcrumbs, .shortlist-link {
   float: none;
   display: block;
 }
 
-/* line 51, ../sass/components/_global.scss */
+/* line 86, ../sass/components/_global.scss */
 .breadcrumbs {
   margin-bottom: 20px;
 }
 
-/* line 54, ../sass/components/_global.scss */
+/* line 89, ../sass/components/_global.scss */
 a.more-posts {
   font-size: 16px;
   font-size: 1rem;
@@ -3956,14 +4005,19 @@ a.more-posts {
   text-decoration: none;
 }
 
-/* line 61, ../sass/components/_global.scss */
+/* line 96, ../sass/components/_global.scss */
 .align-left {
   float: left;
 }
 
-/* line 64, ../sass/components/_global.scss */
+/* line 99, ../sass/components/_global.scss */
 .align-right {
   float: right;
+}
+
+/* line 102, ../sass/components/_global.scss */
+.centered-text {
+  text-align: center;
 }
 
 /* line 2, ../sass/helpers/mixins/_inline-menu.scss */
@@ -3979,24 +4033,24 @@ menu.social li {
 menu.social li a {
   display: block;
 }
-/* line 69, ../sass/components/_global.scss */
+/* line 107, ../sass/components/_global.scss */
 menu.social strong, menu.social ul {
   float: left;
   display: block;
 }
-/* line 73, ../sass/components/_global.scss */
+/* line 111, ../sass/components/_global.scss */
 menu.social strong {
   margin-right: 10px;
 }
-/* line 76, ../sass/components/_global.scss */
+/* line 114, ../sass/components/_global.scss */
 menu.social li {
   margin: 0 5px 0 0;
 }
-/* line 78, ../sass/components/_global.scss */
+/* line 116, ../sass/components/_global.scss */
 #footer menu.social li {
   margin: 0 0 0 5px;
 }
-/* line 82, ../sass/components/_global.scss */
+/* line 120, ../sass/components/_global.scss */
 menu.social a {
   display: block;
   overflow: hidden;
@@ -4014,12 +4068,12 @@ menu.social a {
   background-color: #007bb6;
   color: #efefef;
 }
-/* line 92, ../sass/components/_global.scss */
+/* line 130, ../sass/components/_global.scss */
 menu.social a:hover, menu.social a:active {
   background-color: #009de9;
   color: white !important;
 }
-/* line 97, ../sass/components/_global.scss */
+/* line 135, ../sass/components/_global.scss */
 menu.social a span {
   top: 0;
   right: auto;
@@ -4027,63 +4081,63 @@ menu.social a span {
   left: -500px;
   position: absolute;
 }
-/* line 100, ../sass/components/_global.scss */
+/* line 138, ../sass/components/_global.scss */
 menu.social a.facebook {
   background-color: #3c5a98;
 }
-/* line 102, ../sass/components/_global.scss */
+/* line 140, ../sass/components/_global.scss */
 menu.social a.facebook:hover, menu.social a.facebook:active {
   background-color: #4e71b9;
 }
-/* line 106, ../sass/components/_global.scss */
+/* line 144, ../sass/components/_global.scss */
 menu.social a.twitter {
   background-color: #2ba8e0;
 }
-/* line 108, ../sass/components/_global.scss */
+/* line 146, ../sass/components/_global.scss */
 menu.social a.twitter:hover, menu.social a.twitter:active {
   background-color: #57bae7;
 }
-/* line 112, ../sass/components/_global.scss */
+/* line 150, ../sass/components/_global.scss */
 menu.social a.google-plus {
   background-color: #dc4b38;
 }
-/* line 114, ../sass/components/_global.scss */
+/* line 152, ../sass/components/_global.scss */
 menu.social a.google-plus:hover, menu.social a.google-plus:active {
   background-color: #e47263;
 }
 
-/* line 120, ../sass/components/_global.scss */
+/* line 158, ../sass/components/_global.scss */
 article.post {
   position: relative;
   display: block;
 }
-/* line 124, ../sass/components/_global.scss */
+/* line 162, ../sass/components/_global.scss */
 article.post h3 {
   margin-bottom: 10px;
 }
-/* line 127, ../sass/components/_global.scss */
+/* line 165, ../sass/components/_global.scss */
 article.post header {
   margin-bottom: 20px;
 }
-/* line 131, ../sass/components/_global.scss */
+/* line 169, ../sass/components/_global.scss */
 article.post footer {
   padding-top: 30px;
 }
-/* line 134, ../sass/components/_global.scss */
+/* line 172, ../sass/components/_global.scss */
 article.post footer .buttons {
   float: left;
 }
-/* line 136, ../sass/components/_global.scss */
+/* line 174, ../sass/components/_global.scss */
 article.post footer .buttons a {
   margin: 0 20px 0 0;
 }
-/* line 140, ../sass/components/_global.scss */
+/* line 178, ../sass/components/_global.scss */
 article.post footer menu.social {
   float: none;
   display: block;
   margin-bottom: 20px;
 }
-/* line 147, ../sass/components/_global.scss */
+/* line 185, ../sass/components/_global.scss */
 article.post figure {
   width: 100%;
   display: block;
@@ -4099,13 +4153,13 @@ article.post figure {
   position: relative;
   overflow: hidden;
 }
-/* line 156, ../sass/components/_global.scss */
+/* line 194, ../sass/components/_global.scss */
 article.post figure:before {
   content: "";
   padding-top: 100%;
   display: block;
 }
-/* line 161, ../sass/components/_global.scss */
+/* line 199, ../sass/components/_global.scss */
 article.post figure img {
   top: 0;
   right: auto;
@@ -4115,31 +4169,35 @@ article.post figure img {
   width: 100%;
   height: auto;
 }
-/* line 167, ../sass/components/_global.scss */
+/* line 205, ../sass/components/_global.scss */
 article.post .inner-wrap {
   padding-bottom: 50px;
   margin-bottom: 50px;
   border-bottom: 1px solid #474747;
 }
-/* line 173, ../sass/components/_global.scss */
+/* line 211, ../sass/components/_global.scss */
 article.post.candidate h3 {
   margin-bottom: 20px;
 }
-/* line 177, ../sass/components/_global.scss */
-article.post.candidate footer a {
-  margin-left: 20px;
+/* line 214, ../sass/components/_global.scss */
+article.post.candidate footer {
+  padding-top: 40px;
 }
-/* line 181, ../sass/components/_global.scss */
+/* line 216, ../sass/components/_global.scss */
+article.post.candidate footer a {
+  margin: 0 20px 0 8px;
+}
+/* line 220, ../sass/components/_global.scss */
 article.post.candidate main.profile {
   padding-top: 30px;
 }
-/* line 185, ../sass/components/_global.scss */
+/* line 224, ../sass/components/_global.scss */
 article.post.candidate header p {
   margin-bottom: 10px;
   padding-left: 30px;
   position: relative;
 }
-/* line 189, ../sass/components/_global.scss */
+/* line 228, ../sass/components/_global.scss */
 article.post.candidate header p i {
   top: -2px;
   right: auto;
@@ -4160,17 +4218,17 @@ article.post.candidate header p i {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-/* line 200, ../sass/components/_global.scss */
+/* line 239, ../sass/components/_global.scss */
 article.post.candidate header p:last-child {
   margin: 0;
 }
 
-/* line 207, ../sass/components/_global.scss */
+/* line 246, ../sass/components/_global.scss */
 footer#posts-footer {
   text-align: center;
 }
 
-/* line 210, ../sass/components/_global.scss */
+/* line 249, ../sass/components/_global.scss */
 footer#form-footer {
   text-align: right;
   padding-top: 20px;
@@ -4178,49 +4236,78 @@ footer#form-footer {
 
 /* Media Queries */
 @media only screen and (min-width: 48rem) {
-  /* line 219, ../sass/components/_global.scss */
+  /* line 258, ../sass/components/_global.scss */
   #intro {
     padding: 40px 0 20px;
   }
-  /* line 222, ../sass/components/_global.scss */
+  /* line 261, ../sass/components/_global.scss */
   #intro .columns:last-child {
     display: block;
   }
-  /* line 226, ../sass/components/_global.scss */
+  /* line 265, ../sass/components/_global.scss */
   #intro .columns:first-child div {
     padding-right: 30px;
   }
+  /* line 271, ../sass/components/_global.scss */
+  .page-template-template-thanks #intro h1 {
+    font-size: 30px;
+    font-size: 1.875rem;
+    padding-top: 90px;
+    background-image: url("../images/icon-thumbs-up.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+  /* line 275, ../sass/components/_global.scss */
+  .svg .page-template-template-thanks #intro h1 {
+    background-image: url("../images/icon-thumbs-up.svg");
+  }
+  /* line 282, ../sass/components/_global.scss */
+  .page-template-template-thanks #intro menu.social a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 25px;
+    font-size: 1.5625rem;
+  }
+  /* line 290, ../sass/components/_global.scss */
+  .page-template-template-thanks #intro footer a {
+    margin-bottom: 0;
+  }
 
-  /* line 232, ../sass/components/_global.scss */
+  /* line 296, ../sass/components/_global.scss */
   .breadcrumbs {
     float: left;
     margin-bottom: 0;
   }
 
-  /* line 236, ../sass/components/_global.scss */
+  /* line 300, ../sass/components/_global.scss */
   .shortlist-link {
     float: right;
   }
 
-  /* line 240, ../sass/components/_global.scss */
+  /* line 304, ../sass/components/_global.scss */
   article.post figure {
     margin-bottom: 0;
   }
-  /* line 244, ../sass/components/_global.scss */
+  /* line 309, ../sass/components/_global.scss */
+  article.post.candidate footer a {
+    margin-left: 0 0 0 20px;
+  }
+  /* line 315, ../sass/components/_global.scss */
   article.post footer menu.social {
     float: left;
     display: inline-block;
     margin: 0;
   }
-  /* line 249, ../sass/components/_global.scss */
+  /* line 320, ../sass/components/_global.scss */
   article.post footer .buttons {
     float: right;
   }
-  /* line 251, ../sass/components/_global.scss */
+  /* line 322, ../sass/components/_global.scss */
   article.post footer .buttons a {
     margin: 0 0 0 20px;
   }
-  /* line 254, ../sass/components/_global.scss */
+  /* line 325, ../sass/components/_global.scss */
   article.post footer .buttons form {
     display: inline-block;
   }
@@ -4547,10 +4634,18 @@ footer#form-footer {
 .svg .icon-button.download:before {
   background-image: url("../images/icon-download.svg");
 }
+/* line 132, ../sass/components/_buttons.scss */
+.icon-button.home:before {
+  background-image: url("../images/icon-home.png");
+}
+/* line 134, ../sass/components/_buttons.scss */
+.svg .icon-button.home:before {
+  background-image: url("../images/icon-home.svg");
+}
 
 /* Media Queries */
 @media only screen and (min-width: 48rem) and (max-width: 63.9375rem) {
-  /* line 137, ../sass/components/_buttons.scss */
+  /* line 145, ../sass/components/_buttons.scss */
   .icon-button {
     font-size: 12px;
     font-size: 0.75rem;
@@ -5693,8 +5788,17 @@ button {
   margin: 0 auto;
 }
 
+/* line 46, ../sass/templates/_home.scss */
+#page-links footer {
+  text-align: center;
+}
+/* line 49, ../sass/templates/_home.scss */
+#page-links a.icon-button {
+  margin: 0 auto;
+}
+
 @media only screen and (max-width: 29.9375rem) {
-  /* line 46, ../sass/templates/_home.scss */
+  /* line 54, ../sass/templates/_home.scss */
   .page-links-xsmall {
     display: block;
     padding: 0;
@@ -5729,7 +5833,7 @@ button {
   }
 }
 @media only screen and (min-width: 30rem) and (max-width: 47.9375rem) {
-  /* line 54, ../sass/templates/_home.scss */
+  /* line 62, ../sass/templates/_home.scss */
   .page-links-small {
     display: block;
     padding: 0;
@@ -5765,7 +5869,7 @@ button {
 }
 /* Media Queries */
 @media only screen and (min-width: 48rem) {
-  /* line 72, ../sass/templates/_home.scss */
+  /* line 80, ../sass/templates/_home.scss */
   .page-links-medium {
     display: block;
     padding: 0;
@@ -5798,9 +5902,18 @@ button {
   .page-links-medium > li:nth-of-type(4n+1) {
     clear: both;
   }
+
+  /* line 87, ../sass/templates/_home.scss */
+  #page-links footer {
+    text-align: left;
+  }
+  /* line 90, ../sass/templates/_home.scss */
+  #page-links a.icon-button {
+    margin: 0;
+  }
 }
 @media only screen and (min-width: 64rem) {
-  /* line 83, ../sass/templates/_home.scss */
+  /* line 99, ../sass/templates/_home.scss */
   .page-links-medium {
     display: block;
     padding: 0;
@@ -5846,19 +5959,59 @@ article.candidate main.profile {
   display: none;
 }
 
-/* line 12, ../sass/templates/_search-candidates.scss */
-#search-results footer {
-  padding-top: 50px;
+/* line 14, ../sass/templates/_search-candidates.scss */
+#search-results li footer a {
+  margin: 0 20px 0 0;
+  margin-bottom: 0;
+}
+
+/* line 21, ../sass/templates/_search-candidates.scss */
+#gform_wrapper_9 {
+  float: none;
+  width: auto;
+  margin-bottom: 20px;
+}
+/* line 25, ../sass/templates/_search-candidates.scss */
+#gform_wrapper_9 .gform_body {
+  display: none;
+}
+/* line 28, ../sass/templates/_search-candidates.scss */
+#gform_wrapper_9 .gform_footer {
+  padding-top: 0;
+}
+
+/* line 32, ../sass/templates/_search-candidates.scss */
+ul.alerts {
+  margin-bottom: 20px;
+}
+/* line 35, ../sass/templates/_search-candidates.scss */
+ul.alerts li {
+  display: inline-block;
+  float: left;
+  height: 25px;
+  line-height: 25px;
+  padding: 0 8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 4px;
+  background-color: #f17a72;
+  color: white;
 }
 
 @media only screen and (min-width: 48rem) {
-  /* line 21, ../sass/templates/_search-candidates.scss */
+  /* line 53, ../sass/templates/_search-candidates.scss */
   #search-results li footer {
     text-align: right;
   }
-  /* line 23, ../sass/templates/_search-candidates.scss */
+  /* line 55, ../sass/templates/_search-candidates.scss */
   #search-results li footer a {
-    margin-left: 20px;
+    margin: 0 0 0 20px;
+    margin-bottom: 0;
+  }
+
+  /* line 63, ../sass/templates/_search-candidates.scss */
+  #gform_wrapper_9 {
+    float: right;
     margin-bottom: 0;
   }
 }
