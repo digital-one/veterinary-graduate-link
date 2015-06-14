@@ -1,4 +1,13 @@
 <?php 
+//redirect to login, if user isnt logged in and on private page
+$private_pages = array(21,25,27,29,19,190);
+if(!is_user_logged_in()):
+if(in_array($post->ID,$private_pages)):
+	$url = get_permalink($post->ID);
+	wp_redirect(home_url().'/?login=1&redirect='.$url);
+	exit();
+endif;
+endif;
 session_start();
 global $current_user;
 global $vgl_user;
@@ -124,7 +133,7 @@ Levi Solicitors LLP would like to place cookies onto your computer to help us ma
 <menu id="account-links">
 
 <?php if(!$vgl_user->is_logged_in()): ?>
-	<a href="/?login" rel="login-form" class="notification-btn">Sign in</a> or <a rel="role-selection" class="notification-btn">Register</a>
+	<a href="/?login" class="login notification-btn" rel="login-form">Sign in</a> or <a rel="role-selection" class="notification-btn">Register</a>
 <?php else: ?>
 	<?php 
 $redirect = '&amp;redirect_to='.urlencode(wp_make_link_relative(get_option('siteurl')));

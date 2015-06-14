@@ -2,7 +2,7 @@
 
   class login_forms {
 
-  		var $_user_id;
+  	var $_user_id;
 		var $_current_form_id;
 		var $_message;
 		var $_action;
@@ -82,6 +82,7 @@ if(!empty($_POST)):
  $error=false;
 $id = get_option('login_redirect_page_id');
   $redirect = !empty($id) ? get_permalink(get_option('login_redirect_page_id')) : '';
+  if(!empty($_POST['redirect'])) $redirect = $_POST['redirect']; //set redirect to hidden field value if filled
     $use_remember_me = get_option('login_remember_me') ? 1 : 0;
     //  $status['show_form_id'] = 'login';
     $this->_user_email = urldecode($_POST['user_email']);

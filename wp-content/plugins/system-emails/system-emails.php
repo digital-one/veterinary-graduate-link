@@ -28,7 +28,7 @@
         add_action('admin_init',array($this,'add_email_categories'),0);
         add_filter('wp_mail_from', array($this,'new_mail_from'),0);
         add_filter('wp_mail_from_name', array($this,'new_mail_from_name'),0);
-        add_filter( 'wpmu_signup_user_notification', array($this,'suppress_signup_user_notification'), 10, 4 );
+        add_filter( 'wpmu_signup_user_notification', array($this,'suppress_signup_user_notification'), 10, 4 ); //suppress the default activation email sent by GF registration and use this
       add_filter( 'wpmu_signup_user_notification_subject', array($this,'activation_subject'),  10, 8 );
      add_filter( 'wpmu_signup_blog_notification_subject', array($this,'activation_subject'),  10, 8 );
     add_filter( 'wpmu_signup_user_notification_email', array( $this, 'activation_email_message' ), 10, 4 );
@@ -37,11 +37,10 @@
 
         if (!function_exists('wp_new_user_notification')):
             function wp_new_user_notification($user_id, $plaintext_pass = '') {
-    $user = get_userdata( $user_id );
-    //$gp_user = new gradportaluser($user);
 
-    // The blogname option is escaped with esc_html on the way into the database in sanitize_option
-    // we want to reverse this for the plain text arena of emails.
+    //notification sent to admin on new registration.
+    //commented out as gravity forms registration plugin takes care of this one
+    $user = get_userdata( $user_id );
     $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
     $email = new wp_email('new-account-admin');
     $message = $email->get_message();
@@ -52,30 +51,23 @@
     $find = array('%title%','%first_name%','%user_profile_url%','%user_email%');
         $replace = array($title, $first_name, $login_url, $user_email );
         $html = str_replace($find, $replace, $message);
-    //get new account email message body (admin)
-    //$message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
-    //$message .= sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
-    //$message .= sprintf(__('E-mail: %s'), $user->user_email) . "\r\n";
-    // $to, $subject, $message, $headers, $attachments
    // @wp_mail(get_option('admin_email'), $email->get_subject(), $html); //send to admin
 
     if ( empty($plaintext_pass) )
         return;
-    //get new account email message body
+    //account confirmation email sent to user
+    //i have suppressed the default gravity forms notification as this sends after the user has activated their account
     $email = new wp_email('new-account');
     $message = $email->get_message();
-    $login_url = wp_login_url();
     $title = $email->get_title();
+    $gp_user = new gradportaluser($user);
+    $profile_url = $gp_user->get_profile_url();
     $first_name = $user->first_name;
     $user_email = $user->user_email;
-    //$profile_url = $gp_user->get_profile_url();
     $find = array('%title%', '%first_name%','%user_profile_url%','%user_email%');
-        $replace = array($title, $first_name, $login_url, $user_email );
+        $replace = array($title, $first_name, $profile_url, $user_email );
         $html = str_replace($find, $replace, $message);
 
-  //  $message  = sprintf(__('Username: %s'), $user->user_login) . "\r\n";
-   // $message .= sprintf(__('Password: %s'), $plaintext_pass) . "\r\n";
-   // $message .= wp_login_url() . "\r\n";
      // $to, $subject, $message, $headers, $attachments
     wp_mail($user->user_email, $email->get_subject(), $html); //send to user
 
@@ -224,8 +216,7 @@ function register_cptax_email_type() {
         $find = array('%title%','%activation_url%','%user_email%');
         $replace = array($title, site_url( "?page=gf_activation&key=$key"), $user_email );
         $html = str_replace($find, $replace, $message);
-
-wp_mail( $user_email, $subject, $html);
+        wp_mail( $user_email, $subject, $html);
             return false;
         }
         function new_mail_from($old) {

@@ -43,5 +43,6 @@ global $login;
  <a class="notification-btn" rel="reset-password-form">Forgotten Password?</a>
 </div>
  <input name="action" type="hidden" value="login" />
+ <input name="redirect" type="hidden" value="<?php if(!empty($_REQUEST) and isset($_REQUEST['redirect'])): echo $_REQUEST['redirect']; endif ?>" />
 </form>
 </div>

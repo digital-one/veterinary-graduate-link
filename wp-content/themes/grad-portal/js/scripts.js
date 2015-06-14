@@ -415,6 +415,10 @@ function saved_form_confirmation(){
    if(get_url_parameter('shortlist-sent')){
     _message = 'Your shortlist has been successfully sent.';
    }
+    if(get_url_parameter('login')){
+      console.log('show login')
+      $('a.login').trigger('click'); //if login param found, drop down login form
+   }
    
    if(_message){
      setTimeout(function(){
